@@ -1,20 +1,46 @@
 from flask import Flask, jsonify, request
-from src.core.database import Session, User
-from src.core.ml import RecommendationSystem
+from src.core.database import Session, User, add_message, get_recent_messages
+from src.core.p2p import P2PNode
+import asyncio
 
 app = Flask(__name__)
-rec_system = RecommendationSystem()
+p2p_node = P2PNode()
+
+def start_p2p_node():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(p2p_node.start())
+
+@app.errorhandler(400)
+def bad_request(error):
+    return jsonify({"error": "Bad Request", "message": str(error)}), 400
+
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({"error": "Not Found", "message": str(error)}), 404
+
+@app.errorhandler(500)
+def internal_server_error(error):
+    return jsonify({"error": "Internal Server Error", "message": str(error)}), 500
 
 @app.route('/users', methods=['POST'])
 def create_user():
     data = request.json
+    if not data or 'username' not in data or 'email' not in data:
+        abort(400, description="Missing username or email")
+    
     session = Session()
-    new_user = User(username=data['username'], email=data['email'])
-    session.add(new_user)
-    session.commit()
-    user_id = new_user.id
-    session.close()
-    return jsonify({"message": "User created successfully", "user_id": user_id}), 201
+    try:
+        new_user = User(username=data['username'], email=data['email'])
+        session.add(new_user)
+        session.commit()
+        user_id = new_user.id
+        return jsonify({"message": "User created successfully", "user_id": user_id}), 201
+    except IntegrityError:
+        session.rollback()
+        abort(400, description="Username or email already exists")
+    finally:
+        session.close()
 
 @app.route('/users', methods=['GET'])
 def get_users():
@@ -23,18 +49,17 @@ def get_users():
     session.close()
     return jsonify([{"id": user.id, "username": user.username, "email": user.email} for user in users])
 
-@app.route('/users/<int:user_id>/interests', methods=['POST'])
-def add_user_interests(user_id):
+@app.route('/messages', methods=['POST'])
+def post_message():
     data = request.json
-    interests = data.get('interests', '')
-    rec_system.add_user_interests(user_id, interests)
-    return jsonify({"message": "Interests added successfully"}), 200
+    add_message(data['content'], data['user_id'])
+    asyncio.run(p2p_node.publish_message(data['content']))
+    return jsonify({"message": "Message posted successfully"}), 201
 
-@app.route('/users/<int:user_id>/recommendations', methods=['GET'])
-def get_recommendations(user_id):
-    top_n = request.args.get('top_n', default=5, type=int)
-    recommendations = rec_system.get_recommendations(user_id, top_n=top_n)
-    return jsonify({"recommendations": recommendations}), 200
+@app.route('/messages', methods=['GET'])
+def get_messages():
+    messages = get_recent_messages()
+    return jsonify([{"id": msg.id, "content": msg.content, "timestamp": str(msg.timestamp), "user_id": msg.user_id} for msg in messages])
 
 if __name__ == '__main__':
     app.run(debug=True)

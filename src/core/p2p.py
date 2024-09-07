@@ -1,39 +1,47 @@
 import asyncio
 from libp2p import new_host
 from libp2p.peer.peerinfo import info_from_p2p_addr
-from libp2p.typing import StreamHandler
+from libp2p.pubsub.pubsub import Pubsub
+from libp2p.pubsub.gossipsub import GossipSub
+from src.core.database import add_message, get_recent_messages
 
 class P2PNode:
     def __init__(self):
         self.host = None
+        self.pubsub = None
 
     async def start(self):
         self.host = await new_host()
+        self.pubsub = GossipSub(self.host)
+        await self.pubsub.subscribe("cosmicsynccore")
         print(f"P2P node listening on {self.host.get_addrs()}")
 
-    async def connect_to_peer(self, addr):
-        info = info_from_p2p_addr(addr)
-        await self.host.connect(info)
-        print(f"Connected to peer: {addr}")
+    async def publish_message(self, message, user_id):
+        await self.pubsub.publish("cosmicsynccore", message.encode())
+        add_message(message, user_id)
 
-    def set_stream_handler(self, protocol: str, stream_handler: StreamHandler):
-        self.host.set_stream_handler(protocol, stream_handler)
+    async def handle_message(self, message):
+        print(f"Received message: {message.data.decode()}")
+        # Here you might want to add logic to store the message in the database
+        # if it's not already there
 
-async def handle_echo(stream):
-    while True:
-        read_bytes = await stream.read(1024)
-        if read_bytes is None:
-            break
-        await stream.write(read_bytes)
+    async def sync_messages(self):
+        messages = get_recent_messages(100)  # Sync last 100 messages
+        for msg in messages:
+            await self.publish_message(msg.content, msg.user_id)
 
-async def main():
+async def run_node():
     node = P2PNode()
     await node.start()
-    node.set_stream_handler("/echo/1.0.0", handle_echo)
 
-    # Keep the program running
+    def message_handler(message):
+        asyncio.create_task(node.handle_message(message))
+
+    node.pubsub.subscribe("cosmicsynccore", message_handler)
+
     while True:
-        await asyncio.sleep(1)
+        message = await asyncio.get_event_loop().run_in_executor(None, input, "Enter a message to publish: ")
+        await node.publish_message(message)
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(run_node())
