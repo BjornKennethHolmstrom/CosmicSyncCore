@@ -15,7 +15,7 @@ The database layer uses SQLAlchemy with SQLite as the backend. It manages user p
 
 ## P2P Networking Layer
 
-The P2P networking layer is built using py-libp2p. It enables direct communication between nodes in the network.
+The P2P networking layer is built using libp2p. It enables direct communication between nodes in the network.
 
 ## Machine Learning Layer
 

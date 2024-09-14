@@ -1,34 +1,100 @@
 import asyncio
+import logging
 from libp2p import new_host
 from libp2p.peer.peerinfo import info_from_p2p_addr
 from libp2p.pubsub.pubsub import Pubsub
 from libp2p.pubsub.gossipsub import GossipSub
+from libp2p.network.exceptions import SwarmException
 from src.core.database import add_message, get_recent_messages
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class P2PNode:
     def __init__(self):
         self.host = None
         self.pubsub = None
+        self.peers = set()
+        self.retry_interval = 5  # seconds
+        self.maintain_task = None
 
     async def start(self):
-        self.host = await new_host()
-        self.pubsub = GossipSub(self.host)
-        await self.pubsub.subscribe("cosmicsynccore")
-        print(f"P2P node listening on {self.host.get_addrs()}")
+        try:
+            self.host = await new_host()
+            self.pubsub = GossipSub(self.host)
+            await self.pubsub.subscribe("cosmicsynccore")
+            logger.info(f"P2P node listening on {await self.host.get_addrs()}")
+            self.maintain_task = asyncio.create_task(self.maintain_connections())
+        except Exception as e:
+            logger.error(f"Failed to start P2P node: {e}")
+            raise
+
+    async def stop(self):
+        if self.maintain_task and not self.maintain_task.done():
+            self.maintain_task.cancel()
+            try:
+                await self.maintain_task
+            except asyncio.CancelledError:
+                pass
+        if self.host:
+            await self.host.close()
+        logger.info("P2P node stopped")
 
     async def publish_message(self, message, user_id):
-        await self.pubsub.publish("cosmicsynccore", message.encode())
-        add_message(message, user_id)
+        try:
+            await self.pubsub.publish("cosmicsynccore", message.encode())
+            add_message(message, user_id)
+            logger.info(f"Message published: {message[:20]}...")
+        except Exception as e:
+            logger.error(f"Failed to publish message: {e}")
+            raise
 
     async def handle_message(self, message):
-        print(f"Received message: {message.data.decode()}")
-        # Here you might want to add logic to store the message in the database
-        # if it's not already there
+        try:
+            decoded_message = message.data.decode()
+            logger.info(f"Received message: {decoded_message[:20]}...")
+            # Here you might want to add logic to store the message in the database
+            # if it's not already there
+        except Exception as e:
+            logger.error(f"Failed to handle message: {e}")
 
     async def sync_messages(self):
-        messages = get_recent_messages(100)  # Sync last 100 messages
-        for msg in messages:
-            await self.publish_message(msg.content, msg.user_id)
+        try:
+            messages = get_recent_messages(100)  # Sync last 100 messages
+            for msg in messages:
+                await self.publish_message(msg.content, msg.user_id)
+            logger.info(f"Synced {len(messages)} messages")
+        except Exception as e:
+            logger.error(f"Failed to sync messages: {e}")
+
+    async def connect_to_peer(self, peer_addr):
+        try:
+            peer_info = info_from_p2p_addr(peer_addr)
+            await self.host.connect(peer_info)
+            self.peers.add(peer_addr)
+            logger.info(f"Connected to peer: {peer_addr}")
+        except SwarmException as e:
+            logger.warning(f"Failed to connect to peer {peer_addr}: {e}")
+
+    async def maintain_connections(self):
+        while True:
+            disconnected_peers = set()
+            for peer in self.peers:
+                if not self.host.get_network().is_connected(peer):
+                    disconnected_peers.add(peer)
+            
+            for peer in disconnected_peers:
+                self.peers.remove(peer)
+                asyncio.create_task(self.connect_to_peer(peer))
+            
+            await asyncio.sleep(self.retry_interval)
+
+    async def add_peer(self, peer_addr):
+        if peer_addr not in self.peers:
+            await self.connect_to_peer(peer_addr)
+
+    def get_connected_peers(self):
+        return [peer for peer in self.peers if self.host.get_network().is_connected(peer)]
 
 async def run_node():
     node = P2PNode()
@@ -39,9 +105,12 @@ async def run_node():
 
     node.pubsub.subscribe("cosmicsynccore", message_handler)
 
-    while True:
-        message = await asyncio.get_event_loop().run_in_executor(None, input, "Enter a message to publish: ")
-        await node.publish_message(message)
+    try:
+        while True:
+            message = await asyncio.get_event_loop().run_in_executor(None, input, "Enter a message to publish: ")
+            await node.publish_message(message, 0)  # Assuming user_id 0 for this example
+    finally:
+        await node.stop()
 
 if __name__ == "__main__":
     asyncio.run(run_node())

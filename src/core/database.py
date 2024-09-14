@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker
 from datetime import datetime
 
 Base = declarative_base()
@@ -34,4 +33,3 @@ def get_recent_messages(limit=10):
     messages = session.query(Message).order_by(Message.timestamp.desc()).limit(limit).all()
     session.close()
     return messages
-
