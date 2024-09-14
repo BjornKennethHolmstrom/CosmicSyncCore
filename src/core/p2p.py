@@ -63,14 +63,52 @@ class P2PNode:
         except Exception as e:
             logger.error(f"Failed to handle message: {e}")
 
-    async def sync_messages(self):
+    async def sync_messages(self, limit=100):
         try:
-            messages = get_recent_messages(100)  # Sync last 100 messages
-            for msg in messages:
+            local_messages = get_recent_messages(limit)
+            local_message_ids = set(msg.id for msg in local_messages)
+            print(f"Local message IDs: {local_message_ids}")
+            
+            # Fetch messages from peers
+            peer_messages = []
+            for peer in self.get_connected_peers():
+                try:
+                    peer_msgs = await self.fetch_messages_from_peer(peer, limit)
+                    peer_messages.extend(peer_msgs)
+                except Exception as e:
+                    logger.warning(f"Failed to fetch messages from peer {peer}: {e}")
+            print(f"Fetched {len(peer_messages)} messages from peers")
+            
+            # Deduplicate messages
+            new_message_ids = set()
+            new_messages = []
+            for msg in peer_messages:
+                if msg.id not in local_message_ids and msg.id not in new_message_ids:
+                    new_messages.append(msg)
+                    new_message_ids.add(msg.id)
+            print(f"New messages: {len(new_messages)}")
+            
+            # Sort new messages by timestamp
+            new_messages.sort(key=lambda x: x.timestamp)
+            
+            # Add new messages to the local database
+            for msg in new_messages:
+                add_message(msg.content, msg.user_id)
+            
+            # Publish new messages to the network
+            for msg in new_messages:
                 await self.publish_message(msg.content, msg.user_id)
-            logger.info(f"Synced {len(messages)} messages")
+            
+            logger.info(f"Synced {len(new_messages)} new messages")
+            return len(new_messages)
         except Exception as e:
             logger.error(f"Failed to sync messages: {e}")
+            return 0
+
+    async def fetch_messages_from_peer(self, peer, limit):
+        # This method should be implemented to fetch messages from a specific peer
+        # For now, we'll return an empty list
+        return []
 
     async def connect_to_peer(self, peer_addr):
         try:
