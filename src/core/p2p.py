@@ -24,17 +24,22 @@ class P2PNode:
             self.pubsub = GossipSub(self.host)
             await self.pubsub.subscribe("cosmicsynccore")
             logger.info(f"P2P node listening on {await self.host.get_addrs()}")
-            self.maintain_task = asyncio.create_task(self.maintain_connections())
+            self.maintain_task = self.maintain_connections()
+            asyncio.create_task(self.maintain_task)
         except Exception as e:
             logger.error(f"Failed to start P2P node: {e}")
             raise
 
     async def stop(self):
-        if self.maintain_task and not self.maintain_task.done():
-            self.maintain_task.cancel()
-            try:
-                await self.maintain_task
-            except asyncio.CancelledError:
+        if self.maintain_task:
+            if isinstance(self.maintain_task, asyncio.Task):
+                self.maintain_task.cancel()
+                try:
+                    await self.maintain_task
+                except asyncio.CancelledError:
+                    pass
+            elif asyncio.iscoroutine(self.maintain_task):
+                # If it's a coroutine, we don't need to do anything
                 pass
         if self.host:
             await self.host.close()

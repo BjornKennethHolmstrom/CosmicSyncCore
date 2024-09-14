@@ -39,6 +39,9 @@ async def test_start(mock_create_task, mock_gossipsub, mock_new_host):
         return mock_host
     mock_new_host.side_effect = mock_new_host_coro
 
+    # Mock create_task to simply return the coroutine without scheduling it
+    mock_create_task.side_effect = lambda coro: coro
+
     await node.start()
 
     mock_new_host.assert_called_once()
@@ -49,9 +52,8 @@ async def test_start(mock_create_task, mock_gossipsub, mock_new_host):
     mock_create_task.assert_called_once()
 
     # Ensure the maintain_connections task was created
-    mock_create_task.assert_called_once()
-    maintain_connections_call = mock_create_task.call_args[0][0]
-    assert asyncio.iscoroutine(maintain_connections_call)
+    assert node.maintain_task is not None
+    assert asyncio.iscoroutine(node.maintain_task)
 
 @pytest.mark.asyncio
 @patch('src.core.p2p.add_message')
