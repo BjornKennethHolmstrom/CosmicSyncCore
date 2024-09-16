@@ -3,25 +3,47 @@ __pycache__/
 *.py[cod]
 *.class
 
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
 # Virtual Environment
 venv/
 env/
-
-# IDE files
-.vscode/
-.idea/
-
-# Logs
-*.log
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Environment variables
 .env
 
-# Databases
+# Database
 *.db
 *.sqlite
 *.sqlite3
+
+# PostgreSQL
+*.sql
+*.pgsql
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# Alembic
+alembic.ini
+
+# Other
+*.pyc
+*.pyo
+*.mo
+*.pot
+

@@ -20,7 +20,7 @@ CosmicSyncCore is the core technology powering the SharedSpheres ecosystem, whic
 ## Tech Stack
 
 - Backend: Python (Flask)
-- Database: SQLAlchemy with PostgreSQL
+- Database: PostgreSQL with SQLAlchemy ORM
 - P2P: libp2p
 - Machine Learning: scikit-learn
 
@@ -37,6 +37,19 @@ CosmicSyncCore is the core technology powering the SharedSpheres ecosystem, whic
 7. Initialize the database: `alembic upgrade head`
 8. Run tests: `python -m unittest discover tests`
 
+## Database Configuration
+
+This project uses PostgreSQL. Ensure you have PostgreSQL installed and running on your system. Create a database for the project and update the `.env` file with your database credentials.
+
+Example `.env` file:
+```
+DB_USER=your_username
+DB_PASSWORD=your_password
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=cosmicsynccore
+```
+
 ## Contributing
 
 We're actively seeking collaborators in the following areas:
@@ -52,7 +65,7 @@ Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of co
 
 ## License
 
-This project is licensed under the [appropriate license] - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under a custom license - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Acknowledgments
 
@@ -61,4 +74,4 @@ This project is licensed under the [appropriate license] - see the [LICENSE.md](
 
 ## Contact
 
-Contact the project leader Björn K. Holmström through the form on his webpage: https://bjornkennethholmstrom.wordpress.com/contact/
+Contact the project leader Björn K. Holmström via email bjorn.kenneth.holmstrom@gmail.com
