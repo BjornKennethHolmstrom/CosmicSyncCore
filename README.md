@@ -1,22 +1,28 @@
 # CosmicSyncCore
 
-CosmicSyncCore is the core technology powering the SharedSpheres collaboration platform. It's designed to efficiently connect individuals based on shared interests, complementary skills, and aligned values using advanced P2P synchronization and machine learning techniques.
+CosmicSyncCore is the core technology powering the SharedSpheres ecosystem, which includes MindSpheres, HeartSpheres, and BodySpheres. It's designed to efficiently connect individuals based on shared interests, complementary skills, and aligned values using advanced P2P synchronization and machine learning techniques.
 
-## Features (Planned)
+## Features
 
 - Advanced P2P data synchronization
 - ML-powered intelligent profile matching
-- Scalable user profile management
+- Scalable user profile management across multiple spheres
 - Secure and privacy-focused design
-- API for integration with SharedSpheres platform
+- API for integration with SharedSpheres platforms
 - Ethical collaboration framework
+
+## Supported Platforms
+
+- MindSpheres: Intellectual and professional collaborations
+- HeartSpheres: Personal relationships and emotional connections
+- BodySpheres: Physical health and wellness collaborations
 
 ## Tech Stack
 
 - Backend: Python (Flask)
 - Database: SQLAlchemy with PostgreSQL
 - P2P: libp2p
-- Machine Learning: scikit-learn (planned)
+- Machine Learning: scikit-learn
 
 ## Setup
 
@@ -27,9 +33,9 @@ CosmicSyncCore is the core technology powering the SharedSpheres collaboration p
    - macOS/Linux: `source venv/bin/activate`
 4. Install dependencies: `pip install -r requirements.txt`
 5. Install PostgreSQL and create a database for the project
-6. Set up environment variables for database connection
-7. Run tests: `python -m unittest discover tests`
-
+6. Set up environment variables for database connection in a `.env` file
+7. Initialize the database: `alembic upgrade head`
+8. Run tests: `python -m unittest discover tests`
 
 ## Contributing
 
@@ -40,6 +46,7 @@ We're actively seeking collaborators in the following areas:
 - Testing and quality assurance
 - Documentation
 - Ethical framework development
+- Sphere-specific feature development
 
 Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
