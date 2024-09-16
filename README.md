@@ -14,7 +14,7 @@ CosmicSyncCore is the core technology powering the SharedSpheres collaboration p
 ## Tech Stack
 
 - Backend: Python (Flask)
-- Database: SQLAlchemy with SQLite
+- Database: SQLAlchemy with PostgreSQL
 - P2P: libp2p
 - Machine Learning: scikit-learn (planned)
 
@@ -26,7 +26,10 @@ CosmicSyncCore is the core technology powering the SharedSpheres collaboration p
    - Windows: `venv\Scripts\activate`
    - macOS/Linux: `source venv/bin/activate`
 4. Install dependencies: `pip install -r requirements.txt`
-5. Run tests: `python -m unittest discover tests`
+5. Install PostgreSQL and create a database for the project
+6. Set up environment variables for database connection
+7. Run tests: `python -m unittest discover tests`
+
 
 ## Contributing
 

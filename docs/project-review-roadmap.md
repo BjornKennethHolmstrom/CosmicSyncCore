@@ -15,6 +15,8 @@
    - Robust API for integration with SharedSpheres
    - Security measures and privacy-focused design
    - Ethical collaboration framework
+4. Migrate database from SQLite to PostgreSQL
+5. Implement database sharding strategy for improved scalability
 
 ## Goal Clarity
 
