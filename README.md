@@ -1,13 +1,28 @@
 # CosmicSyncCore
 
-CosmicSyncCore is the core technology powering the SharedSphere collaboration platform. It's designed to efficiently connect individuals based on shared interests, complementary skills, and aligned values.
+CosmicSyncCore is the core technology powering the SharedSpheres ecosystem, which includes MindSpheres, HeartSpheres, and BodySpheres. It's designed to efficiently connect individuals based on shared interests, complementary skills, and aligned values using advanced P2P synchronization and machine learning techniques.
 
-## Features (Planned)
+## Features
 
-- P2P data synchronization
-- ML-powered interest matching
-- Scalable user profile management
-- API for integration with SharedSpheres platform
+- Advanced P2P data synchronization
+- ML-powered intelligent profile matching
+- Scalable user profile management across multiple spheres
+- Secure and privacy-focused design
+- API for integration with SharedSpheres platforms
+- Ethical collaboration framework
+
+## Supported Platforms
+
+- MindSpheres: Intellectual and professional collaborations
+- HeartSpheres: Personal relationships and emotional connections
+- BodySpheres: Physical health and wellness collaborations
+
+## Tech Stack
+
+- Backend: Python (Flask)
+- Database: SQLAlchemy with PostgreSQL
+- P2P: libp2p
+- Machine Learning: scikit-learn
 
 ## Setup
 
@@ -17,20 +32,32 @@ CosmicSyncCore is the core technology powering the SharedSphere collaboration pl
    - Windows: `venv\Scripts\activate`
    - macOS/Linux: `source venv/bin/activate`
 4. Install dependencies: `pip install -r requirements.txt`
-5. Run tests: `python -m unittest discover tests`
+5. Install PostgreSQL and create a database for the project
+6. Set up environment variables for database connection in a `.env` file
+7. Initialize the database: `alembic upgrade head`
+8. Run tests: `python -m unittest discover tests`
 
 ## Contributing
 
-[Guidelines for contributing to be added]
+We're actively seeking collaborators in the following areas:
+- P2P optimization
+- Machine learning algorithm development
+- Security implementation
+- Testing and quality assurance
+- Documentation
+- Ethical framework development
+- Sphere-specific feature development
+
+Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
 ## License
 
-[License information to be added]
+This project is licensed under the [appropriate license] - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Acknowledgments
 
 - Claude 3.5 Sonnet for development assistance and brainstorming
-- ChatGPT for name availablity search and analysis
+- ChatGPT for name availability search and analysis
 
 ## Contact
 

@@ -11,11 +11,11 @@ CosmicSyncCore is designed as a modular system with the following main component
 
 ## Database Layer
 
-The database layer uses SQLAlchemy with SQLite as the backend. It manages user profiles and other persistent data.
+The database layer uses SQLAlchemy with PostgreSQL as the backend. It manages user profiles and other persistent data. PostgreSQL was chosen for its robustness, support for concurrent operations, and advanced features that support the distributed nature of CosmicSyncCore.
 
 ## P2P Networking Layer
 
-The P2P networking layer is built using py-libp2p. It enables direct communication between nodes in the network.
+The P2P networking layer is built using libp2p. It enables direct communication between nodes in the network.
 
 ## Machine Learning Layer
 
