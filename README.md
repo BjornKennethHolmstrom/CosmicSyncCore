@@ -1,19 +1,22 @@
 # CosmicSyncCore
 
-CosmicSyncCore is the core technology powering the SharedSpheres ecosystem, which includes the subcomponents MindSpheres, HeartSpheres, and BodySpheres. It's designed to efficiently connect individuals using advanced P2P synchronization and machine learning techniques.
+CosmicSyncCore is a flexible, P2P-based platform designed to enable decentralized data storage and synchronization for various applications. Initially developed to power the SharedSpheres ecosystem, it has evolved to support a wide range of app types and use cases, including SharedSpheres and EPiC (Exercise Planning in Collaboration).
 
 ## Features
 
-- Advanced P2P data synchronization
-- ML-powered intelligent profile matching
-- Scalable user profile management across multiple spheres
-- Secure and privacy-focused design
-- API for integration with SharedSpheres platforms
-- Ethical collaboration framework
+- Advanced P2P data synchronization with offline support
+- Flexible data model supporting various data types and structures
+- Scalable user and data management across multiple applications
+- Real-time updates and conflict resolution
+- Secure, privacy-focused design with end-to-end encryption
+- Extensible API for integration with various applications
+- Support for custom data validation and business logic
+- Cross-platform SDK support (Web, Mobile, Desktop)
 
 ## Supported Platforms
 
 - SharedSpheres
+- EPiC
 
 ## Tech Stack
 

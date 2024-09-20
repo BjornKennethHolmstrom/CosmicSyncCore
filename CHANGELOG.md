@@ -5,6 +5,25 @@ All notable changes to the CosmicSyncCore project will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - Unreleased
+
+### Added
+- Support for multiple applications beyond SharedSpheres
+- Flexible data model to accommodate various data types and structures
+- Enhanced P2P synchronization with offline support and conflict resolution
+- Real-time update capabilities
+- Cross-platform SDK support
+- Extensibility features for custom data validation and business logic
+
+### Changed
+- Refactored core components for improved flexibility and scalability
+- Updated API to support a wider range of application types
+- Enhanced security measures including end-to-end encryption
+
+### TODO
+- Develop comprehensive documentation for third-party developers
+- Create example integrations for various app types
+
 ## [0.2.0] - 2024-09-16
 
 ### Added
