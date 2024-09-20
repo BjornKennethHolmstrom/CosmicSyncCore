@@ -1,113 +1,88 @@
-# CosmicSyncCore Initial Action Plan
+# CosmicSyncCore Initial Action Plan (Hybrid Approach)
 
 ## Week 1-2: Project Setup and Core Architecture
 
 ### Day 1-2: Project Structure and Environment Setup
-- [x] Set up version control repository (Git) - Already completed
-- [ ] Create initial project structure
-  - [ ] Create directories: `src`, `tests`, `docs`, `scripts`
-  - [ ] Set up `src` subdirectories: `core`, `networking`, `storage`, `sync`, `api`
-- [ ] Initialize Node.js project
-  - [ ] Run `npm init` and fill out package details
-  - [ ] Create initial `README.md` with project overview
-- [ ] Set up development environment
-  - [ ] Install and configure ESLint for code linting
-  - [ ] Set up Prettier for code formatting
-  - [ ] Create `.gitignore` file for Node.js project
+- [x] Set up version control repository (Git)
+- [x] Create initial project structure
+- [x] Initialize Node.js project
+- [x] Set up development environment
 
 ### Day 3-4: Core Dependencies and Basic Architecture
-- [ ] Research and select P2P networking library
-  - [ ] Evaluate libp2p, Hyperswarm, and other options
-  - [ ] Document decision and rationale
-- [ ] Choose database for local storage
-  - [ ] Evaluate SQLite, LevelDB, and other options
-  - [ ] Document decision and rationale
-- [ ] Select encryption library
-  - [ ] Evaluate node-crypto, libsodium, and other options
-  - [ ] Document decision and rationale
-- [ ] Design core module structure
-  - [ ] Create basic class/module skeletons for core components
-  - [ ] Implement basic event system for inter-module communication
+- [x] Research and select P2P networking library
+  - [ ] Evaluate libp2p (used by IPFS) alongside Gun.js for P2P capabilities
+- [x] Choose database for local storage
+  - [ ] Consider Gun.js for real-time data and IPFS for file storage
+- [x] Select encryption library
+- [x] Design core module structure
+  - [ ] Adjust to incorporate Gun.js and IPFS modules
+- [ ] Implement basic event system for inter-module communication
 
-### Day 5-7: Configuration and Logging Setup
+### Day 5-7: Configuration, Logging Setup, and Integration Planning
 - [ ] Develop configuration management system
-  - [ ] Create `config` directory with JSON files for different environments
-  - [ ] Implement configuration loading based on NODE_ENV
 - [ ] Set up logging system
-  - [ ] Integrate a logging library (e.g., Winston or Bunyan)
-  - [ ] Implement different log levels (debug, info, warn, error)
 - [ ] Implement global error handling mechanism
-  - [ ] Create an `ErrorHandler` class with different error types
-  - [ ] Integrate error handling with the logging system
+- [ ] Plan integration points for Gun.js and IPFS
+  - [ ] Identify which parts of the system will use Gun.js vs. IPFS vs. custom code
 
 ### Day 8-10: Basic P2P Networking Layer
 - [ ] Implement basic node discovery mechanism
-  - [ ] Create a `PeerDiscovery` class using the chosen P2P library
-  - [ ] Implement methods for finding and connecting to peers
+  - [ ] Utilize Gun.js for real-time data sync discovery
+  - [ ] Use IPFS for content-based addressing and discovery
 - [ ] Develop basic connection management system
-  - [ ] Create a `ConnectionManager` class
-  - [ ] Implement methods for establishing and maintaining connections
+  - [ ] Implement connection handling for both Gun.js and IPFS networks
 
 ## Week 3-4: Expanding P2P Capabilities and Starting Data Management
 
 ### Day 11-14: Enhancing P2P Networking
 - [ ] Design and implement basic message protocol
-  - [ ] Define message types (e.g., HELLO, PING, SYNC_REQUEST)
-  - [ ] Implement message serialization and deserialization
+  - [ ] Leverage Gun.js for real-time data messaging
+  - [ ] Use IPFS for larger data transfers and content addressing
 - [ ] Develop simple message routing system
-  - [ ] Create a `MessageRouter` class
-  - [ ] Implement basic routing logic based on message types
+  - [ ] Implement routing logic that works across Gun.js and IPFS networks
 
 ### Day 15-17: Initial Security Measures
 - [ ] Implement basic secure channel establishment
-  - [ ] Research and integrate a library for secure communication (e.g., libsodium)
-  - [ ] Implement encrypted message exchange between peers
+  - [ ] Utilize Gun.js's built-in security features
+  - [ ] Implement additional security layers for IPFS communication if needed
 - [ ] Develop basic node authentication mechanism
-  - [ ] Create a simple challenge-response authentication system
+  - [ ] Integrate with Gun.js user authentication system
+  - [ ] Implement additional auth for IPFS nodes if required
 
 ### Day 18-21: Starting Data Management
 - [ ] Set up local database integration
-  - [ ] Integrate chosen database library
-  - [ ] Create a `DatabaseManager` class with basic CRUD operations
+  - [ ] Use Gun.js for real-time, synchronized structured data
+  - [ ] Implement IPFS integration for file and large data storage
 - [ ] Design initial data model system
-  - [ ] Create a `Model` base class
-  - [ ] Implement a simple user profile model as an example
+  - [ ] Create models that work with Gun.js's data structure
+  - [ ] Design system for managing IPFS-stored data references
 
 ### Day 22-24: Basic Synchronization Concept
 - [ ] Implement basic change tracking mechanism
-  - [ ] Create a `ChangeTracker` class
-  - [ ] Implement methods to record and retrieve changes
-- [ ] Develop a simple Last-Write-Wins (LWW) conflict resolution strategy
-  - [ ] Create a `ConflictResolver` class with LWW logic
+  - [ ] Utilize Gun.js's built-in real-time sync capabilities
+  - [ ] Implement change tracking for IPFS-stored data
+- [ ] Develop a simple conflict resolution strategy
+  - [ ] Leverage Gun.js's conflict resolution for real-time data
+  - [ ] Implement custom resolution for IPFS data if needed
 
 ### Day 25-28: Initial Testing and Documentation
 - [ ] Set up testing framework
-  - [ ] Integrate a testing library (e.g., Jest or Mocha)
-  - [ ] Write initial unit tests for core modules
+  - [ ] Include tests for Gun.js and IPFS integrations
 - [ ] Start API documentation
-  - [ ] Set up JSDoc or similar for inline documentation
-  - [ ] Begin documenting core classes and methods
+  - [ ] Document how to use the hybrid system with Gun.js and IPFS components
 
 ## Next Steps and Ongoing Tasks
 - [ ] Regular code reviews and pair programming sessions
 - [ ] Daily stand-ups to discuss progress and blockers
 - [ ] Weekly planning sessions to adjust priorities and timeline
-- [ ] Continuous integration setup (e.g., GitHub Actions or Jenkins)
+- [ ] Continuous integration setup
 - [ ] Regular security reviews of implemented features
+- [ ] Monitor Gun.js and IPFS project updates and adjust integration as needed
 
 ## Key Milestones for This Phase
-1. Functioning project structure with core modules outlined
-2. Basic P2P networking capabilities (discovery and connection)
-3. Initial local data storage and retrieval system
-4. Foundational security measures implemented
-5. Basic change tracking and conflict resolution concept
-6. Initial test suite and documentation in place
-
-This action plan covers the first 4 weeks of development, focusing on setting up the project structure and implementing the core functionalities. It provides a day-by-day breakdown of tasks, allowing for easy tracking of progress and adjustments as needed.
-
-Remember to:
-- Regularly commit your changes to the Git repository
-- Document important decisions and rationales
-- Stay flexible and be prepared to adjust the plan based on discoveries or challenges encountered during implementation
-
-Would you like to start working on any specific task from this plan, or do you need any clarification on the steps outlined?
+1. Functioning project structure with core modules outlined, including Gun.js and IPFS integration
+2. Basic P2P networking capabilities using both Gun.js and IPFS
+3. Initial local data storage and retrieval system leveraging Gun.js for real-time data and IPFS for file storage
+4. Foundational security measures implemented, utilizing Gun.js security features
+5. Basic change tracking and conflict resolution concept, primarily using Gun.js capabilities
+6. Initial test suite and documentation in place, covering the hybrid system

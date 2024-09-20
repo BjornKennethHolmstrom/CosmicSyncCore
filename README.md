@@ -4,7 +4,7 @@ CosmicSyncCore is a flexible, P2P-based platform designed to enable decentralize
 
 ## Current Status
 
-CosmicSyncCore is in early development. We have set up the basic project structure and implemented core components including P2P networking, database management, data synchronization, and encryption.
+CosmicSyncCore is in early development. We have set up the basic project structure and implemented core components including P2P networking, database management, data synchronization, and encryption. We've also integrated an event bus system for improved inter-module communication and added Helia for decentralized file storage.
 
 ## Features
 

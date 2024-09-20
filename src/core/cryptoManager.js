@@ -1,29 +1,38 @@
-// src/core/cryptoManager.js
 const crypto = require('crypto');
-const EventEmitter = require('./eventEmitter');
 
-class CryptoManager extends EventEmitter {
-  constructor() {
-    super();
-    this.algorithm = 'aes-256-cbc';
+class CryptoManager {
+  constructor(eventBus) {
+    this.eventBus = eventBus;
+    this.algorithm = 'aes-256-gcm';
     this.key = crypto.randomBytes(32);
-    this.iv = crypto.randomBytes(16);
+    this.eventBus.emit('crypto:initialized');
   }
 
   encrypt(text) {
-    let cipher = crypto.createCipheriv(this.algorithm, Buffer.from(this.key), this.iv);
-    let encrypted = cipher.update(text);
-    encrypted = Buffer.concat([encrypted, cipher.final()]);
-    return { iv: this.iv.toString('hex'), encryptedData: encrypted.toString('hex') };
+    const iv = crypto.randomBytes(12);
+    const cipher = crypto.createCipheriv(this.algorithm, this.key, iv);
+    let encrypted = cipher.update(text, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    const tag = cipher.getAuthTag();
+    this.eventBus.emit('crypto:encrypted', { length: text.length });
+    return {
+      iv: iv.toString('hex'),
+      encryptedData: encrypted,
+      tag: tag.toString('hex')
+    };
   }
 
-  decrypt(text) {
-    let iv = Buffer.from(text.iv, 'hex');
-    let encryptedText = Buffer.from(text.encryptedData, 'hex');
-    let decipher = crypto.createDecipheriv(this.algorithm, Buffer.from(this.key), iv);
-    let decrypted = decipher.update(encryptedText);
-    decrypted = Buffer.concat([decrypted, decipher.final()]);
-    return decrypted.toString();
+  decrypt(encryptedObj) {
+    const decipher = crypto.createDecipheriv(
+      this.algorithm,
+      this.key,
+      Buffer.from(encryptedObj.iv, 'hex')
+    );
+    decipher.setAuthTag(Buffer.from(encryptedObj.tag, 'hex'));
+    let decrypted = decipher.update(encryptedObj.encryptedData, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    this.eventBus.emit('crypto:decrypted', { length: decrypted.length });
+    return decrypted;
   }
 }
 

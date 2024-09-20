@@ -27,8 +27,12 @@
   },
   "homepage": "https://github.com/BjornKennethHolmstrom/CosmicSyncCore#readme",
   "dependencies": {
+    "@helia/unixfs": "^3.0.7",
+    "@supabase/supabase-js": "^2.45.4",
     "config": "^3.3.12",
     "dotenv": "^16.4.5",
+    "gun": "^0.2020.1240",
+    "helia": "^4.2.6",
     "libp2p": "^2.0.2",
     "libp2p-bootstrap": "^0.14.0",
     "libp2p-gossipsub": "^0.13.0",
