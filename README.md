@@ -1,55 +1,65 @@
 # CosmicSyncCore
 
-CosmicSyncCore is a flexible, P2P-based platform designed to enable decentralized data storage and synchronization for various applications. Initially developed to power the SharedSpheres ecosystem, it has evolved to support a wide range of app types and use cases, including SharedSpheres and EPiC (Exercise Planning in Collaboration).
+CosmicSyncCore is a flexible, P2P-based platform designed to enable decentralized data storage and synchronization for various applications. It supports a wide range of app types and use cases, including SharedSpheres and EPiC (Exercise Planning in Collaboration).
+
+## Current Status
+
+CosmicSyncCore is in early development. We have set up the basic project structure and implemented core components including P2P networking, database management, data synchronization, and encryption.
 
 ## Features
 
-- Advanced P2P data synchronization with offline support
+- Advanced P2P data synchronization with offline support using libp2p
 - Flexible data model supporting various data types and structures
 - Scalable user and data management across multiple applications
-- Real-time updates and conflict resolution
+- Real-time updates and basic conflict resolution
 - Secure, privacy-focused design with end-to-end encryption
 - Extensible API for integration with various applications
 - Support for custom data validation and business logic
-- Cross-platform SDK support (Web, Mobile, Desktop)
-
-## Supported Platforms
-
-- SharedSpheres
-- EPiC
+- Cross-platform compatibility (Node.js based)
 
 ## Tech Stack
 
-- Backend: Python (Flask)
-- Database: PostgreSQL with SQLAlchemy ORM
+- Backend: Node.js
+- Database: PostgreSQL
 - P2P: libp2p
-- Machine Learning: scikit-learn
+- Encryption: Node.js crypto module
+
+## Project Structure
+
+```
+CosmicSyncCore/
+├── src/
+│   ├── core/
+│   │   ├── eventEmitter.js
+│   │   ├── syncManager.js
+│   │   └── cryptoManager.js
+│   ├── p2p/
+│   │   └── node.js
+│   ├── db/
+│   │   └── manager.js
+│   ├── api/
+│   │   └── apiManager.js
+│   └── index.js
+├── config/
+│   └── default.json
+├── tests/
+├── docs/
+└── scripts/
+```
 
 ## Setup
 
 1. Clone the repository
-2. Create a virtual environment: `python -m venv venv`
-3. Activate the virtual environment:
-   - Windows: `venv\Scripts\activate`
-   - macOS/Linux: `source venv/bin/activate`
-4. Install dependencies: `pip install -r requirements.txt`
-5. Install PostgreSQL and create a database for the project
-6. Set up environment variables for database connection in a `.env` file
-7. Initialize the database: `alembic upgrade head`
-8. Run tests: `python -m unittest discover tests`
+2. Install Node.js (version 14 or later recommended)
+3. Install PostgreSQL and create a database for the project
+4. Run `npm install` to install dependencies
+5. Copy `.env.example` to `.env` and fill in the required environment variables
+6. Run `npm start` to start the development server
+7. Run `npm test` to run the test suite (to be implemented)
 
-## Database Configuration
+## Contributing
 
-This project uses PostgreSQL. Ensure you have PostgreSQL installed and running on your system. Create a database for the project and update the `.env` file with your database credentials.
-
-Example `.env` file:
-```
-DB_USER=your_username
-DB_PASSWORD=your_password
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=cosmicsynccore
-```
+We are not currently accepting external contributions as the project is in its initial development phase. Please check back later for contribution guidelines.
 
 ## License
 
@@ -59,4 +69,3 @@ This project is licensed under a custom license - see the [LICENSE.md](LICENSE.m
 
 - Claude 3.5 Sonnet for development assistance and brainstorming
 - ChatGPT for name availability search and analysis
-

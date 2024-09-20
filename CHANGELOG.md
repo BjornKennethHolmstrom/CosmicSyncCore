@@ -5,24 +5,31 @@ All notable changes to the CosmicSyncCore project will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.3.0] - Unreleased
+## [0.3.0] - 2024-09-20
 
 ### Added
-- Support for multiple applications beyond SharedSpheres
-- Flexible data model to accommodate various data types and structures
-- Enhanced P2P synchronization with offline support and conflict resolution
-- Real-time update capabilities
-- Cross-platform SDK support
+- Basic P2P networking functionality using libp2p
+- PostgreSQL database integration
+- Core components: P2PNode, DatabaseManager, SyncManager, CryptoManager, and APIManager
+- Basic event system for inter-module communication
+- Environment variable configuration with .env file support
+- Basic data synchronization mechanism
+- Simple end-to-end encryption using Node.js crypto module
 - Extensibility features for custom data validation and business logic
 
 ### Changed
 - Refactored core components for improved flexibility and scalability
-- Updated API to support a wider range of application types
-- Enhanced security measures including end-to-end encryption
+- Moved from Python implementation to Node.js
+- Updated project structure to support modular architecture
 
 ### TODO
+- Implement comprehensive P2P synchronization with conflict resolution
+- Develop advanced security measures including robust encryption and authentication
+- Create a comprehensive API for integration with various applications
+- Implement thorough error handling and logging
 - Develop comprehensive documentation for third-party developers
 - Create example integrations for various app types
+- Implement test suite for all components
 
 ## [0.2.0] - 2024-09-16
 
