@@ -5,6 +5,29 @@ All notable changes to the CosmicSyncCore project will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2024-09-21
+
+### Added
+- Integrated event bus system for improved inter-module communication
+- Added Helia for decentralized file storage
+- Implemented FileStorageManager interface with Helia implementation
+
+### Changed
+- Refactored core components to use the event bus
+- Updated main CosmicSyncCore class to streamline initialization and startup
+
+### Removed
+- Removed Supabase integration in favor of Helia
+
+### TODO
+- Implement comprehensive P2P synchronization with conflict resolution
+- Develop advanced security measures including robust encryption and authentication
+- Create a comprehensive API for integration with various applications
+- Implement thorough error handling and logging
+- Develop comprehensive documentation for third-party developers
+- Create example integrations for various app types
+- Implement test suite for all components
+
 ## [0.3.0] - 2024-09-20
 
 ### Added

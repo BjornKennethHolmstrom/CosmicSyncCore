@@ -1,11 +1,11 @@
-// src/core/syncManager.js
 const EventEmitter = require('./eventEmitter');
 
 class SyncManager extends EventEmitter {
-  constructor(p2pNode, dbManager) {
-    super();
+  constructor(p2pNode, dbManager, gunManager, eventBus) {
     this.p2pNode = p2pNode;
     this.dbManager = dbManager;
+    this.gunManager = gunManager;
+    this.eventBus = eventBus;
   }
 
   async syncData() {
@@ -15,7 +15,11 @@ class SyncManager extends EventEmitter {
         type: 'SYNC_REQUEST',
         data: localData
       }));
-      this.emit('syncStarted');
+
+      // Sync with Gun.js
+      await this.syncWithGun(localData);
+
+      this.eventBus.emit('data:synced', { count: localData.length });
     } catch (error) {
       console.error('Error during data sync:', error);
       this.emit('syncError', error);
@@ -25,15 +29,20 @@ class SyncManager extends EventEmitter {
   async handleIncomingSync(syncData) {
     try {
       const incomingData = JSON.parse(syncData);
-      // Implement logic to merge incoming data with local data
-      // This is a simplified version and should be expanded based on your specific needs
       for (const item of incomingData.data) {
         await this.dbManager.addMessage(item.content, item.user_id);
+        await this.gunManager.put(item.id, item);
       }
       this.emit('syncCompleted');
     } catch (error) {
       console.error('Error handling incoming sync:', error);
       this.emit('syncError', error);
+    }
+  }
+
+  async syncWithGun(localData) {
+    for (const item of localData) {
+      await this.gunManager.put(item.id, item);
     }
   }
 }
