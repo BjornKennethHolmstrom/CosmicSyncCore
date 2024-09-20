@@ -1,6 +1,6 @@
 # CosmicSyncCore
 
-CosmicSyncCore is the core technology powering the SharedSpheres ecosystem, which includes MindSpheres, HeartSpheres, and BodySpheres. It's designed to efficiently connect individuals based on shared interests, complementary skills, and aligned values using advanced P2P synchronization and machine learning techniques.
+CosmicSyncCore is the core technology powering the SharedSpheres ecosystem, which includes the subcomponents MindSpheres, HeartSpheres, and BodySpheres. It's designed to efficiently connect individuals using advanced P2P synchronization and machine learning techniques.
 
 ## Features
 
@@ -13,9 +13,7 @@ CosmicSyncCore is the core technology powering the SharedSpheres ecosystem, whic
 
 ## Supported Platforms
 
-- MindSpheres: Intellectual and professional collaborations
-- HeartSpheres: Personal relationships and emotional connections
-- BodySpheres: Physical health and wellness collaborations
+- SharedSpheres
 
 ## Tech Stack
 
@@ -50,19 +48,6 @@ DB_PORT=5432
 DB_NAME=cosmicsynccore
 ```
 
-## Contributing
-
-We're actively seeking collaborators in the following areas:
-- P2P optimization
-- Machine learning algorithm development
-- Security implementation
-- Testing and quality assurance
-- Documentation
-- Ethical framework development
-- Sphere-specific feature development
-
-Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
-
 ## License
 
 This project is licensed under a custom license - see the [LICENSE.md](LICENSE.md) file for details.
@@ -72,6 +57,3 @@ This project is licensed under a custom license - see the [LICENSE.md](LICENSE.m
 - Claude 3.5 Sonnet for development assistance and brainstorming
 - ChatGPT for name availability search and analysis
 
-## Contact
-
-Contact the project leader Björn K. Holmström via email bjorn.kenneth.holmstrom@gmail.com
