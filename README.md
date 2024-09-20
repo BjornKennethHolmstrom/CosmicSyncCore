@@ -24,6 +24,18 @@ CosmicSyncCore is in early development. We have set up the basic project structu
 - P2P: libp2p
 - Encryption: Node.js crypto module
 
+## Decentralized File Storage with Helia
+
+CosmicSyncCore uses Helia, a modern, modular implementation of IPFS, for decentralized file storage. Helia offers several advantages:
+
+- Improved performance and scalability for content retrieval and file management
+- Better integration with decentralized web applications (PWAs)
+- Support for content-addressed data via Content Identifiers (CIDs)
+- Modular design allowing for customization and extension of core features
+- Efficient "reference counting file system" for handling large datasets
+
+While Helia is optimized for JavaScript and browser-based environments, it remains interoperable with the broader IPFS ecosystem, allowing for future scalability and integration options.
+
 ## Project Structure
 
 ```
