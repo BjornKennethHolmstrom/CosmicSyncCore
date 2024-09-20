@@ -10,54 +10,54 @@
 
 ### 1.2 Core Dependencies
 - [X] Research and select P2P networking library (e.g., libp2p)
-- [ ] Integrate Gun.js for real-time data synchronization
-- [ ] Set up IPFS for decentralized file storage
+- [X] Integrate Gun.js for real-time data synchronization
+- [X] Set up Helia/Kubo/IPFS for decentralized file storage
 - [X] Choose database for local storage (e.g., SQLite, LevelDB) for non-Gun.js data
 - [X] Select encryption library for additional security features
 
 ### 1.3 Basic Architecture
 - [X] Design and implement core module structure
 - [ ] Create interfaces for major components (networking, storage, sync)
-- [ ] Implement basic event system for inter-module communication
-- [ ] Design integration points for Gun.js and IPFS within the architecture
+- [X] Implement basic event system for inter-module communication
+- [ ] Design integration points for Gun.js and Helia/Kubo/IPFS within the architecture
 
 ### 1.4 Configuration Management
 - [ ] Develop configuration management system
 - [ ] Implement environment-based config loading
-- [ ] Add configuration options for Gun.js and IPFS
+- [ ] Add configuration options for Gun.js and Helia/Kubo/IPFS
 
 ### 1.5 Logging and Error Handling
 - [ ] Set up logging system
 - [ ] Implement global error handling mechanism
-- [ ] Ensure proper logging for Gun.js and IPFS operations
+- [ ] Ensure proper logging for Gun.js and Helia/Kubo/IPFS operations
 
 ## Phase 2: P2P Networking Layer (Estimated time: 3-4 weeks)
 
 ### 2.1 Node Discovery and Connection
 - [ ] Implement node discovery mechanism using Gun.js for real-time data
-- [ ] Utilize IPFS for content-based discovery
-- [ ] Develop connection management system integrating both Gun.js and IPFS
-- [ ] Create NAT traversal solution leveraging existing solutions in Gun.js/IPFS
+- [ ] Utilize Helia/Kubo/IPFS for content-based discovery
+- [ ] Develop connection management system integrating both Gun.js and Helia/Kubo/IPFS
+- [ ] Create NAT traversal solution leveraging existing solutions in Gun.js/Helia/Kubo/IPFS
 
 ### 2.2 Message Protocol
-- [ ] Design message format and serialization compatible with Gun.js and IPFS
-- [ ] Implement message routing system across Gun.js and IPFS networks
+- [ ] Design message format and serialization compatible with Gun.js and Helia/Kubo/IPFS
+- [ ] Implement message routing system across Gun.js and Helia/Kubo/IPFS networks
 - [ ] Develop message validation and error handling
 
 ### 2.3 Network Security
 - [ ] Implement secure channel establishment using Gun.js security features
 - [ ] Develop node authentication mechanism, extending Gun.js user system
-- [ ] Implement network-level encryption for IPFS communication if needed
+- [ ] Implement network-level encryption for Helia/Kubo/IPFS communication if needed
 
 ### 2.4 Network Resilience
 - [ ] Develop reconnection and failure recovery mechanisms
-- [ ] Implement network diagnostics and health checks for both Gun.js and IPFS networks
+- [ ] Implement network diagnostics and health checks for both Gun.js and Helia/Kubo/IPFS networks
 
 ## Phase 3: Data Management and Storage (Estimated time: 3-4 weeks)
 
 ### 3.1 Local Database
 - [ ] Set up Gun.js for real-time data storage and sync
-- [ ] Implement IPFS integration for file and large data storage
+- [ ] Implement Helia/Kubo/IPFS integration for file and large data storage
 - [ ] Set up local database for non-Gun.js data if needed
 - [ ] Develop data migration system for schema updates
 
@@ -70,11 +70,11 @@
 - [ ] Develop query parsing and execution engine that works with Gun.js data
 - [ ] Implement support for complex queries (filtering, sorting, pagination)
 - [ ] Optimize query performance
-- [ ] Implement querying for IPFS-stored data
+- [ ] Implement querying for Helia/Kubo/IPFS-stored data
 
 ### 3.4 Data Encryption
 - [ ] Utilize Gun.js built-in encryption for real-time data
-- [ ] Implement additional encryption for IPFS-stored data if needed
+- [ ] Implement additional encryption for Helia/Kubo/IPFS-stored data if needed
 - [ ] Develop key management system
 - [ ] Implement data integrity checks
 
@@ -82,22 +82,22 @@
 
 ### 4.1 Change Detection
 - [ ] Utilize Gun.js real-time sync capabilities for change detection
-- [ ] Implement change tracking for IPFS-stored data
+- [ ] Implement change tracking for Helia/Kubo/IPFS-stored data
 - [ ] Develop efficient diff generation for data changes
 
 ### 4.2 Conflict Resolution
 - [ ] Leverage Gun.js conflict resolution for real-time data
-- [ ] Develop framework for custom conflict resolution strategies for IPFS data
+- [ ] Develop framework for custom conflict resolution strategies for Helia/Kubo/IPFS data
 - [ ] Implement Operational Transformation for collaborative editing if needed
 
 ### 4.3 Sync Protocol
-- [ ] Design and implement sync protocol that works across Gun.js and IPFS
+- [ ] Design and implement sync protocol that works across Gun.js and Helia/Kubo/IPFS
 - [ ] Develop efficient data transfer mechanisms
 - [ ] Implement resume capability for interrupted syncs
 
 ### 4.4 Offline Support
 - [ ] Utilize Gun.js offline capabilities
-- [ ] Implement offline data access and modification for IPFS-stored data
+- [ ] Implement offline data access and modification for Helia/Kubo/IPFS-stored data
 - [ ] Develop queue for offline changes
 - [ ] Implement sync upon reconnection
 
@@ -111,7 +111,7 @@
 ### 5.2 Authorization
 - [ ] Develop role-based access control (RBAC) system
 - [ ] Implement fine-grained permissions
-- [ ] Ensure authorization works across Gun.js and IPFS data
+- [ ] Ensure authorization works across Gun.js and Helia/Kubo/IPFS data
 
 ### 5.3 Data Privacy
 - [ ] Implement data anonymization techniques
@@ -122,7 +122,7 @@
 
 ### 6.1 RESTful API
 - [ ] Design RESTful API endpoints
-- [ ] Implement CRUD operations via API, interfacing with Gun.js and IPFS
+- [ ] Implement CRUD operations via API, interfacing with Gun.js and Helia/Kubo/IPFS
 - [ ] Develop API versioning system
 
 ### 6.2 GraphQL API
@@ -136,7 +136,7 @@
 - [ ] Implement WebSocket authentication and security
 
 ### 6.4 SDK Development
-- [ ] Develop JavaScript/TypeScript SDK that abstracts Gun.js and IPFS usage
+- [ ] Develop JavaScript/TypeScript SDK that abstracts Gun.js and Helia/Kubo/IPFS usage
 - [ ] Create SDK documentation
 - [ ] Implement example applications using SDK
 
@@ -155,17 +155,17 @@
 ### 7.3 Network Optimization
 - [ ] Implement data compression for network transfers
 - [ ] Develop bandwidth-aware sync strategies
-- [ ] Optimize P2P connection management for both Gun.js and IPFS
+- [ ] Optimize P2P connection management for both Gun.js and Helia/Kubo/IPFS
 
 ## Phase 8: Testing and Quality Assurance (Estimated time: Ongoing, intensify for 3-4 weeks)
 
 ### 8.1 Unit Testing
-- [ ] Develop comprehensive unit test suite, including Gun.js and IPFS integrations
+- [ ] Develop comprehensive unit test suite, including Gun.js and Helia/Kubo/IPFS integrations
 - [ ] Implement continuous integration for automated testing
 
 ### 8.2 Integration Testing
 - [ ] Develop integration test suite
-- [ ] Implement end-to-end testing scenarios across Gun.js and IPFS components
+- [ ] Implement end-to-end testing scenarios across Gun.js and Helia/Kubo/IPFS components
 
 ### 8.3 Performance Testing
 - [ ] Develop performance benchmarks
@@ -182,7 +182,7 @@
 - [ ] Develop interactive API explorer
 
 ### 9.2 Developer Guides
-- [ ] Write getting started guide, including Gun.js and IPFS setup
+- [ ] Write getting started guide, including Gun.js and Helia/Kubo/IPFS setup
 - [ ] Develop advanced usage tutorials
 
 ### 9.3 Example Applications
@@ -196,7 +196,7 @@
 - [ ] Implement automated rollback mechanisms
 
 ### 10.2 Monitoring and Alerting
-- [ ] Set up performance monitoring for the entire system, including Gun.js and IPFS components
+- [ ] Set up performance monitoring for the entire system, including Gun.js and Helia/Kubo/IPFS components
 - [ ] Implement automated alerting for critical issues
 
 ### 10.3 Scalability Testing
@@ -229,7 +229,7 @@
 
 ### 12.3 Support Preparation
 - [ ] Set up support channels
-- [ ] Train support team on the platform, including Gun.js and IPFS specifics
+- [ ] Train support team on the platform, including Gun.js and Helia/Kubo/IPFS specifics
 
 ### 12.4 Launch
 - [ ] Perform final deployment checks
@@ -241,12 +241,12 @@
 - [ ] Regular security updates
 - [ ] Performance optimizations
 - [ ] Feature enhancements based on user feedback
-- [ ] Stay updated with Gun.js and IPFS developments and integrate new features
+- [ ] Stay updated with Gun.js and Helia/Kubo/IPFS developments and integrate new features
 
 ### Community Engagement
 - [ ] Maintain active presence in developer communities
 - [ ] Regular webinars and developer events
-- [ ] Engage with Gun.js and IPFS communities
+- [ ] Engage with Gun.js and Helia/Kubo/IPFS communities
 
 ### Ecosystem Growth
 - [ ] Encourage third-party integrations and plugins
