@@ -10,16 +10,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Integrated event bus system for improved inter-module communication
 - Added Helia for decentralized file storage
-- Implemented FileStorageManager interface with Helia implementation
+  - Implemented FileStorageManager interface with Helia implementation
+  - Leveraged Helia's efficient content retrieval and file management capabilities
+  - Prepared groundwork for future PWA support through Helia integration
 
 ### Changed
 - Refactored core components to use the event bus
 - Updated main CosmicSyncCore class to streamline initialization and startup
+- Transitioned from centralized file storage to Helia's decentralized approach
 
 ### Removed
-- Removed Supabase integration in favor of Helia
+- Removed Supabase integration in favor of Helia's decentralized storage solution
 
 ### TODO
+- Explore advanced Helia features such as its reference counting file system for large dataset management
+- Investigate potential hybrid approaches combining Helia with other IPFS implementations for specific use cases
 - Implement comprehensive P2P synchronization with conflict resolution
 - Develop advanced security measures including robust encryption and authentication
 - Create a comprehensive API for integration with various applications
