@@ -1,50 +1,34 @@
-const EventEmitter = require('./eventEmitter');
+import eventBus from './eventBus.js';
+import dataAccessLayer from '../data/dataAccessLayer.js';
 
-class SyncManager extends EventEmitter {
-  constructor(p2pNode, dbManager, gunManager, eventBus) {
-    this.p2pNode = p2pNode;
-    this.dbManager = dbManager;
-    this.gunManager = gunManager;
-    this.eventBus = eventBus;
+class SyncManager {
+  constructor() {
+    this.dataAccessLayer = dataAccessLayer;
   }
 
-  async syncData() {
+  async syncData(key, value) {
     try {
-      const localData = await this.dbManager.getRecentMessages(100);
-      await this.p2pNode.publishMessage(JSON.stringify({
-        type: 'SYNC_REQUEST',
-        data: localData
-      }));
-
-      // Sync with Gun.js
-      await this.syncWithGun(localData);
-
-      this.eventBus.emit('data:synced', { count: localData.length });
+      await this.dataAccessLayer.setData(key, value);
+      eventBus.emit('dataSynced', { key, value });
     } catch (error) {
-      console.error('Error during data sync:', error);
-      this.emit('syncError', error);
+      eventBus.emit('syncError', { type: 'data', key, error });
     }
   }
 
-  async handleIncomingSync(syncData) {
+  async syncFile(fileData, adapter) {
     try {
-      const incomingData = JSON.parse(syncData);
-      for (const item of incomingData.data) {
-        await this.dbManager.addMessage(item.content, item.user_id);
-        await this.gunManager.put(item.id, item);
-      }
-      this.emit('syncCompleted');
+      const cid = await this.dataAccessLayer.addFile(fileData, adapter);
+      eventBus.emit('fileSynced', { cid, adapter });
+      return cid;
     } catch (error) {
-      console.error('Error handling incoming sync:', error);
-      this.emit('syncError', error);
+      eventBus.emit('syncError', { type: 'file', error });
     }
   }
 
-  async syncWithGun(localData) {
-    for (const item of localData) {
-      await this.gunManager.put(item.id, item);
-    }
+  setDefaultFileAdapter(adapter) {
+    this.dataAccessLayer.setDefaultFileAdapter(adapter);
   }
 }
 
-module.exports = SyncManager;
+export default new SyncManager();
+

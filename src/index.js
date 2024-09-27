@@ -1,86 +1,28 @@
-require('dotenv').config();
-const config = require('config');
-const { createHelia } = require('helia');
-const GunManager = require('./storage/gunManager');
-const P2PNode = require('./p2p/node');
-const DatabaseManager = require('./db/manager');
-const SyncManager = require('./core/syncManager');
-const CryptoManager = require('./core/cryptoManager');
-const APIManager = require('./api/apiManager');
-const eventBus = require('./core/eventBus');
+import http from 'http';
+import restApi from './api/restApi.js';
+import WebSocketApi from './api/websocketApi.js';
+import discovery from './p2p/discovery.js';
+import dataAccessLayer from './data/dataAccessLayer.js';
+import syncManager from './core/syncManager.js';
+import eventBus from './core/eventBus.js';
 
-class CosmicSyncCore {
-  constructor(config) {
-    this.config = config;
-    this.helia = null;
-    this.eventBus = eventBus;
-    this.gunManager = new GunManager(config.gun, this.eventBus);
-    this.p2pNode = new P2PNode(config.p2p, this.eventBus);
-    this.dbManager = new DatabaseManager(config.database, this.eventBus);
-    this.syncManager = new SyncManager(this.p2pNode, this.dbManager, this.gunManager, this.eventBus);
-    this.cryptoManager = new CryptoManager(this.eventBus);
-    this.apiManager = new APIManager(this.p2pNode, this.dbManager, this.syncManager, this.cryptoManager, this.gunManager, this.eventBus);
+async function start() {
+  const server = http.createServer(restApi);
+  const webSocketApi = new WebSocketApi(server);
 
-    this.setupEventListeners();
-  }
+  await discovery.start();
 
-  setupEventListeners() {
-    this.eventBus.on('core:initialized', () => {
-      console.log('CosmicSyncCore has been initialized');
-    });
+  eventBus.on('peerConnected', (peerId) => {
+    console.log('Peer connected:', peerId);
+  });
 
-    this.eventBus.on('data:synced', (data) => {
-      console.log('Data has been synced:', data);
-    });
+  eventBus.on('nodeStarted', () => {
+    console.log('P2P node started');
+  });
 
-    // Add more global event listeners as needed
-  }
-
-  async start() {
-    try {
-      this.helia = await createHelia();
-      await this.p2pNode.start();
-      this.eventBus.emit('core:initialized');
-
-      console.log('P2P node started successfully');
-
-      this.p2pNode.on('message', this.handleIncomingMessage.bind(this));
-
-      // Example: Sync data every 30 seconds
-      setInterval(() => this.syncManager.syncData(), 30000);
-
-      // Handle application shutdown
-      process.on('SIGINT', this.shutdown.bind(this));
-
-    } catch (error) {
-      console.error('Error starting the application:', error);
-      process.exit(1);
-    }
-  }
-
-  async handleIncomingMessage(message) {
-    const parsedMessage = JSON.parse(message);
-    switch (parsedMessage.type) {
-      case 'NEW_MESSAGE':
-        await this.dbManager.addMessage(parsedMessage.data.content, parsedMessage.data.userId);
-        break;
-      case 'SYNC_REQUEST':
-        await this.syncManager.handleIncomingSync(message);
-        break;
-      default:
-        console.log('Received unknown message type:', parsedMessage.type);
-    }
-  }
-
-  async shutdown() {
-    console.log('Shutting down...');
-    await this.p2pNode.stop();
-    await this.dbManager.close();
-    process.exit(0);
-  }
+  server.listen(3000, () => {
+    console.log('Server running on http://localhost:3000');
+  });
 }
 
-const cosmicSyncCore = new CosmicSyncCore(config);
-cosmicSyncCore.start();
-
-module.exports = CosmicSyncCore;
+start().catch(console.error);

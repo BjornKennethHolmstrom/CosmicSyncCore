@@ -1,39 +1,26 @@
-const crypto = require('crypto');
+import crypto from 'crypto';
 
 class CryptoManager {
-  constructor(eventBus) {
-    this.eventBus = eventBus;
-    this.algorithm = 'aes-256-gcm';
-    this.key = crypto.randomBytes(32);
-    this.eventBus.emit('crypto:initialized');
-  }
-
-  encrypt(text) {
-    const iv = crypto.randomBytes(12);
-    const cipher = crypto.createCipheriv(this.algorithm, this.key, iv);
-    let encrypted = cipher.update(text, 'utf8', 'hex');
+  async encrypt(data, key) {
+    const iv = crypto.randomBytes(16);
+    const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
+    let encrypted = cipher.update(data, 'utf8', 'hex');
     encrypted += cipher.final('hex');
-    const tag = cipher.getAuthTag();
-    this.eventBus.emit('crypto:encrypted', { length: text.length });
-    return {
-      iv: iv.toString('hex'),
-      encryptedData: encrypted,
-      tag: tag.toString('hex')
-    };
+    const authTag = cipher.getAuthTag();
+    return { iv: iv.toString('hex'), encryptedData: encrypted, authTag: authTag.toString('hex') };
   }
 
-  decrypt(encryptedObj) {
-    const decipher = crypto.createDecipheriv(
-      this.algorithm,
-      this.key,
-      Buffer.from(encryptedObj.iv, 'hex')
-    );
-    decipher.setAuthTag(Buffer.from(encryptedObj.tag, 'hex'));
-    let decrypted = decipher.update(encryptedObj.encryptedData, 'hex', 'utf8');
+  async decrypt(encryptedData, key, iv, authTag) {
+    const decipher = crypto.createDecipheriv('aes-256-gcm', key, Buffer.from(iv, 'hex'));
+    decipher.setAuthTag(Buffer.from(authTag, 'hex'));
+    let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
     decrypted += decipher.final('utf8');
-    this.eventBus.emit('crypto:decrypted', { length: decrypted.length });
     return decrypted;
+  }
+
+  generateKey() {
+    return crypto.randomBytes(32);
   }
 }
 
-module.exports = CryptoManager;
+export default new CryptoManager();

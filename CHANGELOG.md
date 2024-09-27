@@ -5,6 +5,21 @@ All notable changes to the CosmicSyncCore project will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2] - 2024-09-27
+
+### Added
+- Implemented basic file upload and download functionality using Helia
+- Added error handling for file operations
+- Integrated CID parsing for improved file retrieval
+
+### Changed
+- Updated API to handle both JSON and non-JSON file content
+- Refactored file storage and retrieval process for better efficiency
+
+### Fixed
+- Resolved issues with WebSocket setup and Helia integration
+- Fixed CID parsing errors in file download process
+
 ## [0.3.1] - 2024-09-21
 
 ### Added

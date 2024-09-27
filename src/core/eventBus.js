@@ -1,12 +1,26 @@
-// src/core/eventBus.js
-
-const EventEmitter = require('events');
-
-class EventBus extends EventEmitter {
+class EventBus {
   constructor() {
-    super();
-    this.setMaxListeners(100); // Adjust as needed
+    this.listeners = {};
+  }
+
+  on(event, callback) {
+    if (!this.listeners[event]) {
+      this.listeners[event] = [];
+    }
+    this.listeners[event].push(callback);
+  }
+
+  emit(event, data) {
+    if (this.listeners[event]) {
+      this.listeners[event].forEach(callback => callback(data));
+    }
+  }
+
+  off(event, callback) {
+    if (this.listeners[event]) {
+      this.listeners[event] = this.listeners[event].filter(cb => cb !== callback);
+    }
   }
 }
 
-module.exports = new EventBus(); // Export a singleton instance
+export default new EventBus();

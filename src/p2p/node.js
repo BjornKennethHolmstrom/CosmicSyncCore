@@ -1,10 +1,10 @@
-const Libp2p = require('libp2p')
-const TCP = require('libp2p-tcp')
-const Mplex = require('libp2p-mplex')
-const { NOISE } = require('libp2p-noise')
-const Gossipsub = require('libp2p-gossipsub')
-const Bootstrap = require('libp2p-bootstrap')
-const EventEmitter = require('../core/eventEmitter')
+import Libp2p from 'libp2p';
+import TCP from 'libp2p-tcp';
+import Mplex from 'libp2p-mplex';
+import { NOISE } from 'libp2p-noise';
+import Gossipsub from 'libp2p-gossipsub';
+import Bootstrap from 'libp2p-bootstrap';
+import EventEmitter from '../core/eventEmitter.js';
 
 class P2PNode extends EventEmitter {
   constructor() {
@@ -65,4 +65,4 @@ class P2PNode extends EventEmitter {
   }
 }
 
-module.exports = P2PNode
+export default new P2PNode();

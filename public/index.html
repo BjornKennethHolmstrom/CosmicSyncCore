@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CosmicSyncCore Demo</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        button { margin: 10px 0; }
+        #output { border: 1px solid #ddd; padding: 10px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>CosmicSyncCore Demo</h1>
+    
+    <h2>Data Synchronization</h2>
+    <input type="text" id="dataKey" placeholder="Data Key">
+    <input type="text" id="dataValue" placeholder="Data Value">
+    <button onclick="setData()">Set Data</button>
+    <button onclick="getData()">Get Data</button>
+
+    <h2>File Sharing</h2>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">Upload File</button>
+    <input type="text" id="fileCID" placeholder="File CID">
+    <button onclick="downloadFile()">Download File</button>
+
+    <div id="output"></div>
+
+    <script>
+        async function setData() {
+            const key = document.getElementById('dataKey').value;
+            const value = document.getElementById('dataValue').value;
+            const response = await fetch('/api/data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ key, value })
+            });
+            const result = await response.json();
+            document.getElementById('output').innerText = JSON.stringify(result, null, 2);
+        }
+
+        async function getData() {
+            const key = document.getElementById('dataKey').value;
+            const response = await fetch(`/api/data/${key}`);
+            const result = await response.json();
+            document.getElementById('output').innerText = JSON.stringify(result, null, 2);
+        }
+
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            if (!file) {
+                alert('Please select a file');
+                return;
+            }
+            const formData = new FormData();
+            formData.append('file', file);
+            const response = await fetch('/api/file', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById('output').innerText = JSON.stringify(result, null, 2);
+        }
+
+        async function downloadFile() {
+            const cid = document.getElementById('fileCID').value;
+            const response = await fetch(`/api/file/${cid}`);
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'downloaded_file';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
