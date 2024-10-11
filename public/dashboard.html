@@ -1,0 +1,107 @@
+<!-- public/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CosmicSyncCore Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        .metric { margin-bottom: 20px; }
+        canvas { max-width: 600px; }
+    </style>
+</head>
+<body>
+    <h1>CosmicSyncCore Dashboard</h1>
+    <div id="metrics"></div>
+    <canvas id="cpuChart"></canvas>
+    <canvas id="memoryChart"></canvas>
+
+    <script>
+        const metricsDiv = document.getElementById('metrics');
+        const cpuCtx = document.getElementById('cpuChart').getContext('2d');
+        const memoryCtx = document.getElementById('memoryChart').getContext('2d');
+        let cpuChart, memoryChart;
+
+        function initCharts() {
+            cpuChart = new Chart(cpuCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'CPU Usage (%)',
+                        data: [],
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+
+            memoryChart = new Chart(memoryCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Memory Usage (%)',
+                        data: [],
+                        borderColor: 'rgb(255, 99, 132)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateMetrics() {
+            fetch('/api/v1/health')
+                .then(response => response.json())
+                .then(data => {
+                    metricsDiv.innerHTML = `
+                        <div class="metric">Status: ${data.status}</div>
+                        <div class="metric">Uptime: ${data.uptime.toFixed(2)} seconds</div>
+                        <div class="metric">CPU Usage: ${data.cpuUsage}%</div>
+                        <div class="metric">Memory Usage: ${data.memoryUsage}%</div>
+                        <div class="metric">Disk Usage: ${data.diskUsage}%</div>
+                        <div class="metric">Active Connections: ${data.activeConnections}</div>
+                    `;
+
+                    const now = new Date().toLocaleTimeString();
+                    cpuChart.data.labels.push(now);
+                    cpuChart.data.datasets[0].data.push(data.cpuUsage);
+                    memoryChart.data.labels.push(now);
+                    memoryChart.data.datasets[0].data.push(data.memoryUsage);
+
+                    if (cpuChart.data.labels.length > 20) {
+                        cpuChart.data.labels.shift();
+                        cpuChart.data.datasets[0].data.shift();
+                        memoryChart.data.labels.shift();
+                        memoryChart.data.datasets[0].data.shift();
+                    }
+
+                    cpuChart.update();
+                    memoryChart.update();
+                });
+        }
+
+        initCharts();
+        updateMetrics();
+        setInterval(updateMetrics, 5000);
+    </script>
+</body>
+</html>

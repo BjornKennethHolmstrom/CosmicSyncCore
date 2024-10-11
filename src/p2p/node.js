@@ -5,15 +5,23 @@ import { NOISE } from 'libp2p-noise';
 import Gossipsub from 'libp2p-gossipsub';
 import Bootstrap from 'libp2p-bootstrap';
 import EventEmitter from '../core/eventEmitter.js';
+import cryptoManager from '../core/cryptoManager.js';
 
 class P2PNode extends EventEmitter {
   constructor() {
     super()
     this.node = null
     this.topic = 'cosmicsynccore'
+    this.keyId = 'p2p_communication_key' // We'll use a single key for simplicity
   }
 
   async start() {
+    // Generate and store a key for P2P communication if it doesn't exist
+    if (!(await cryptoManager.getKey(this.keyId))) {
+      const key = await cryptoManager.generateKey();
+      await cryptoManager.storeKey(this.keyId, key);
+    }
+
     this.node = await Libp2p.create({
       addresses: {
         listen: ['/ip4/0.0.0.0/tcp/0']
@@ -44,9 +52,10 @@ class P2PNode extends EventEmitter {
     console.log('P2P node started')
 
     this.node.pubsub.subscribe(this.topic)
-    this.node.pubsub.on(this.topic, (message) => {
-      console.log(`Received message: ${message.data.toString()}`)
-      this.emit('message', message.data.toString())
+    this.node.pubsub.on(this.topic, async (message) => {
+      const decryptedMessage = await this.decryptMessage(message.data.toString());
+      console.log(`Received message: ${decryptedMessage}`)
+      this.emit('message', decryptedMessage)
     })
 
     this.node.connectionManager.on('peer:connect', (connection) => {
@@ -55,8 +64,27 @@ class P2PNode extends EventEmitter {
   }
 
   async publishMessage(message) {
-    await this.node.pubsub.publish(this.topic, Buffer.from(message))
-    console.log(`Published message: ${message}`)
+    const encryptedMessage = await this.encryptMessage(message);
+    await this.node.pubsub.publish(this.topic, Buffer.from(encryptedMessage))
+    console.log(`Published encrypted message`)
+  }
+
+  async encryptMessage(message) {
+    const { iv, encryptedData, authTag } = await cryptoManager.encrypt(message, this.keyId);
+    return JSON.stringify({ iv, encryptedData, authTag });
+  }
+
+  async decryptMessage(encryptedMessage) {
+    const { iv, encryptedData, authTag } = JSON.parse(encryptedMessage);
+    return await cryptoManager.decrypt(encryptedData, this.keyId, iv, authTag);
+  }
+
+  async signMessage(message) {
+    return await cryptoManager.sign(message, this.keyId);
+  }
+
+  async verifyMessage(message, signature) {
+    return await cryptoManager.verify(message, signature, this.keyId);
   }
 
   async stop() {

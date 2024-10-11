@@ -42,23 +42,46 @@ While Helia is optimized for JavaScript and browser-based environments, it remai
 
 ```
 CosmicSyncCore/
-├── src/
-│   ├── core/
-│   │   ├── eventEmitter.js
-│   │   ├── syncManager.js
-│   │   └── cryptoManager.js
-│   ├── p2p/
-│   │   └── node.js
-│   ├── db/
-│   │   └── manager.js
-│   ├── api/
-│   │   └── apiManager.js
-│   └── index.js
-├── config/
-│   └── default.json
-├── tests/
+├── CHANGELOG.md
+├── config
+│   └── default.json
+├── CONTRIBUTING.md
 ├── docs/
-└── scripts/
+├── eslint.config.js
+├── LICENSE.md
+├── nodemon.js
+├── package.json
+├── package-lock.json
+├── public
+│   └── index.html
+├── radata
+├── README.md
+├── scripts
+└── src
+    ├── api
+    │   ├── restApi.js
+    │   └── websocketApi.js
+    ├── core
+    │   ├── cryptoManager.js
+    │   ├── errorHandler.js
+    │   ├── eventBus.js
+    │   ├── eventEmitter.js
+    │   └── syncManager.js
+    ├── data
+    │   ├── dataAccessLayer.js
+    │   ├── gunAdapter.js
+    │   ├── heliaAdapter.js
+    │   ├── kuboAdapter.js
+    │   └── localStorageAdapter.js
+    ├── index.js
+    ├── networking
+    ├── p2p
+    │   ├── discovery.js
+    │   ├── libp2pNode.js
+    │   ├── natTraversal.js
+    │   └── node.js
+    └── plugins
+        └── pluginManager.js
 ```
 
 ## Setup

@@ -4,6 +4,7 @@ import kuboAdapter from './kuboAdapter.js';
 import localStorageAdapter from './localStorageAdapter.js';
 import eventBus from '../core/eventBus.js';
 import { CID } from 'multiformats/cid'
+import logger from '../core/logger.js';
 
 class DataAccessLayer {
   constructor() {
@@ -15,22 +16,29 @@ class DataAccessLayer {
   }
 
   async getData(key) {
-    const data = await this.gunAdapter.get(key);
+    let data = await gunAdapter.get(key);
+    if (data === undefined) {
+      logger.info(`Data not found in GunDB for key: ${key}, trying LocalStorage`);
+      data = await localStorageAdapter.get(key);
+    }
+    logger.info(`Retrieved data for key: ${key}`, { data });
     eventBus.emit('dataRetrieved', { key, data });
     return data;
   }
 
   async setData(key, value) {
-    await this.gunAdapter.set(key, value);
-    await this.localStorageAdapter.set(key, value);
+    await gunAdapter.set(key, value);
+    await localStorageAdapter.set(key, value);
+    logger.info(`Data set for key: ${key}`, { value });
     eventBus.emit('dataSet', { key, value });
   }
 
   async addFile(fileData, adapter = this.defaultFileAdapter) {
     const cid = await adapter.addFile(fileData);
-    await this.localStorageAdapter.set(cid, fileData);
-    eventBus.emit('fileAdded', { cid, adapter: adapter.constructor.name });
-    return cid;
+    await this.localStorageAdapter.set(cid.toString(), fileData);
+    logger.info(`File added with CID: ${cid}`);
+    eventBus.emit('fileAdded', { cid: cid.toString(), adapter: adapter.constructor.name });
+    return cid.toString();
   }
 
   async getFile(cidString) {

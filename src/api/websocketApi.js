@@ -1,9 +1,24 @@
 import { WebSocketServer } from 'ws';
+import url from 'url';
+import auth from '../core/auth.js';
 import eventBus from '../core/eventBus.js';
 
 class WebSocketApi {
   constructor(server) {
-    this.wss = new WebSocketServer({ server });
+    this.wss = new WebSocketServer({ noServer: true });
+
+    server.on('upgrade', async (request, socket, head) => {
+      const { query } = url.parse(request.url, true);
+      try {
+        await auth.verifyToken(query.token);
+        this.wss.handleUpgrade(request, socket, head, (ws) => {
+          this.wss.emit('connection', ws, request);
+        });
+      } catch (error) {
+        socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
+        socket.destroy();
+      }
+    });
 
     this.wss.on('connection', (ws) => {
       ws.on('message', (message) => {

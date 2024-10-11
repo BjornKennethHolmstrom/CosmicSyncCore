@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node --experimental-modules src/index.js",
     "dev": "nodemon --experimental-modules src/index.js",
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint . --config eslint.config.js",
     "lint:fix": "eslint . --config eslint.config.js --fix",
     "format": "prettier --write 'src/**/*.js'"
@@ -37,6 +37,7 @@
     "express": "^4.21.0",
     "gun": "^0.2020.1240",
     "helia": "^4.2.6",
+    "jsonwebtoken": "^9.0.2",
     "kubo-rpc-client": "^5.0.1",
     "level": "^8.0.1",
     "libp2p": "^2.1.4",
@@ -49,6 +50,8 @@
     "multer": "^1.4.5-lts.1",
     "multiformats": "^13.3.0",
     "pg": "^8.13.0",
+    "systeminformation": "^5.23.5",
+    "winston": "^3.15.0",
     "ws": "^8.18.0"
   },
   "devDependencies": {
@@ -59,6 +62,7 @@
     "globals": "^15.9.0",
     "jest": "^29.7.0",
     "nodemon": "^3.1.7",
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "supertest": "^7.0.0"
   }
 }
