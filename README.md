@@ -6,6 +6,13 @@ CosmicSyncCore is a flexible, P2P-based platform designed to enable decentralize
 
 CosmicSyncCore is in early development. We have set up the basic project structure and implemented core components including P2P networking, database management, data synchronization, and encryption. We've also integrated an event bus system for improved inter-module communication and added Helia for decentralized file storage. Recently, we've implemented a basic file upload and download functionality using Helia.
 
+## Recent Updates
+
+- Implemented comprehensive test suite for core components
+- Enhanced P2P networking mocks for improved testing
+- Resolved issues with Jest configuration for ES modules
+- Improved error handling and logging in tests
+
 ## Features
 
 - Advanced P2P data synchronization with offline support using libp2p
@@ -92,7 +99,7 @@ CosmicSyncCore/
 4. Run `npm install` to install dependencies
 5. Copy `.env.example` to `.env` and fill in the required environment variables
 6. Run `npm start` to start the development server
-7. Run `npm test` to run the test suite (to be implemented)
+7. Run `npm test -- --detectOpenHandles --forceExit` to run the test suite
 
 ## Contributing
 

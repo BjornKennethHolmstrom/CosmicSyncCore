@@ -5,6 +5,19 @@ All notable changes to the CosmicSyncCore project will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- Comprehensive test suite for core components
+- Enhanced P2P networking mocks for improved testing
+
+### Changed
+- Updated Jest configuration to properly handle ES modules
+- Improved error handling and logging in tests
+
+### Fixed
+- Resolved issues with libp2p and libp2p-gossipsub mocking in tests
+
 ## [0.3.2] - 2024-09-27
 
 ### Added

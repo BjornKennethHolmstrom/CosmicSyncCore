@@ -3,11 +3,13 @@ export default {
   testEnvironment: 'node',
   transform: {},
   extensionsToTreatAsEsm: [],
-  moduleFileExtensions: ['js', 'mjs'],
-  testMatch: ['**/__tests__/**/*.js', '**/?(*.)+(spec|test).js'],
-  globals: {
-    'ts-jest': {
-      useESM: true,
-    },
+  moduleFileExtensions: ['js'],
+  testMatch: ['**/tests/**/*.js', '**/?(*.)+(spec|test).js'],
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
   },
+  testPathIgnorePatterns: ['/node_modules/', '__mocks__'],
+  testTimeout: 30000,
+  setupFilesAfterEnv: ['./jest.setup.js'],
+  injectGlobals: true, // Add this line
 };

@@ -8,6 +8,9 @@ import syncManager from './core/syncManager.js';
 import eventBus from './core/eventBus.js';
 import logger from './core/logger.js';
 import monitoring from './core/monitoring.js';
+import events from 'events';
+
+events.EventEmitter.defaultMaxListeners = 20; 
 
 async function start() {
   try {

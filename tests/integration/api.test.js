@@ -3,6 +3,7 @@ import supertest from 'supertest';
 import app from '../../src/api/restApi.js';
 import localStorageAdapter from '../../src/data/localStorageAdapter.js';
 import logger from '../../src/core/logger.js';
+import { jest, describe, beforeAll, afterAll, test, expect } from '@jest/globals';
 
 const request = supertest(app);
 
@@ -11,6 +12,8 @@ describe('API Endpoints', () => {
 
   afterAll(async () => {
     await localStorageAdapter.close();
+    // If GunDB has a close method, call it here
+    // await gunAdapter.close();
   });
 
   beforeAll(async () => {

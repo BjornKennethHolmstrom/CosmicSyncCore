@@ -1,7 +1,7 @@
 import dataAccessLayer from '../../src/data/dataAccessLayer.js';
 import localStorageAdapter from '../../src/data/localStorageAdapter.js';
 import logger from '../../src/core/logger.js';
-
+import { jest, describe, beforeAll, afterAll, test, expect } from '@jest/globals';
 
 describe('Data Storage and Retrieval', () => {
   const testKey = 'testKey';
@@ -9,6 +9,8 @@ describe('Data Storage and Retrieval', () => {
 
   afterAll(async () => {
     await localStorageAdapter.close();
+    // If GunDB has a close method, call it here
+    // await gunAdapter.close();
   });
 
   test('Should store and retrieve data', async () => {

@@ -1,14 +1,16 @@
 // src/data/localStorageAdapter.js
 import { Level } from 'level';
+import { v4 as uuidv4 } from 'uuid';
 
 class LocalStorageAdapter {
   constructor() {
     this.db = null;
+    this.dbPath = `./local-storage-${uuidv4()}`;
   }
 
   async init() {
     if (!this.db) {
-      this.db = new Level('./local-storage', { valueEncoding: 'json' });
+      this.db = new Level(this.dbPath, { valueEncoding: 'json' });
       await this.db.open();
     }
   }
