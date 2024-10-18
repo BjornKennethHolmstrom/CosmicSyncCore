@@ -9,11 +9,23 @@ import eventBus from './core/eventBus.js';
 import logger from './core/logger.js';
 import monitoring from './core/monitoring.js';
 import events from 'events';
+import DatabaseManager from './data/DatabaseManager.js';
+import config from './config.js';
 
 events.EventEmitter.defaultMaxListeners = 20; 
 
 async function start() {
   try {
+    // Initialize DatabaseManager
+    const dbManager = new DatabaseManager(config.databasePath);
+    await dbManager.initialize();
+    await dbManager.initializeTables();
+
+    logger.info('Database initialized successfully');
+
+    // Inject dbManager into dataAccessLayer or other modules that need it
+    dataAccessLayer.setDatabaseManager(dbManager);
+
     const server = http.createServer(restApi);
     const webSocketApi = new WebSocketApi(server);
 
@@ -37,6 +49,16 @@ async function start() {
       const metrics = monitoring.getMetrics();
       logger.info('Health check:', metrics);
     }, 60000); // Run every minute
+
+    // Graceful shutdown
+    process.on('SIGINT', async () => {
+      logger.info('Shutting down gracefully...');
+      await dbManager.close();
+      server.close(() => {
+        logger.info('Server closed');
+        process.exit(0);
+      });
+    });
 
   } catch (error) {
     logger.error('Failed to start server:', error);

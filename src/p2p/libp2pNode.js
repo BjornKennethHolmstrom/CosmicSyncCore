@@ -2,7 +2,7 @@ import Libp2p from 'libp2p';
 import TCP from 'libp2p-tcp';
 import Mplex from 'libp2p-mplex';
 import { NOISE } from 'libp2p-noise';
-import Gossipsub from 'libp2p-gossipsub';
+import GossipsubModule from 'libp2p-gossipsub';
 import Bootstrap from 'libp2p-bootstrap';
 import KadDHT from 'libp2p-kad-dht';
 import eventBus from '../core/eventBus.js';
@@ -17,7 +17,7 @@ class LibP2PNode {
         transport: [TCP],
         streamMuxer: [Mplex],
         connEncryption: [NOISE],
-        pubsub: Gossipsub,
+        pubsub: GossipsubModule,
         peerDiscovery: [Bootstrap],
         dht: KadDHT
       },

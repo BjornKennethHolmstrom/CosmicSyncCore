@@ -1,7 +1,7 @@
 # Data Management System
 
 ## Objectives
-- [ ] Implement local data storage and retrieval
+- [x] Implement local data storage and retrieval
 - [ ] Develop basic data synchronization mechanism
 - [ ] Create a simple data model system
 - [ ] Implement basic data versioning

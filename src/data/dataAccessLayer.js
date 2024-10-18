@@ -13,6 +13,7 @@ class DataAccessLayer {
     this.kuboAdapter = kuboAdapter;
     this.localStorageAdapter = localStorageAdapter;
     this.defaultFileAdapter = this.heliaAdapter;
+    this.dbManager = null;
   }
 
   async getData(key) {
@@ -24,6 +25,10 @@ class DataAccessLayer {
     logger.info(`Retrieved data for key: ${key}`, { data });
     eventBus.emit('dataRetrieved', { key, data });
     return data;
+  }
+
+  setDatabaseManager(dbManager) {
+    this.dbManager = dbManager;
   }
 
   async setData(key, value) {

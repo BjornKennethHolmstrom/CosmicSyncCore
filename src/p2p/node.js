@@ -1,4 +1,4 @@
-import Libp2p from 'libp2p';
+import * as Libp2p from 'libp2p';
 import TCP from 'libp2p-tcp';
 import Mplex from 'libp2p-mplex';
 import { NOISE } from 'libp2p-noise';
