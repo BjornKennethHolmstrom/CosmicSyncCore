@@ -7,18 +7,15 @@ class SyncManager {
   }
 
   async syncWith(otherSyncManager) {
+    // Get and apply remote changes first
     const lastSyncTimestamp = await this.dbManager.getLastSyncTimestamp(otherSyncManager.peerId);
-    const localChanges = await this.getChanges(lastSyncTimestamp);
-    
-    // Send local changes to the other peer
-    await otherSyncManager.applyChanges(localChanges);
-    
-    // Get changes from the other peer
     const remoteChanges = await otherSyncManager.getChanges(lastSyncTimestamp);
-    
-    // Apply remote changes locally
     await this.applyChanges(remoteChanges);
-    
+
+    // Then get and send local changes
+    const localChanges = await this.getChanges(lastSyncTimestamp);
+    await otherSyncManager.applyChanges(localChanges);
+
     // Update last sync timestamp
     const currentTimestamp = Date.now();
     await this.dbManager.updateLastSyncTimestamp(otherSyncManager.peerId, currentTimestamp);
@@ -39,22 +36,24 @@ class SyncManager {
       for (const record of tableChanges) {
         const existingRecord = await this.dbManager.read(table, record.id);
         
-        // Handle deleted records
-        if (record._deleted) {
-          if (existingRecord) {
+        // Handle deletions first
+        if (record._deleted === 1) {
+          if (!existingRecord || (existingRecord && record.timestamp > existingRecord.timestamp)) {
             await this.dbManager.delete(table, record.id);
           }
           continue;
         }
 
-        // Handle updates and new records
-        if (!existingRecord || existingRecord.timestamp < record.timestamp) {
-          // Preserve the original timestamp when syncing
-          const timestamp = record.timestamp;
+        // Handle updates and creates
+        const shouldUpdate = !existingRecord || 
+                           (existingRecord && record.timestamp > existingRecord.timestamp);
+        
+        if (shouldUpdate) {
+          const { _deleted, ...recordData } = record;
           if (existingRecord) {
-            await this.dbManager.update(table, record.id, { ...record, timestamp });
+            await this.dbManager.update(table, record.id, recordData);
           } else {
-            await this.dbManager.create(table, { ...record, timestamp });
+            await this.dbManager.create(table, recordData);
           }
         }
       }

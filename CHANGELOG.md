@@ -10,13 +10,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Comprehensive test suite for core components
 - Enhanced P2P networking mocks for improved testing
+- Implemented basic data synchronization with last-write-wins conflict resolution
+- Added SQLite database integration with CRUD operations
+- Implemented flexible schema system with timestamps and versioning
 
 ### Changed
 - Updated Jest configuration to properly handle ES modules
 - Improved error handling and logging in tests
+- Enhanced database operations to support synchronization
 
 ### Fixed
 - Resolved issues with libp2p and libp2p-gossipsub mocking in tests
+- Fixed data synchronization timing issues
+- Corrected deletion propagation in sync operations
 
 ## [0.3.2] - 2024-09-27
 

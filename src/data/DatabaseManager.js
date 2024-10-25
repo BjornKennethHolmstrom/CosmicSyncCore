@@ -45,19 +45,19 @@ class DatabaseManager {
   }
 
   async update(table, id, record) {
-    const { _deleted, ...recordWithoutDeleted } = record;
     const timestamp = record.timestamp || Date.now();
-    const finalRecord = { ...recordWithoutDeleted, timestamp };
-    
-    const setClause = Object.keys(finalRecord).map(key => `${key} = ?`).join(', ');
+    const finalRecord = { ...record, timestamp };
+    const setClause = Object.keys(finalRecord)
+      .map(key => `${key} = ?`)
+      .join(', ');
     const values = [...Object.values(finalRecord), id];
-
+    
     const query = `UPDATE ${table} SET ${setClause} WHERE id = ?`;
     await this.db.run(query, values);
   }
 
   async getChanges(table, since) {
-    // Include deleted records in changes
+    // Get all changes including deletions
     const query = `SELECT * FROM ${table} WHERE timestamp > ?`;
     return await this.db.all(query, [since]);
   }

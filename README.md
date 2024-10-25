@@ -4,14 +4,14 @@ CosmicSyncCore is a flexible, P2P-based platform designed to enable decentralize
 
 ## Current Status
 
-CosmicSyncCore is in early development. We have set up the basic project structure and implemented core components including P2P networking, database management, data synchronization, and encryption. We've also integrated an event bus system for improved inter-module communication and added Helia for decentralized file storage. Recently, we've implemented a basic file upload and download functionality using Helia.
+CosmicSyncCore is in early development. We have set up the basic project structure and implemented core components including P2P networking, database management, data synchronization, and encryption. We've also integrated an event bus system for improved inter-module communication and added Helia for decentralized file storage. Recently, we've implemented a comprehensive data synchronization system with conflict resolution and a complete test suite for core components.
 
 ## Recent Updates
 
 - Implemented comprehensive test suite for core components
-- Enhanced P2P networking mocks for improved testing
-- Resolved issues with Jest configuration for ES modules
-- Improved error handling and logging in tests
+- Added data synchronization with last-write-wins conflict resolution
+- Enhanced database operations with timestamp-based versioning
+- Improved error handling and testing infrastructure
 
 ## Features
 

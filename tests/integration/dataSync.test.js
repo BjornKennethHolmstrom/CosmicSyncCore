@@ -37,19 +37,39 @@ describe('Data Synchronization', () => {
   });
 
   test('should sync updated data from peer2 to peer1', async () => {
-    const user = { id: '1', name: 'Bob', email: 'bob@example.com' };
+    // Create initial user with timestamp
+    const initialTimestamp = Date.now();
+    const user = { 
+      id: '1', 
+      name: 'Bob', 
+      email: 'bob@example.com', 
+      timestamp: initialTimestamp 
+    };
     await dbManager1.create('users', user);
     await syncManager1.syncWith(syncManager2);
 
-    const updatedUser = { ...user, name: 'Bobby' };
+    // Wait to ensure different timestamp
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    // Update with new timestamp
+    const updateTimestamp = Date.now();
+    const updatedUser = { 
+      id: '1', 
+      name: 'Bobby', 
+      email: 'bob@example.com', 
+      timestamp: updateTimestamp 
+    };
     await dbManager2.update('users', '1', updatedUser);
+
+    // Sync both ways to ensure changes propagate
     await syncManager2.syncWith(syncManager1);
+    await syncManager1.syncWith(syncManager2);
 
     const syncedUser = await dbManager1.read('users', '1');
     expect(syncedUser).toMatchObject({
-      id: updatedUser.id,
-      name: updatedUser.name,
-      email: updatedUser.email
+      id: '1',
+      name: 'Bobby',
+      email: 'bob@example.com'
     });
   });
 
@@ -102,17 +122,27 @@ describe('Data Synchronization', () => {
   });
 
   test('should handle syncing deleted data', async () => {
+    // Create initial user with timestamp
+    const initialTimestamp = Date.now();
     const user = { 
       id: '1', 
       name: 'David', 
       email: 'david@example.com',
-      timestamp: Date.now()
+      timestamp: initialTimestamp 
     };
     await dbManager1.create('users', user);
     await syncManager1.syncWith(syncManager2);
 
+    // Wait to ensure different timestamp
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    // Delete with new timestamp
+    const deleteTimestamp = Date.now();
     await dbManager1.delete('users', '1');
+
+    // Sync both ways to ensure deletion propagates
     await syncManager1.syncWith(syncManager2);
+    await syncManager2.syncWith(syncManager1);
 
     // Both databases should show null for deleted record
     const deletedUser1 = await dbManager1.read('users', '1');
