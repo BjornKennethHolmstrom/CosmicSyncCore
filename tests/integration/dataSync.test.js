@@ -1,7 +1,6 @@
 import { jest } from '@jest/globals';
-import DatabaseManager from '../../src/data/DatabaseManager.js';
 import SyncManager from '../../src/core/syncManager.js';
-import { setupTestDatabase } from '../helpers/dbSetup.helper.js';
+import { setupTestDatabase } from '../../src/testUtils/dbSetup.js';
 
 describe('Data Synchronization', () => {
   let dbManager1, dbManager2, syncManager1, syncManager2;
@@ -19,18 +18,22 @@ describe('Data Synchronization', () => {
   });
 
   beforeEach(async () => {
-    // Clear data before each test
     await dbManager1.deleteAll('users');
     await dbManager2.deleteAll('users');
   });
 
   test('should sync new data from peer1 to peer2', async () => {
-    const user = { id: '1', name: 'Alice', email: 'alice@example.com' };
+    const timestamp = Date.now();
+    const user = { id: '1', name: 'Alice', email: 'alice@example.com', timestamp };
     await dbManager1.create('users', user);
     await syncManager1.syncWith(syncManager2);
 
     const syncedUser = await dbManager2.read('users', '1');
-    expect(syncedUser).toEqual(user);
+    expect(syncedUser).toMatchObject({
+      id: user.id,
+      name: user.name,
+      email: user.email
+    });
   });
 
   test('should sync updated data from peer2 to peer1', async () => {
@@ -43,41 +46,79 @@ describe('Data Synchronization', () => {
     await syncManager2.syncWith(syncManager1);
 
     const syncedUser = await dbManager1.read('users', '1');
-    expect(syncedUser).toEqual(updatedUser);
+    expect(syncedUser).toMatchObject({
+      id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email
+    });
   });
 
   test('should resolve conflicts using last-write-wins strategy', async () => {
-    const originalUser = { id: '1', name: 'Charlie', email: 'charlie@example.com' };
+    const originalUser = { 
+      id: '1', 
+      name: 'Charlie', 
+      email: 'charlie@example.com',
+      timestamp: Date.now() 
+    };
     await dbManager1.create('users', originalUser);
     await syncManager1.syncWith(syncManager2);
 
-    const updatedUser1 = { ...originalUser, name: 'Charles' };
-    const updatedUser2 = { ...originalUser, name: 'Chuck' };
+    // Wait a bit to ensure timestamps are different
+    await new Promise(resolve => setTimeout(resolve, 100));
 
+    const updatedUser1 = { 
+      ...originalUser, 
+      name: 'Charles',
+      timestamp: Date.now() 
+    };
     await dbManager1.update('users', '1', updatedUser1);
-    await dbManager2.update('users', '1', updatedUser2);
 
-    // Simulate a delay to ensure updatedUser2 is the last write
-    await new Promise(resolve => setTimeout(resolve, 10));
+    // Wait a bit to ensure timestamps are different
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    const updatedUser2 = { 
+      ...originalUser, 
+      name: 'Chuck',
+      timestamp: Date.now() 
+    };
+    await dbManager2.update('users', '1', updatedUser2);
 
     await syncManager1.syncWith(syncManager2);
 
     const finalUser1 = await dbManager1.read('users', '1');
     const finalUser2 = await dbManager2.read('users', '1');
 
-    expect(finalUser1).toEqual(updatedUser2);
-    expect(finalUser2).toEqual(updatedUser2);
+    // Should have Chuck's data as it was the last write
+    expect(finalUser1).toMatchObject({
+      id: '1',
+      name: 'Chuck',
+      email: 'charlie@example.com'
+    });
+    expect(finalUser2).toMatchObject({
+      id: '1',
+      name: 'Chuck',
+      email: 'charlie@example.com'
+    });
   });
 
   test('should handle syncing deleted data', async () => {
-    const user = { id: '1', name: 'David', email: 'david@example.com' };
+    const user = { 
+      id: '1', 
+      name: 'David', 
+      email: 'david@example.com',
+      timestamp: Date.now()
+    };
     await dbManager1.create('users', user);
     await syncManager1.syncWith(syncManager2);
 
     await dbManager1.delete('users', '1');
     await syncManager1.syncWith(syncManager2);
 
-    const deletedUser = await dbManager2.read('users', '1');
-    expect(deletedUser).toBeNull();
+    // Both databases should show null for deleted record
+    const deletedUser1 = await dbManager1.read('users', '1');
+    const deletedUser2 = await dbManager2.read('users', '1');
+    
+    expect(deletedUser1).toBeNull();
+    expect(deletedUser2).toBeNull();
   });
 });

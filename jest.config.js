@@ -14,5 +14,6 @@ export default {
   testPathIgnorePatterns: ['/node_modules/','helpers'],
   testTimeout: 30000,
   setupFilesAfterEnv: ['./jest.setup.js'],
-  injectGlobals: true, // Add this line
+  roots: ['<rootDir>/src', '<rootDir>/tests'],
+  injectGlobals: true,
 };

@@ -1,4 +1,12 @@
 // jest.setup.js
-import { jest } from '@jest/globals';
+import { setMaxListeners } from 'events';
+setMaxListeners(20);
 
-jest.setTimeout(30000);
+beforeAll(() => {
+  // Any global setup
+});
+
+afterAll(async () => {
+  // Clean up any remaining connections
+  await new Promise(resolve => setTimeout(resolve, 500));
+});

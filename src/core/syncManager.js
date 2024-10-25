@@ -38,11 +38,23 @@ class SyncManager {
     for (const [table, tableChanges] of Object.entries(changes)) {
       for (const record of tableChanges) {
         const existingRecord = await this.dbManager.read(table, record.id);
-        if (!existingRecord || existingRecord.timestamp < record.timestamp) {
+        
+        // Handle deleted records
+        if (record._deleted) {
           if (existingRecord) {
-            await this.dbManager.update(table, record.id, record);
+            await this.dbManager.delete(table, record.id);
+          }
+          continue;
+        }
+
+        // Handle updates and new records
+        if (!existingRecord || existingRecord.timestamp < record.timestamp) {
+          // Preserve the original timestamp when syncing
+          const timestamp = record.timestamp;
+          if (existingRecord) {
+            await this.dbManager.update(table, record.id, { ...record, timestamp });
           } else {
-            await this.dbManager.create(table, record);
+            await this.dbManager.create(table, { ...record, timestamp });
           }
         }
       }
@@ -52,7 +64,11 @@ class SyncManager {
   // Keep existing methods for backward compatibility
   async syncData(key, value) {
     try {
-      await this.dbManager.create('items', { id: key, name: value });
+      await this.dbManager.create('items', { 
+        id: key,
+        name: value,
+        timestamp: Date.now()
+      });
       eventBus.emit('dataSynced', { key, value });
     } catch (error) {
       eventBus.emit('syncError', { type: 'data', key, error });
@@ -61,16 +77,23 @@ class SyncManager {
 
   async syncFile(fileData, adapter) {
     try {
-      // Implement file syncing logic if needed
-      // For now, just emit an event
+      // Implement basic file syncing
+      const record = {
+        id: fileData.filename,
+        data: fileData.buffer,
+        timestamp: Date.now()
+      };
+      await this.dbManager.create('files', record);
       eventBus.emit('fileSynced', { fileData, adapter });
+      return { success: true };
     } catch (error) {
       eventBus.emit('syncError', { type: 'file', error });
+      throw error;
     }
   }
 
   setDefaultFileAdapter(adapter) {
-    // Implement if needed
+    // Implement if needed, placeholder for backward compatibility
   }
 }
 

@@ -4,7 +4,7 @@ import restApi from './api/restApi.js';
 import WebSocketApi from './api/websocketApi.js';
 import discovery from './p2p/discovery.js';
 import dataAccessLayer from './data/dataAccessLayer.js';
-import syncManager from './core/syncManager.js';
+import SyncManager from './core/syncManager.js';
 import eventBus from './core/eventBus.js';
 import logger from './core/logger.js';
 import monitoring from './core/monitoring.js';
@@ -22,6 +22,12 @@ async function start() {
     await dbManager.initializeTables();
 
     logger.info('Database initialized successfully');
+
+
+    const syncManager = new SyncManager(dbManager);
+    
+    // Make syncManager available to other modules
+    global.syncManager = syncManager;
 
     // Inject dbManager into dataAccessLayer or other modules that need it
     dataAccessLayer.setDatabaseManager(dbManager);

@@ -26,37 +26,38 @@ class DatabaseManager {
   }
 
   async create(table, record) {
-    const timestamp = Date.now();
-    record.timestamp = timestamp;
-    const columns = Object.keys(record).join(', ');
-    const placeholders = Object.keys(record).map(() => '?').join(', ');
-    const values = Object.values(record);
+    const { _deleted, ...recordWithoutDeleted } = record;
+    const timestamp = record.timestamp || Date.now();
+    const finalRecord = { ...recordWithoutDeleted, timestamp };
+    
+    const columns = Object.keys(finalRecord).join(', ');
+    const placeholders = Object.keys(finalRecord).map(() => '?').join(', ');
+    const values = Object.values(finalRecord);
 
     const query = `INSERT INTO ${table} (${columns}) VALUES (${placeholders})`;
     await this.db.run(query, values);
   }
 
   async read(table, id) {
-    const query = `SELECT * FROM ${table} WHERE id = ?`;
+    const query = `SELECT * FROM ${table} WHERE id = ? AND (_deleted IS NULL OR _deleted = 0)`;
     const result = await this.db.get(query, [id]);
     return result || null;
   }
 
   async update(table, id, record) {
-    const existingRecord = await this.read(table, id);
-    if (!existingRecord) {
-      return this.create(table, record);
-    }
-
-    record.timestamp = Date.now();
-    const setClause = Object.keys(record).map(key => `${key} = ?`).join(', ');
-    const values = [...Object.values(record), id];
+    const { _deleted, ...recordWithoutDeleted } = record;
+    const timestamp = record.timestamp || Date.now();
+    const finalRecord = { ...recordWithoutDeleted, timestamp };
+    
+    const setClause = Object.keys(finalRecord).map(key => `${key} = ?`).join(', ');
+    const values = [...Object.values(finalRecord), id];
 
     const query = `UPDATE ${table} SET ${setClause} WHERE id = ?`;
     await this.db.run(query, values);
   }
 
   async getChanges(table, since) {
+    // Include deleted records in changes
     const query = `SELECT * FROM ${table} WHERE timestamp > ?`;
     return await this.db.all(query, [since]);
   }
@@ -67,8 +68,9 @@ class DatabaseManager {
   }
 
   async delete(table, id) {
-    const query = `DELETE FROM ${table} WHERE id = ?`;
-    await this.db.run(query, [id]);
+    const timestamp = Date.now();
+    const query = `UPDATE ${table} SET _deleted = 1, timestamp = ? WHERE id = ?`;
+    await this.db.run(query, [timestamp, id]);
   }
 
   async getLastSyncTimestamp(peerId) {
@@ -83,7 +85,7 @@ class DatabaseManager {
   }
 
   async list(table) {
-    const query = `SELECT * FROM ${table}`;
+    const query = `SELECT * FROM ${table} WHERE _deleted IS NULL OR _deleted = 0`;
     return await this.db.all(query);
   }
 
@@ -91,6 +93,31 @@ class DatabaseManager {
   async createTableIfNotExists(table, schema) {
     const query = `CREATE TABLE IF NOT EXISTS ${table} (${schema})`;
     await this.db.run(query);
+  }
+
+  async applyChanges(changes) {
+    for (const [table, tableChanges] of Object.entries(changes)) {
+      for (const record of tableChanges) {
+        const existingRecord = await this.read(table, record.id);
+        
+        if (record._deleted) {
+          // If record is marked as deleted and is newer, delete it
+          if (!existingRecord || record.timestamp > (existingRecord.timestamp || 0)) {
+            await this.delete(table, record.id);
+          }
+          continue;
+        }
+
+        // Handle regular records
+        if (!existingRecord || record.timestamp > (existingRecord.timestamp || 0)) {
+          if (existingRecord) {
+            await this.update(table, record.id, record);
+          } else {
+            await this.create(table, record);
+          }
+        }
+      }
+    }
   }
 }
 
