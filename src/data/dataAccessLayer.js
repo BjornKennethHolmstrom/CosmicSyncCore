@@ -5,6 +5,7 @@ import localStorageAdapter from './localStorageAdapter.js';
 import eventBus from '../core/eventBus.js';
 import { CID } from 'multiformats/cid'
 import logger from '../core/logger.js';
+import cacheManager from '../core/cacheManager.js';
 
 class DataAccessLayer {
   constructor() {
@@ -17,11 +18,25 @@ class DataAccessLayer {
   }
 
   async getData(key) {
+    // Check cache first
+    const cachedData = cacheManager.get(key);
+    if (cachedData !== undefined) {
+      logger.info(`Cache hit for key: ${key}`);
+      return cachedData;
+    }
+
+    // If not in cache, get from storage
     let data = await gunAdapter.get(key);
     if (data === undefined) {
       logger.info(`Data not found in GunDB for key: ${key}, trying LocalStorage`);
       data = await localStorageAdapter.get(key);
     }
+
+    // Cache the retrieved data if it exists
+    if (data !== undefined) {
+      cacheManager.set(key, data);
+    }
+
     logger.info(`Retrieved data for key: ${key}`, { data });
     eventBus.emit('dataRetrieved', { key, data });
     return data;
@@ -34,6 +49,8 @@ class DataAccessLayer {
   async setData(key, value) {
     await gunAdapter.set(key, value);
     await localStorageAdapter.set(key, value);
+    // Invalidate cache on data update
+    cacheManager.invalidate(key);
     logger.info(`Data set for key: ${key}`, { value });
     eventBus.emit('dataSet', { key, value });
   }
@@ -47,6 +64,13 @@ class DataAccessLayer {
   }
 
   async getFile(cidString) {
+    // Check cache first
+    const cachedFile = cacheManager.get(`file:${cidString}`);
+    if (cachedFile !== undefined) {
+      logger.info(`Cache hit for file: ${cidString}`);
+      return cachedFile;
+    }
+
     try {
       const cid = CID.parse(cidString)
       if (!this.heliaAdapter.fs) await this.heliaAdapter.init();
@@ -54,7 +78,12 @@ class DataAccessLayer {
       for await (const chunk of this.heliaAdapter.fs.cat(cid)) {
         chunks.push(chunk)
       }
-      return Buffer.concat(chunks)
+      const fileData = Buffer.concat(chunks);
+      
+      // Cache the file data
+      cacheManager.set(`file:${cidString}`, fileData);
+      
+      return fileData;
     } catch (error) {
       console.error('Error retrieving file:', error)
       throw error

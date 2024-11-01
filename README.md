@@ -8,10 +8,10 @@ CosmicSyncCore is in early development. We have set up the basic project structu
 
 ## Recent Updates
 
-- Implemented comprehensive test suite for core components
-- Added data synchronization with last-write-wins conflict resolution
-- Enhanced database operations with timestamp-based versioning
-- Improved error handling and testing infrastructure
+- Implemented advanced caching system with LRU eviction policy
+- Added comprehensive backup and restore functionality
+- Enhanced data access performance through intelligent caching
+- Added backup integrity validation and automatic rotation
 
 ## Features
 
@@ -24,6 +24,10 @@ CosmicSyncCore is in early development. We have set up the basic project structu
 - Support for custom data validation and business logic
 - Cross-platform compatibility (Node.js based)
 - Basic file upload and download functionality using Helia for decentralized storage
+- Advanced caching system with LRU eviction and TTL support
+- Comprehensive backup and restore functionality with compression
+- Backup integrity validation and automatic rotation
+- Event-based monitoring for cache and backup operations
 
 ## Tech Stack
 
@@ -32,6 +36,8 @@ CosmicSyncCore is in early development. We have set up the basic project structu
 - P2P: libp2p
 - Encryption: Node.js crypto module
 - Decentralized Storage: Helia (IPFS implementation)
+- Compression: zlib
+- Caching: Custom LRU implementation
 
 ## Decentralized File Storage with Helia
 
@@ -50,45 +56,89 @@ While Helia is optimized for JavaScript and browser-based environments, it remai
 ```
 CosmicSyncCore/
 ├── CHANGELOG.md
+├── combined.log
 ├── config
 │   └── default.json
 ├── CONTRIBUTING.md
-├── docs/
+├── docs
+│   ├── api
+│   ├── api.md
+│   ├── architecture.md
+│   ├── cosmicsynccore-implementation-plan.md
+│   ├── cosmicsynccore-initial-action-plan.md
+│   ├── creating-hybrid-on-a-gun-ipfs-hybrid.md
+│   ├── decisions
+│   │   └── p2p-database-decisions.md
+│   ├── generalized-cosmicsynccore-requirements.md
+│   ├── plan
+│   ├── project-review-roadmap.md
+│   └── unsorted
+├── error.log
 ├── eslint.config.js
+├── jest.config.js
+├── jest.setup.js
+├── jest.teardown.js
 ├── LICENSE.md
+├── __mocks__
+│   └── libp2p-gossipsub.mjs
 ├── nodemon.js
 ├── package.json
 ├── package-lock.json
 ├── public
+│   ├── dashboard.html
 │   └── index.html
 ├── radata
 ├── README.md
 ├── scripts
-└── src
-    ├── api
-    │   ├── restApi.js
-    │   └── websocketApi.js
-    ├── core
-    │   ├── cryptoManager.js
-    │   ├── errorHandler.js
-    │   ├── eventBus.js
-    │   ├── eventEmitter.js
-    │   └── syncManager.js
-    ├── data
-    │   ├── dataAccessLayer.js
-    │   ├── gunAdapter.js
-    │   ├── heliaAdapter.js
-    │   ├── kuboAdapter.js
-    │   └── localStorageAdapter.js
-    ├── index.js
-    ├── networking
-    ├── p2p
-    │   ├── discovery.js
-    │   ├── libp2pNode.js
-    │   ├── natTraversal.js
-    │   └── node.js
-    └── plugins
-        └── pluginManager.js
+├── server
+│   └── postgresAdapter.js
+├── src
+│   ├── api
+│   │   ├── restApi.js
+│   │   └── websocketApi.js
+│   ├── config.js
+│   ├── core
+│   │   ├── auth.js
+│   │   ├── cryptoManager.js
+│   │   ├── errorHandler.js
+│   │   ├── errorMiddleware.js
+│   │   ├── errors.js
+│   │   ├── eventBus.js
+│   │   ├── eventEmitter.js
+│   │   ├── logger.js
+│   │   ├── monitoring.js
+│   │   └── syncManager.js
+│   ├── data
+│   │   ├── dataAccessLayer.js
+│   │   ├── DatabaseManager.js
+│   │   ├── gunAdapter.js
+│   │   ├── heliaAdapter.js
+│   │   ├── kuboAdapter.js
+│   │   ├── localStorageAdapter.js
+│   │   └── schema.js
+│   ├── index.js
+│   ├── networking
+│   ├── p2p
+│   │   ├── discovery.js
+│   │   ├── libp2pNode.js
+│   │   ├── natTraversal.js
+│   │   └── node.js
+│   ├── plugins
+│   │   └── pluginManager.js
+│   └── testUtils
+│       └── dbSetup.js
+└── tests
+    ├── helpers
+    │   └── dbSetup.helper.js
+    └── integration
+        ├── api.test.js
+        ├── database.test.js
+        ├── dataSync.test.js
+        ├── data.test.js
+        ├── p2p.test.js.bak
+        ├── schema.test.js
+        └── security.test.js
+
 ```
 
 ## Setup

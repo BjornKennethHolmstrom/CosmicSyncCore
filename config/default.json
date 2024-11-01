@@ -11,5 +11,14 @@
     "bootstrapNodes": [
       // Add bootstrap nodes here
     ]
+  },
+  "backup": {
+    "directory": "./backups",
+    "maxBackups": 5,
+    "compression": true,
+    "schedule": {
+      "full": "0 0 * * 0",  // Weekly full backup
+      "incremental": "0 0 * * *"  // Daily incremental backup
+    }
   }
 }

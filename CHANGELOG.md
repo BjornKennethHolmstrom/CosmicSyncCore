@@ -24,6 +24,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed data synchronization timing issues
 - Corrected deletion propagation in sync operations
 
+## [0.3.4] - 2024-11-01
+
+### Added
+- Implemented advanced caching system with LRU eviction policy
+- Added comprehensive backup and restore functionality
+  - Support for full backup creation and restoration
+  - Backup compression using gzip
+  - Backup integrity validation with SHA-256 checksums
+  - Automatic backup rotation and cleanup
+  - Backup manifest system for metadata tracking
+- Enhanced data access performance through intelligent caching
+- Added event emission for backup and cache operations
+
+### Changed
+- Updated DataAccessLayer to integrate caching mechanism
+- Enhanced configuration system to support backup settings
+- Improved data retrieval performance with cache implementation
+
+### Fixed
+- Addressed potential memory issues with cache size limits
+- Implemented proper cleanup for expired cache entries
+- Added safeguards for backup integrity
+
 ## [0.3.2] - 2024-09-27
 
 ### Added

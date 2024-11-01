@@ -5,8 +5,8 @@
 - [x] Develop basic data synchronization mechanism
 - [x] Create a simple data model system
 - [x] Implement basic data versioning
-- [ ] Develop a simple caching mechanism for frequently accessed data
-- [ ] Create a basic backup and restore functionality
+- [x] Develop a simple caching mechanism for frequently accessed data
+- [x] Create a basic backup and restore functionality
 
 ## Key Components
 1. Local Storage
