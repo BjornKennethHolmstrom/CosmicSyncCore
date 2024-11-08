@@ -5,7 +5,7 @@ All notable changes to the CosmicSyncCore project will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.3.5] - 2024-11-08
 
 ### Added
 - Comprehensive test suite for core components
@@ -13,16 +13,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Implemented basic data synchronization with last-write-wins conflict resolution
 - Added SQLite database integration with CRUD operations
 - Implemented flexible schema system with timestamps and versioning
+- Added thorough test coverage for authentication endpoints
+- Created extensive test infrastructure with proper setup and teardown
+- Added comprehensive test cases for caching system
+- Implemented test coverage for backup and restore functionality
 
 ### Changed
 - Updated Jest configuration to properly handle ES modules
 - Improved error handling and logging in tests
 - Enhanced database operations to support synchronization
+- Refactored CacheManager to support better testing and singleton pattern
+- Enhanced EventBus implementation for better cleanup and testing support
+- Improved test environment setup with proper resource cleanup
 
 ### Fixed
 - Resolved issues with libp2p and libp2p-gossipsub mocking in tests
 - Fixed data synchronization timing issues
 - Corrected deletion propagation in sync operations
+- Fixed CacheManager constructor issues for testing
+- Resolved event listener cleanup in test environment
 
 ## [0.3.4] - 2024-11-01
 

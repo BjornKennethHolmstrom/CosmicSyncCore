@@ -45,3 +45,9 @@ export class InternalServerError extends AppError {
     super(message, 500);
   }
 }
+
+export class TooManyRequestsError extends AppError {
+  constructor(message) {
+    super(message, 429);
+  }
+}

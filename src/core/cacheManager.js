@@ -3,23 +3,21 @@
 import logger from './logger.js';
 import eventBus from './eventBus.js';
 
-class CacheManager {
+export class CacheManager {
   constructor(options = {}) {
-    this.maxSize = options.maxSize || 1000; // Maximum number of items in cache
-    this.ttl = options.ttl || 5 * 60 * 1000; // Default TTL: 5 minutes
+    this.maxSize = options.maxSize || 1000;
+    this.ttl = options.ttl || 5 * 60 * 1000;
     this.cache = new Map();
-    this.accessLog = new Map(); // For LRU tracking
-    this.expiryTimes = new Map(); // For TTL tracking
+    this.accessLog = new Map();
+    this.expiryTimes = new Map();
     
-    // Start cleanup interval
+    // Store event listener reference for cleanup
+    this.dataSetListener = ({ key }) => this.invalidate(key);
+    eventBus.on('dataSet', this.dataSetListener);
+    
     this.cleanupInterval = setInterval(() => {
       this.cleanup();
-    }, 60000); // Cleanup every minute
-
-    // Listen for data changes
-    eventBus.on('dataSet', ({ key }) => {
-      this.invalidate(key);
-    });
+    }, 60000);
   }
 
   set(key, value, customTtl) {
@@ -115,7 +113,14 @@ class CacheManager {
       clearInterval(this.cleanupInterval);
       this.cleanupInterval = null;
     }
+    
+    // Remove event listener
+    eventBus.off('dataSet', this.dataSetListener);
+    
     this.clear();
+    this.cache = null;
+    this.accessLog = null;
+    this.expiryTimes = null;
   }
 
   getStats() {
@@ -127,4 +132,5 @@ class CacheManager {
   }
 }
 
-export default new CacheManager();
+export const defaultCache = new CacheManager();
+export default defaultCache;

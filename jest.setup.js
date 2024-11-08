@@ -1,12 +1,17 @@
 // jest.setup.js
-import { setMaxListeners } from 'events';
-setMaxListeners(20);
+import { TextEncoder, TextDecoder } from 'util';
+import { jest } from '@jest/globals';
 
-beforeAll(() => {
-  // Any global setup
-});
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+global.jest = jest;
 
-afterAll(async () => {
-  // Clean up any remaining connections
-  await new Promise(resolve => setTimeout(resolve, 500));
-});
+// Mock timers
+jest.useFakeTimers();
+
+// Setup global test environment
+global.testSetup = {
+  timeout: 5000,
+  testPort: 3001,
+  testDbPath: ':memory:'
+};

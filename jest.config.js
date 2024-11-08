@@ -1,19 +1,24 @@
 // jest.config.js
+
 export default {
   testEnvironment: 'node',
   transform: {
-    '^.+\\.m?js$': 'babel-jest',
+    '^.+\\.jsx?$': 'babel-jest'
   },
-  globalTeardown: './jest.teardown.js',
-  moduleFileExtensions: ['js', ,'mjs'],
-  testMatch: ['**/tests/**/*.js', '**/?(*.)+(spec|test).js'],
+  // Remove extensionsToTreatAsEsm since .js is already treated as ESM
   moduleNameMapper: {
-    '^(\\.{1,2}/.*)\\.js$': '$1',
-    '^libp2p-gossipsub$': '<rootDir>/__mocks__/libp2p-gossipsub.mjs'
+    '^(\\.{1,2}/.*)\\.js$': '$1'
   },
-  testPathIgnorePatterns: ['/node_modules/','helpers'],
-  testTimeout: 30000,
-  setupFilesAfterEnv: ['./jest.setup.js'],
-  roots: ['<rootDir>/src', '<rootDir>/tests'],
-  injectGlobals: true,
+  testMatch: ['**/__tests__/**/*.js', '**/?(*.)+(spec|test).js'],
+  verbose: true,
+  setupFiles: ['<rootDir>/jest.setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/jest.teardown.js'],
+  testTimeout: 10000,
+  transformIgnorePatterns: [
+    'node_modules/(?!(module-that-needs-transform)/)'
+  ],
+  moduleFileExtensions: ['js', 'mjs', 'cjs', 'jsx', 'json', 'node'],
+  // Add these for better ES Module support
+  resolver: undefined,
+  moduleDirectories: ['node_modules']
 };

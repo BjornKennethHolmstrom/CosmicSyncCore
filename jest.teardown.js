@@ -1,21 +1,26 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+// jest.teardown.js
+import { jest } from '@jest/globals';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+beforeAll(() => {
+  // Reset mocks before each test suite
+  jest.clearAllMocks();
+});
 
-export default async () => {
-  // Give some time for any hanging processes to close
-  await new Promise(resolve => setTimeout(resolve, 2000));
+afterEach(() => {
+  // Clear any timers after each test
+  jest.clearAllTimers();
+});
 
-  const testDataDir = path.join(__dirname, 'local-storage-*');
-  const directories = fs.readdirSync(__dirname, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory() && dirent.name.startsWith('local-storage-'))
-    .map(dirent => path.join(__dirname, dirent.name));
+afterAll(async () => {
+  // Cleanup resources
+  const cleanup = async () => {
+    try {
+      // Add specific cleanup tasks here
+      jest.useRealTimers();
+    } catch (error) {
+      console.error('Cleanup error:', error);
+    }
+  };
 
-  directories.forEach(dir => {
-    fs.rmSync(dir, { recursive: true, force: true });
-    console.log(`Cleaned up directory: ${dir}`);
-  });
-};
+  await cleanup();
+});

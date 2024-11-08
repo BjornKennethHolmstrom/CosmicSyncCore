@@ -1,9 +1,13 @@
+// tests/integration/dataSync.test.js
 import { jest } from '@jest/globals';
+import { setupTestDatabase, cleanupDatabase } from '../helpers/dbSetup.helper.js';
 import SyncManager from '../../src/core/syncManager.js';
-import { setupTestDatabase } from '../../src/testUtils/dbSetup.js';
 
 describe('Data Synchronization', () => {
-  let dbManager1, dbManager2, syncManager1, syncManager2;
+  let dbManager1;
+  let dbManager2;
+  let syncManager1;
+  let syncManager2;
 
   beforeAll(async () => {
     dbManager1 = await setupTestDatabase();
@@ -13,8 +17,8 @@ describe('Data Synchronization', () => {
   });
 
   afterAll(async () => {
-    await dbManager1.close();
-    await dbManager2.close();
+    await cleanupDatabase(dbManager1);
+    await cleanupDatabase(dbManager2);
   });
 
   beforeEach(async () => {
@@ -22,133 +26,119 @@ describe('Data Synchronization', () => {
     await dbManager2.deleteAll('users');
   });
 
-  test('should sync new data from peer1 to peer2', async () => {
-    const timestamp = Date.now();
-    const user = { id: '1', name: 'Alice', email: 'alice@example.com', timestamp };
-    await dbManager1.create('users', user);
+  it('should sync new data from peer1 to peer2', async () => {
+    const testUser = {
+      id: 'test1',
+      email: 'test1@example.com',
+      username: 'testuser1',
+      password: 'hashedpassword',
+      timestamp: Date.now()
+    };
+
+    // Create data in peer1
+    await dbManager1.createUser(testUser);
+
+    // Sync between peers
     await syncManager1.syncWith(syncManager2);
 
-    const syncedUser = await dbManager2.read('users', '1');
-    expect(syncedUser).toMatchObject({
-      id: user.id,
-      name: user.name,
-      email: user.email
-    });
+    // Verify data in peer2
+    const syncedUser = await dbManager2.getUserById(testUser.id);
+    expect(syncedUser).toBeDefined();
+    expect(syncedUser.email).toBe(testUser.email);
   });
 
-  test('should sync updated data from peer2 to peer1', async () => {
-    // Create initial user with timestamp
-    const initialTimestamp = Date.now();
-    const user = { 
-      id: '1', 
-      name: 'Bob', 
-      email: 'bob@example.com', 
-      timestamp: initialTimestamp 
+  it('should sync updated data from peer2 to peer1', async () => {
+    const testUser = {
+      id: 'test2',
+      email: 'test2@example.com',
+      username: 'testuser2',
+      password: 'hashedpassword',
+      timestamp: Date.now()
     };
-    await dbManager1.create('users', user);
+
+    // Create initial data in both peers
+    await dbManager1.createUser(testUser);
     await syncManager1.syncWith(syncManager2);
 
-    // Wait to ensure different timestamp
-    await new Promise(resolve => setTimeout(resolve, 100));
-
-    // Update with new timestamp
-    const updateTimestamp = Date.now();
-    const updatedUser = { 
-      id: '1', 
-      name: 'Bobby', 
-      email: 'bob@example.com', 
-      timestamp: updateTimestamp 
+    // Update data in peer2
+    const updates = {
+      email: 'updated2@example.com',
+      username: 'updateduser2', // Adding username to make it a valid update
+      timestamp: Date.now()
     };
-    await dbManager2.update('users', '1', updatedUser);
-
-    // Sync both ways to ensure changes propagate
-    await syncManager2.syncWith(syncManager1);
-    await syncManager1.syncWith(syncManager2);
-
-    const syncedUser = await dbManager1.read('users', '1');
-    expect(syncedUser).toMatchObject({
-      id: '1',
-      name: 'Bobby',
-      email: 'bob@example.com'
-    });
-  });
-
-  test('should resolve conflicts using last-write-wins strategy', async () => {
-    const originalUser = { 
-      id: '1', 
-      name: 'Charlie', 
-      email: 'charlie@example.com',
-      timestamp: Date.now() 
-    };
-    await dbManager1.create('users', originalUser);
-    await syncManager1.syncWith(syncManager2);
-
-    // Wait a bit to ensure timestamps are different
-    await new Promise(resolve => setTimeout(resolve, 100));
-
-    const updatedUser1 = { 
-      ...originalUser, 
-      name: 'Charles',
-      timestamp: Date.now() 
-    };
-    await dbManager1.update('users', '1', updatedUser1);
-
-    // Wait a bit to ensure timestamps are different
-    await new Promise(resolve => setTimeout(resolve, 100));
-
-    const updatedUser2 = { 
-      ...originalUser, 
-      name: 'Chuck',
-      timestamp: Date.now() 
-    };
-    await dbManager2.update('users', '1', updatedUser2);
-
-    await syncManager1.syncWith(syncManager2);
-
-    const finalUser1 = await dbManager1.read('users', '1');
-    const finalUser2 = await dbManager2.read('users', '1');
-
-    // Should have Chuck's data as it was the last write
-    expect(finalUser1).toMatchObject({
-      id: '1',
-      name: 'Chuck',
-      email: 'charlie@example.com'
-    });
-    expect(finalUser2).toMatchObject({
-      id: '1',
-      name: 'Chuck',
-      email: 'charlie@example.com'
-    });
-  });
-
-  test('should handle syncing deleted data', async () => {
-    // Create initial user with timestamp
-    const initialTimestamp = Date.now();
-    const user = { 
-      id: '1', 
-      name: 'David', 
-      email: 'david@example.com',
-      timestamp: initialTimestamp 
-    };
-    await dbManager1.create('users', user);
-    await syncManager1.syncWith(syncManager2);
-
-    // Wait to ensure different timestamp
-    await new Promise(resolve => setTimeout(resolve, 100));
-
-    // Delete with new timestamp
-    const deleteTimestamp = Date.now();
-    await dbManager1.delete('users', '1');
-
-    // Sync both ways to ensure deletion propagates
-    await syncManager1.syncWith(syncManager2);
-    await syncManager2.syncWith(syncManager1);
-
-    // Both databases should show null for deleted record
-    const deletedUser1 = await dbManager1.read('users', '1');
-    const deletedUser2 = await dbManager2.read('users', '1');
     
-    expect(deletedUser1).toBeNull();
-    expect(deletedUser2).toBeNull();
+    await dbManager2.updateUser(testUser.id, updates);
+
+    // Sync back to peer1
+    await syncManager2.syncWith(syncManager1);
+
+    // Verify update in peer1
+    const syncedUser = await dbManager1.getUserById(testUser.id);
+    expect(syncedUser.email).toBe(updates.email);
+  });
+
+  it('should resolve conflicts using last-write-wins strategy', async () => {
+    const testUser = {
+      id: 'test3',
+      email: 'test3@example.com',
+      username: 'testuser3',
+      password: 'hashedpassword',
+      timestamp: Date.now()
+    };
+
+    // Create initial data
+    await dbManager1.createUser(testUser);
+    await syncManager1.syncWith(syncManager2);
+
+    // Make conflicting changes
+    const timestamp1 = Date.now();
+    const timestamp2 = timestamp1 + 1000;
+
+    await dbManager1.updateUser(testUser.id, {
+      email: 'peer1@example.com',
+      username: 'peer1user',
+      timestamp: timestamp1
+    });
+
+    await dbManager2.updateUser(testUser.id, {
+      email: 'peer2@example.com',
+      username: 'peer2user',
+      timestamp: timestamp2
+    });
+
+    // Sync between peers
+    await syncManager1.syncWith(syncManager2);
+
+    // Verify both peers have the latest change
+    const user1 = await dbManager1.getUserById(testUser.id);
+    const user2 = await dbManager2.getUserById(testUser.id);
+    expect(user1.email).toBe('peer2@example.com');
+    expect(user2.email).toBe('peer2@example.com');
+  });
+
+  it('should handle syncing deleted data', async () => {
+    const testUser = {
+      id: 'test4',
+      email: 'test4@example.com',
+      username: 'testuser4',
+      password: 'hashedpassword',
+      timestamp: Date.now()
+    };
+
+    // Create initial data
+    await dbManager1.createUser(testUser);
+    await syncManager1.syncWith(syncManager2);
+
+    // Delete in peer1
+    await dbManager1.delete('users', testUser.id);
+
+    // Sync deletion to peer2
+    await syncManager1.syncWith(syncManager2);
+
+    // Verify deletion in both peers
+    await expect(dbManager1.getUserById(testUser.id))
+      .rejects.toThrow('User not found');
+    await expect(dbManager2.getUserById(testUser.id))
+      .rejects.toThrow('User not found');
   });
 });

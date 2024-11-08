@@ -7,6 +7,7 @@ import { promisify } from 'util';
 import logger from './logger.js';
 import eventBus from './eventBus.js';
 import { createHash } from 'crypto';
+import { SCHEMA } from '../data/schema.js';
 
 const gzip = promisify(zlib.gzip);
 const gunzip = promisify(zlib.gunzip);
@@ -16,6 +17,7 @@ class BackupManager {
     this.backupDir = options.backupDir || './backups';
     this.dbManager = null;
     this.maxBackups = options.maxBackups || 5;
+    this.schema = SCHEMA;
   }
 
   setDatabaseManager(dbManager) {
@@ -42,13 +44,11 @@ class BackupManager {
     const backupPath = path.join(this.backupDir, backupName);
 
     try {
-      // Create backup directory
       await fs.mkdir(backupPath, { recursive: true });
-
-      // Backup database tables
+      
       const backup = {};
-      for (const table of Object.keys(SCHEMA)) {
-        if (table !== 'sync_metadata') {  // Skip sync metadata
+      for (const table of Object.keys(this.schema)) {
+        if (table !== 'sync_metadata') {
           const records = await this.dbManager.list(table);
           backup[table] = records;
         }

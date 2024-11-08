@@ -62,17 +62,9 @@ CosmicSyncCore/
 ├── CONTRIBUTING.md
 ├── docs
 │   ├── api
-│   ├── api.md
-│   ├── architecture.md
-│   ├── cosmicsynccore-implementation-plan.md
-│   ├── cosmicsynccore-initial-action-plan.md
-│   ├── creating-hybrid-on-a-gun-ipfs-hybrid.md
 │   ├── decisions
-│   │   └── p2p-database-decisions.md
-│   ├── generalized-cosmicsynccore-requirements.md
 │   ├── plan
-│   ├── project-review-roadmap.md
-│   └── unsorted
+│   └── project-review-roadmap.md
 ├── error.log
 ├── eslint.config.js
 ├── jest.config.js
@@ -99,6 +91,8 @@ CosmicSyncCore/
 │   ├── config.js
 │   ├── core
 │   │   ├── auth.js
+│   │   ├── backupManager.js
+│   │   ├── cacheManager.js
 │   │   ├── cryptoManager.js
 │   │   ├── errorHandler.js
 │   │   ├── errorMiddleware.js
@@ -117,6 +111,8 @@ CosmicSyncCore/
 │   │   ├── localStorageAdapter.js
 │   │   └── schema.js
 │   ├── index.js
+│   ├── middleware
+│   │   └── rateLimiter.js
 │   ├── networking
 │   ├── p2p
 │   │   ├── discovery.js
@@ -125,19 +121,28 @@ CosmicSyncCore/
 │   │   └── node.js
 │   ├── plugins
 │   │   └── pluginManager.js
-│   └── testUtils
-│       └── dbSetup.js
+│   ├── testUtils
+│   │   └── dbSetup.js
+│   └── utils
+│       └── validation.js
 └── tests
     ├── helpers
-    │   └── dbSetup.helper.js
+    │   ├── dbSetup.helper.js
+    │   └── testEnvironment.js
     └── integration
+        ├── api-extended.test.js
         ├── api.test.js
+        ├── auth-extended.test.js
+        ├── auth.test.js
+        ├── backup.test.js
+        ├── cache.test.js
         ├── database.test.js
         ├── dataSync.test.js
         ├── data.test.js
         ├── p2p.test.js.bak
         ├── schema.test.js
         └── security.test.js
+
 
 ```
 
