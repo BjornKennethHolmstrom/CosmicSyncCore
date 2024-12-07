@@ -14,7 +14,7 @@ export const SCHEMA = {
     lastFailedLoginAt INTEGER,
     passwordResetToken TEXT,
     passwordResetExpiresAt INTEGER,
-    preferences TEXT, /* JSON string for user preferences */
+    preferences TEXT,
     timestamp INTEGER NOT NULL,
     _deleted INTEGER DEFAULT 0,
     CONSTRAINT email_format CHECK (email LIKE '%_@__%.__%'),
@@ -82,10 +82,6 @@ export const SCHEMA = {
 };
 
 export async function initializeTables(dbManager) {
-  for (const [tableName, schema] of Object.entries(SCHEMA)) {
-    await dbManager.createTableIfNotExists(tableName, schema);
-  }
-
   // Create indexes for better query performance
   const indexes = [
     'CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)',

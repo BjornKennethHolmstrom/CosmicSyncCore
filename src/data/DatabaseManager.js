@@ -1,8 +1,7 @@
 // src/data/DatabaseManager.js
-
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
-import { initializeTables, initializeTranslationTables } from './schema.js';
+import { SCHEMA, initializeTables, initializeTranslationTables } from './schema.js';  // Added SCHEMA import
 import { BadRequestError, NotFoundError } from '../core/errors.js';
 import logger from '../core/logger.js';
 import eventBus from '../core/eventBus.js';
@@ -11,22 +10,34 @@ class DatabaseManager {
   constructor(dbPath) {
     this.dbPath = dbPath;
     this.db = null;
+    this.initialized = false;
   }
 
   async initialize() {
-    this.db = await open({
-      filename: this.dbPath,
-      driver: sqlite3.Database
-    });
-    
-    // Enable foreign key support
-    await this.db.run('PRAGMA foreign_keys = ON');
-    
-    // Initialize tables
-    await initializeTables(this);
-    await initializeTranslationTables(this);
-    
-    logger.info('Database initialized successfully');
+    try {
+      this.db = await open({
+        filename: this.dbPath,
+        driver: sqlite3.Database
+      });
+      
+      // Enable foreign key support
+      await this.db.run('PRAGMA foreign_keys = ON');
+
+      // Create tables if they don't exist
+      for (const [tableName, schema] of Object.entries(SCHEMA)) {
+        await this.db.run(`CREATE TABLE IF NOT EXISTS ${tableName} (${schema})`);
+      }
+      
+      // Initialize tables
+      await initializeTables(this);
+      await initializeTranslationTables(this);
+      
+      this.initialized = true;
+      logger.info('Database initialized successfully');
+    } catch (error) {
+      logger.error('Database initialization failed:', error);
+      throw error;
+    }
   }
 
   async initializeTables() {
@@ -36,21 +47,24 @@ class DatabaseManager {
   // User Management Methods
 
   async createUser(userData) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const {
       id,
       email,
       username,
-      password,
+      password,  // This should already be hashed from auth.hashPassword
       preferences = {},
       timestamp = Date.now()
     } = userData;
 
     try {
-      // Check for existing user
-      const existingUser = await this.getUserByEmail(email);
-      if (existingUser) {
-        throw new BadRequestError('Email already registered');
-      }
+      logger.debug('Creating user:', { id, email, username });
+
+      // Store the debug info before creating the user
+      logger.debug('Password hash being stored:', { hash: password.slice(0, 10) + '...' });
 
       const query = `
         INSERT INTO users (
@@ -69,9 +83,10 @@ class DatabaseManager {
         timestamp
       ]);
 
-      eventBus.emit('userCreated', { userId: id, timestamp });
+      logger.debug('User created successfully:', { id });
       return id;
     } catch (error) {
+      logger.error('Error creating user:', error);
       if (error.code === 'SQLITE_CONSTRAINT') {
         throw new BadRequestError('Username or email already exists');
       }
@@ -79,24 +94,11 @@ class DatabaseManager {
     }
   }
 
-  async getUserById(userId) {
-    const query = `
-      SELECT id, email, username, createdAt, status, 
-             verifiedAt, preferences, timestamp
-      FROM users 
-      WHERE id = ? AND (_deleted IS NULL OR _deleted = 0)
-    `;
-    
-    const user = await this.db.get(query, [userId]);
-    if (!user) {
-      throw new NotFoundError('User not found');
+  async getUserByEmail(email) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
     }
 
-    user.preferences = JSON.parse(user.preferences || '{}');
-    return user;
-  }
-
-  async getUserByEmail(email) {
     const query = `
       SELECT id, email, username, password, status, 
              failedLoginAttempts, lastFailedLoginAt
@@ -104,10 +106,23 @@ class DatabaseManager {
       WHERE LOWER(email) = LOWER(?) AND (_deleted IS NULL OR _deleted = 0)
     `;
     
-    return await this.db.get(query, [email]);
+    const result = await this.db.get(query, [email]);
+    if (result) {
+      logger.debug('Found user by email:', { 
+        email,
+        userId: result.id,
+        hasPassword: !!result.password,
+        passwordLength: result.password ? result.password.length : 0
+      });
+    }
+    return result;
   }
 
   async updateUser(userId, updates) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const allowedUpdates = [
       'username',
       'password',
@@ -156,6 +171,10 @@ class DatabaseManager {
   // Session Management Methods
 
   async createSession(sessionData) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const {
       id,
       userId,
@@ -190,6 +209,10 @@ class DatabaseManager {
   }
 
   async updateSessionUsage(sessionId) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const timestamp = Date.now();
     const query = `
       UPDATE user_sessions 
@@ -202,6 +225,10 @@ class DatabaseManager {
   }
 
   async invalidateSession(sessionId, reason = 'logout') {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const timestamp = Date.now();
     const query = `
       UPDATE user_sessions 
@@ -219,6 +246,10 @@ class DatabaseManager {
   // Auth Logging Methods
 
   async logAuthEvent(eventData) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const {
       userId,
       eventType,
@@ -253,6 +284,10 @@ class DatabaseManager {
   // Token Management Methods
 
   async addInvalidatedToken(tokenData) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const {
       token,
       userId,
@@ -278,6 +313,10 @@ class DatabaseManager {
   }
 
   async isTokenInvalidated(token) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const query = `
       SELECT 1 FROM invalidated_tokens 
       WHERE token = ? AND expiresAt > ?
@@ -290,6 +329,10 @@ class DatabaseManager {
   // Cleanup Methods
 
   async cleanupExpiredSessions() {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const timestamp = Date.now();
     const query = `
       UPDATE user_sessions 
@@ -305,6 +348,10 @@ class DatabaseManager {
   }
 
   async cleanupExpiredTokens() {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const timestamp = Date.now();
     const query = `DELETE FROM invalidated_tokens WHERE expiresAt < ?`;
     
@@ -316,6 +363,10 @@ class DatabaseManager {
   }
 
   async getSessionByRefreshToken(refreshToken) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const query = `
       SELECT * FROM user_sessions 
       WHERE refreshToken = ? 
@@ -329,6 +380,10 @@ class DatabaseManager {
   }
 
   async getSessionsByUserId(userId) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const query = `
       SELECT * FROM user_sessions 
       WHERE userId = ? 
@@ -342,6 +397,10 @@ class DatabaseManager {
   }
 
   async invalidateUserSessions(userId, exceptSessionId = null) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const timestamp = Date.now();
     let query = `
       UPDATE user_sessions 
@@ -368,6 +427,10 @@ class DatabaseManager {
   }
 
   async cleanupInvalidatedTokens() {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const timestamp = Date.now();
     const query = `
       DELETE FROM invalidated_tokens 
@@ -383,6 +446,10 @@ class DatabaseManager {
   }
 
   async checkPasswordResetToken(token) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const query = `
       SELECT id, email FROM users 
       WHERE passwordResetToken = ? 
@@ -401,6 +468,10 @@ class DatabaseManager {
   }
 
   async create(table, record) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const { _deleted, ...recordWithoutDeleted } = record;
     const timestamp = record.timestamp || Date.now();
     const finalRecord = { ...recordWithoutDeleted, timestamp };
@@ -414,12 +485,20 @@ class DatabaseManager {
   }
 
   async read(table, id) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const query = `SELECT * FROM ${table} WHERE id = ? AND (_deleted IS NULL OR _deleted = 0)`;
     const result = await this.db.get(query, [id]);
     return result || null;
   }
 
   async update(table, id, record) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const timestamp = record.timestamp || Date.now();
     const finalRecord = { ...record, timestamp };
     const setClause = Object.keys(finalRecord)
@@ -432,45 +511,78 @@ class DatabaseManager {
   }
 
   async getChanges(table, since) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     // Get all changes including deletions
     const query = `SELECT * FROM ${table} WHERE timestamp > ?`;
     return await this.db.all(query, [since]);
   }
 
   async deleteAll(table) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const query = `DELETE FROM ${table}`;
     await this.db.run(query);
   }
 
   async delete(table, id) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const timestamp = Date.now();
     const query = `UPDATE ${table} SET _deleted = 1, timestamp = ? WHERE id = ?`;
     await this.db.run(query, [timestamp, id]);
   }
 
   async getLastSyncTimestamp(peerId) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const query = `SELECT last_sync_timestamp FROM sync_metadata WHERE peer_id = ?`;
     const result = await this.db.get(query, [peerId]);
     return result ? result.last_sync_timestamp : 0;
   }
 
   async updateLastSyncTimestamp(peerId, timestamp) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const query = `INSERT OR REPLACE INTO sync_metadata (peer_id, last_sync_timestamp) VALUES (?, ?)`;
     await this.db.run(query, [peerId, timestamp]);
   }
 
   async list(table) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     const query = `SELECT * FROM ${table} WHERE _deleted IS NULL OR _deleted = 0`;
     return await this.db.all(query);
   }
 
   // Helper method to create tables if they don't exist
   async createTableIfNotExists(table, schema) {
-    const query = `CREATE TABLE IF NOT EXISTS ${table} (${schema})`;
-    await this.db.run(query);
+    try {
+      const query = `CREATE TABLE IF NOT EXISTS ${table} (${schema})`;
+      await this.db.run(query);
+    } catch (error) {
+      logger.error(`Failed to create table ${table}:`, error);
+      throw error;
+    }
   }
 
   async applyChanges(changes) {
+    if (!this.initialized || !this.db) {
+      throw new Error('Database not initialized');
+    }
+
     for (const [table, tableChanges] of Object.entries(changes)) {
       for (const record of tableChanges) {
         const existingRecord = await this.read(table, record.id);

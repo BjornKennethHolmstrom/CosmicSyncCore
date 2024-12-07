@@ -1,11 +1,6 @@
-// jest.config.js
-
 export default {
   testEnvironment: 'node',
-  transform: {
-    '^.+\\.jsx?$': 'babel-jest'
-  },
-  // Remove extensionsToTreatAsEsm since .js is already treated as ESM
+  transform: {},  // No transform needed for native ESM
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1'
   },
@@ -14,11 +9,11 @@ export default {
   setupFiles: ['<rootDir>/jest.setup.js'],
   setupFilesAfterEnv: ['<rootDir>/jest.teardown.js'],
   testTimeout: 10000,
-  transformIgnorePatterns: [
-    'node_modules/(?!(module-that-needs-transform)/)'
-  ],
+  transformIgnorePatterns: [],
   moduleFileExtensions: ['js', 'mjs', 'cjs', 'jsx', 'json', 'node'],
-  // Add these for better ES Module support
+  testEnvironmentOptions: {
+    url: "http://localhost"
+  },
   resolver: undefined,
   moduleDirectories: ['node_modules']
 };

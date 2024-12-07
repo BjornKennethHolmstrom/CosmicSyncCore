@@ -1,10 +1,11 @@
-import { createLibp2p } from 'libp2p';
-import { tcp } from '@libp2p/tcp';
-import { yamux } from '@chainsafe/libp2p-yamux';
-import { noise } from '@chainsafe/libp2p-noise';
-import { bootstrap } from '@libp2p/bootstrap';
-import { kadDHT } from '@libp2p/kad-dht';
-import { EventEmitter } from 'events';
+// src/p2p/natTraversal.js
+import { createLibp2p } from 'libp2p'
+import { TCP } from '@libp2p/tcp'
+import { Mplex } from '@libp2p/mplex'
+import { Noise } from '@libp2p/noise'
+import { Bootstrap } from '@libp2p/bootstrap'
+import { EventEmitter } from 'events'
+import logger from '../core/logger.js'
 
 class NATTraversal {
   constructor() {
@@ -13,46 +14,75 @@ class NATTraversal {
   }
 
   async createNode() {
-    this.node = await createLibp2p({
-      addresses: {
-        listen: ['/ip4/0.0.0.0/tcp/0']
-      },
-      transports: [tcp()],
-      streamMuxers: [yamux()],
-      connectionEncryption: [noise()],
-      peerDiscovery: [
-        bootstrap({
-          list: [
-            '/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN',
-            '/dnsaddr/bootstrap.libp2p.io/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa',
-            '/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb',
-            '/dnsaddr/bootstrap.libp2p.io/p2p/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt'
-          ]
-        })
-      ],
-      dht: kadDHT(),
-      relay: {
-        enabled: true,
-        hop: {
-          enabled: true,
-          active: true
+    try {
+      const node = await createLibp2p({
+        modules: {
+          transport: [TCP],
+          streamMuxer: [Mplex],
+          connEncryption: [Noise],
+          peerDiscovery: [Bootstrap]
+        },
+        config: {
+          transport: {
+            TCP: {
+              listenerOptions: {
+                ip: '0.0.0.0',
+                port: 0
+              }
+            }
+          },
+          peerDiscovery: {
+            bootstrap: {
+              list: [
+                '/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN',
+                '/dnsaddr/bootstrap.libp2p.io/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa'
+              ]
+            }
+          }
         }
-      }
-    });
+      });
 
-    this.node.addEventListener('peer:connect', (event) => {
-      this.eventEmitter.emit('peerConnected', event.detail.remotePeer.toString());
-    });
+      await node.start();
+      this.node = node;
 
-    await this.node.start();
-    this.eventEmitter.emit('nodeStarted');
+      this.node.connectionManager.on('peer:connect', (connection) => {
+        const peerInfo = connection.remotePeer.toB58String();
+        logger.info('Connected to peer:', peerInfo);
+        this.eventEmitter.emit('peerConnected', peerInfo);
+      });
+
+      logger.info('NAT traversal node started');
+      this.eventEmitter.emit('nodeStarted');
+    } catch (error) {
+      logger.error('Failed to start NAT traversal node:', error);
+      throw error;
+    }
   }
 
   async stop() {
     if (this.node) {
-      await this.node.stop();
-      this.eventEmitter.emit('nodeStopped');
+      try {
+        await this.node.stop();
+        this.node = null;
+        logger.info('NAT traversal node stopped');
+        this.eventEmitter.emit('nodeStopped');
+      } catch (error) {
+        logger.error('Error stopping NAT traversal node:', error);
+        throw error;
+      }
     }
+  }
+
+  isStarted() {
+    return this.node !== null;
+  }
+
+  on(event, listener) {
+    this.eventEmitter.on(event, listener);
+  }
+
+  off(event, listener) {
+    this.eventEmitter.off(event, listener);
   }
 }
 

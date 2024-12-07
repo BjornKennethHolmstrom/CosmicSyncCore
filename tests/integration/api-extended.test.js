@@ -1,25 +1,92 @@
 // tests/integration/api-extended.test.js
-
 import request from 'supertest';
 import app from '../../src/api/restApi.js';
-import { setupTestDatabase } from '../helpers/dbSetup.helper.js';
-import DatabaseManager from '../../src/data/DatabaseManager.js';
+import { setupTestDatabase, cleanupDatabase } from '../helpers/dbSetup.helper.js';
+import logger from '../../src/core/logger.js';
+
+jest.setTimeout(10000); // Set timeout to 10 seconds
 
 describe('Core API Integration Tests', () => {
   let dbManager;
   let authToken;
+  let registeredUserId;  // Add this to store the user ID
+  const testUser = {
+    email: 'test@example.com',
+    password: 'validPassword123',
+    username: 'testuser'
+  };
 
   beforeAll(async () => {
-    dbManager = await setupTestDatabase();
-    // Get auth token for protected endpoints
-    const loginResponse = await request(app)
-      .post('/api/v1/login')
-      .send({ userId: 'testUser123' });
-    authToken = loginResponse.body.token;
+    try {
+      // Setup test database with logging
+      logger.info('Setting up test database...');
+      dbManager = await setupTestDatabase();
+      logger.info('Test database setup complete');
+
+      // Register test user
+      logger.info('Step 1: Registering test user...');
+      const registerResponse = await request(app)
+        .post('/api/v1/auth/register')
+        .send(testUser);
+
+      logger.info('Step 2: Registration response:', {
+        status: registerResponse.status,
+        hasToken: !!registerResponse.body.accessToken,
+        userId: registerResponse.body.userId
+      });
+
+      if (registerResponse.status !== 201) {
+        throw new Error(`Registration failed: ${JSON.stringify(registerResponse.body)}`);
+      }
+
+      registeredUserId = registerResponse.body.userId;
+      authToken = registerResponse.body.accessToken;
+
+      // Verify user exists in database
+      const dbUser = await dbManager.getUserByEmail(testUser.email);
+      logger.info('Step 3: Database user verification:', {
+        exists: !!dbUser,
+        userId: dbUser?.id,
+        hasPassword: !!dbUser?.password
+      });
+
+      // Only attempt login if we need to
+      if (!authToken) {
+        logger.info('Step 4: Attempting login...');
+        const loginResponse = await request(app)
+          .post('/api/v1/auth/login')
+          .send({
+            email: testUser.email,
+            password: testUser.password
+          });
+
+        logger.info('Step 5: Login response:', {
+          status: loginResponse.status,
+          hasToken: !!loginResponse.body.accessToken
+        });
+
+        if (!loginResponse.body.accessToken) {
+          throw new Error(`Login failed: ${JSON.stringify(loginResponse.body)}`);
+        }
+        
+        authToken = loginResponse.body.accessToken;
+      }
+
+      logger.info('Test setup complete');
+    } catch (error) {
+      logger.error('Test setup failed:', error);
+      throw error;
+    }
   });
 
   afterAll(async () => {
-    await dbManager.close();
+    try {
+      logger.info('Cleaning up test database...');
+      await cleanupDatabase(dbManager);
+      logger.info('Cleanup complete');
+    } catch (error) {
+      logger.error('Cleanup failed:', error);
+    }
   });
 
   describe('Authentication Endpoints', () => {
@@ -185,4 +252,5 @@ describe('Core API Integration Tests', () => {
       expect(lastResponse.body).toHaveProperty('error', 'Too many requests');
     });
   });
+
 });

@@ -75,23 +75,33 @@ class Auth {
    * @returns {Promise<Object>} Object containing access and refresh tokens
    */
   async generateTokens(userId) {
-    const accessToken = await this.sign(
-      { userId, type: 'access' },
-      this.accessTokenKey,
-      { expiresIn: TOKEN_EXPIRY }
-    );
+    try {
+      logger.debug('Starting token generation for:', userId);
+      
+      // Create the tokens without promisify
+      const accessToken = jwt.sign(
+        { userId, type: 'access' },
+        this.accessTokenKey,
+        { expiresIn: TOKEN_EXPIRY }
+      );
 
-    const refreshToken = await this.sign(
-      { userId, type: 'refresh' },
-      this.refreshTokenKey,
-      { expiresIn: REFRESH_TOKEN_EXPIRY }
-    );
+      const refreshToken = jwt.sign(
+        { userId, type: 'refresh' },
+        this.refreshTokenKey,
+        { expiresIn: REFRESH_TOKEN_EXPIRY }
+      );
 
-    return {
-      accessToken,
-      refreshToken,
-      expiresIn: TOKEN_EXPIRY
-    };
+      logger.debug('Tokens generated successfully');
+
+      return {
+        accessToken,
+        refreshToken,
+        expiresIn: TOKEN_EXPIRY
+      };
+    } catch (error) {
+      logger.error('Token generation failed:', error);
+      throw error;
+    }
   }
 
   /**

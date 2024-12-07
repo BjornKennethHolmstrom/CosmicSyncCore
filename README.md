@@ -158,7 +158,7 @@ CosmicSyncCore/
 
 ## Contributing
 
-We are not currently accepting external contributions as the project is in its initial development phase. Please check back later for contribution guidelines.
+We would love to receive contributions, especially regarding the P2P-technology, with which we are currently experiencing some issues. Contact bjorn.kenneth.holmstrom@gmail.com if you'd like to contribute.
 
 ## License
 

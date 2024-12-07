@@ -16,6 +16,7 @@ import errorMiddleware from '../core/errorMiddleware.js';
 import monitoring from '../core/monitoring.js';
 import { applyRateLimiters } from '../middleware/rateLimiter.js';
 import { validateEmail, validatePassword, validateUsername, sanitizeUser } from '../utils/validation.js';
+import { setupSwagger, validateApiSpec, swaggerDocument } from './swagger.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,8 +28,16 @@ const upload = multer({ memory: true });
 // Apply rate limiters to routes
 applyRateLimiters(router);
 
-// Initialize DatabaseManager and SyncManager
+// Initialize DatabaseManager
 const dbManager = new DatabaseManager(config.databasePath);
+
+// Initialize database before setting up routes
+await dbManager.initialize().catch(error => {
+  logger.error('Failed to initialize database:', error);
+  process.exit(1);
+});
+
+// Initialize SyncManager
 const syncManager = new SyncManager(dbManager);
 
 // Middleware
@@ -36,6 +45,15 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../../public')));
 
 const apiVersion = '/api/v1';
+
+if (process.env.NODE_ENV !== 'production') {
+  try {
+    await setupSwagger(app);
+    logger.info('Swagger documentation setup successfully');
+  } catch (error) {
+    logger.error('Failed to setup Swagger documentation:', error);
+  }
+}
 
 // Base routes
 app.get('/', (req, res) => {
@@ -70,71 +88,47 @@ router.post('/login', async (req, res, next) => {
   }
 });
 
-// Authentication Routes
 router.post('/auth/register', async (req, res, next) => {
   try {
+    logger.info('Registration request received:', { body: req.body });
     const { email, password, username } = req.body;
 
-    // Validate required fields
+    // Basic validation
     if (!email || !password || !username) {
+      logger.warn('Registration validation failed - missing fields');
       throw new BadRequestError('Email, password, and username are required');
     }
 
     // Validate email format
     if (!validateEmail(email)) {
+      logger.warn('Registration validation failed - invalid email');
       throw new BadRequestError('Invalid email format');
     }
 
-    // Validate password strength
-    if (password.length < 8) {
-      throw new BadRequestError('Password must be at least 8 characters long');
-    }
-
-    // Validate username
-    if (username.length < 3 || !/^[a-zA-Z0-9_-]+$/.test(username)) {
-      throw new BadRequestError('Username must be at least 3 characters and contain only letters, numbers, underscores, and hyphens');
-    }
-
-    // Hash password
-    const hashedPassword = await auth.hashPassword(password);
-
     // Create user
     const userId = uuidv4();
+    logger.info('Creating user in database');
+    
     await dbManager.createUser({
       id: userId,
       email,
       username,
-      password: hashedPassword,
+      password: await auth.hashPassword(password),
       timestamp: Date.now()
     });
 
-    // Generate tokens
+    logger.info('User created successfully');
+
+    // Generate tokens instead of single token
+    logger.debug('Generating tokens');
     const tokens = await auth.generateTokens(userId);
-
-    // Create user session
-    const sessionId = uuidv4();
-    await dbManager.createSession({
-      id: sessionId,
-      userId,
-      refreshToken: tokens.refreshToken,
-      ipAddress: req.ip,
-      userAgent: req.headers['user-agent'],
-      expiresAt: Date.now() + (7 * 24 * 60 * 60 * 1000) // 7 days
-    });
-
-    // Log the registration
-    await dbManager.logAuthEvent({
-      userId,
-      eventType: 'registration',
-      ipAddress: req.ip,
-      userAgent: req.headers['user-agent']
-    });
+    logger.debug('Tokens generated successfully');
 
     // Return success response
     res.status(201).json({
       message: 'User registered successfully',
       userId,
-      ...tokens
+      ...tokens  // This spreads accessToken, refreshToken, and expiresIn
     });
 
   } catch (error) {
@@ -146,6 +140,7 @@ router.post('/auth/register', async (req, res, next) => {
 router.post('/auth/login', async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    logger.debug('Login attempt:', { email });
 
     if (!email || !password) {
       throw new BadRequestError('Email and password are required');
@@ -154,85 +149,35 @@ router.post('/auth/login', async (req, res, next) => {
     // Get user from database
     const user = await dbManager.getUserByEmail(email);
     if (!user) {
+      logger.debug('User not found:', { email });
       throw new UnauthorizedError('Invalid credentials');
     }
 
-    // Check if account is not suspended
-    if (user.status === 'suspended') {
-      throw new UnauthorizedError('Account is suspended. Please contact support.');
-    }
-
-    // Check failed login attempts
-    if (user.failedLoginAttempts >= 5) {
-      const lockoutPeriod = 15 * 60 * 1000; // 15 minutes
-      const lastFailedLogin = user.lastFailedLoginAt || 0;
-      
-      if (Date.now() - lastFailedLogin < lockoutPeriod) {
-        throw new UnauthorizedError('Account is temporarily locked. Please try again later.');
-      }
-      
-      // Reset failed attempts after lockout period
-      await dbManager.updateUser(user.id, {
-        failedLoginAttempts: 0,
-        lastFailedLoginAt: null
-      });
-    }
+    // Log hash details for debugging
+    logger.debug('Password verification:', { 
+      hasStoredHash: !!user.password,
+      storedHashLength: user.password?.length,
+      providedPasswordLength: password.length
+    });
 
     // Verify password
     const isValid = await auth.verifyPassword(password, user.password);
+    logger.debug('Password verification result:', { isValid });
+
     if (!isValid) {
-      // Increment failed login attempts
-      await dbManager.updateUser(user.id, {
-        failedLoginAttempts: (user.failedLoginAttempts || 0) + 1,
-        lastFailedLoginAt: Date.now()
-      });
-
-      await dbManager.logAuthEvent({
-        userId: user.id,
-        eventType: 'failed_login',
-        ipAddress: req.ip,
-        userAgent: req.headers['user-agent'],
-        details: { reason: 'invalid_password' }
-      });
-
+      logger.debug('Password verification failed');
       throw new UnauthorizedError('Invalid credentials');
     }
 
     // Generate tokens
     const tokens = await auth.generateTokens(user.id);
-
-    // Create new session
-    const sessionId = uuidv4();
-    await dbManager.createSession({
-      id: sessionId,
-      userId: user.id,
-      refreshToken: tokens.refreshToken,
-      ipAddress: req.ip,
-      userAgent: req.headers['user-agent'],
-      expiresAt: Date.now() + (7 * 24 * 60 * 60 * 1000) // 7 days
-    });
-
-    // Reset failed login attempts
-    await dbManager.updateUser(user.id, {
-      failedLoginAttempts: 0,
-      lastFailedLoginAt: null,
-      lastLoginAt: Date.now()
-    });
-
-    // Log successful login
-    await dbManager.logAuthEvent({
-      userId: user.id,
-      eventType: 'login',
-      ipAddress: req.ip,
-      userAgent: req.headers['user-agent']
-    });
+    logger.debug('Tokens generated successfully');
 
     // Return success response
     res.json({
       message: 'Login successful',
       userId: user.id,
-      ...tokens,
-      user: sanitizeUser(user)
+      ...tokens
     });
 
   } catch (error) {
@@ -422,97 +367,6 @@ router.get('/file/:cid', async (req, res, next) => {
   }
 });
 
-// Auth routes
-router.post('/auth/register', async (req, res, next) => {
-  try {
-    const { email, password, username } = req.body;
-
-    // Basic validation
-    if (!email || !password || !username) {
-      throw new BadRequestError('Email, password, and username are required');
-    }
-
-    // Hash password
-    const hashedPassword = await auth.hashPassword(password);
-
-    // Create user in database
-    const userId = await dbManager.create('users', {
-      email,
-      username,
-      password: hashedPassword,
-      createdAt: Date.now()
-    });
-
-    // Generate tokens
-    const tokens = await auth.generateTokens(userId);
-
-    res.status(201).json({
-      message: 'User registered successfully',
-      userId,
-      ...tokens
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post('/auth/login', async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      throw new BadRequestError('Email and password are required');
-    }
-
-    // Get user from database
-    const user = await dbManager.query('users', { email });
-    if (!user || user.length === 0) {
-      throw new UnauthorizedError('Invalid credentials');
-    }
-
-    // Verify password
-    const isValid = await auth.verifyPassword(password, user[0].password);
-    if (!isValid) {
-      throw new UnauthorizedError('Invalid credentials');
-    }
-
-    // Generate tokens
-    const tokens = await auth.generateTokens(user[0].id);
-
-    res.json({
-      message: 'Login successful',
-      userId: user[0].id,
-      ...tokens
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post('/auth/refresh', async (req, res, next) => {
-  try {
-    const { refreshToken } = req.body;
-    if (!refreshToken) {
-      throw new BadRequestError('Refresh token is required');
-    }
-
-    const tokens = await auth.refreshAccessToken(refreshToken);
-    res.json(tokens);
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post('/auth/logout', auth.middleware(), async (req, res, next) => {
-  try {
-    const token = req.headers.authorization.split(' ')[1];
-    auth.invalidateToken(token);
-    res.json({ message: 'Logged out successfully' });
-  } catch (error) {
-    next(error);
-  }
-});
-
 // Mount router with version prefix
 app.use(apiVersion, router);
 
@@ -529,10 +383,14 @@ app.use((req, res, next) => {
 app.use(errorMiddleware);
 
 // Initialize database when starting the server
-dbManager.initialize().then(() => {
-  dbManager.initializeTables();
-}).catch(error => {
-  logger.error('Failed to initialize database:', error);
-});
+if (process.env.NODE_ENV !== 'test') {
+  dbManager.initialize().then(() => {
+    logger.info('Production database initialized');
+    return dbManager.initializeTables();
+  }).catch(error => {
+    logger.error('Failed to initialize database:', error);
+    process.exit(1);  // Exit if database initialization fails
+  });
+}
 
 export default app;
