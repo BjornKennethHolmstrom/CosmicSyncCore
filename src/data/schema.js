@@ -70,7 +70,7 @@ export const SCHEMA = {
 
   files: `
     id TEXT PRIMARY KEY,
-    data BLOB,
+    data BYTEA,
     timestamp INTEGER NOT NULL,
     _deleted INTEGER DEFAULT 0
   `,

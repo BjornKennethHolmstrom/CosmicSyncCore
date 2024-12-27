@@ -5,6 +5,26 @@ All notable changes to the CosmicSyncCore project will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.6] - 2024-12-27
+
+### Added
+- Database setup script for PostgreSQL initialization
+- Environment configuration template with database settings
+- System migration support for new installations
+- Automatic table and index creation functionality
+
+### Changed
+- Updated dependencies to address security vulnerabilities
+- Migrated from older IPFS components to Helia
+- Improved NAT traversal implementation with STUN/TURN support
+- Enhanced development environment setup process
+
+### Fixed
+- Resolved CommonJS/ES Module import issues
+- Addressed better-sqlite3 build dependencies
+- Fixed database initialization process for new installations
+- Resolved deprecated package warnings
+
 ## [0.3.5] - 2024-11-08
 
 ### Added

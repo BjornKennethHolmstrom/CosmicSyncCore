@@ -4,7 +4,14 @@ CosmicSyncCore is a flexible, P2P-based platform designed to enable decentralize
 
 ## Current Status
 
-CosmicSyncCore is in early development. We have set up the basic project structure and implemented core components including P2P networking, database management, data synchronization, and encryption. We've also integrated an event bus system for improved inter-module communication and added Helia for decentralized file storage. Recently, we've implemented a comprehensive data synchronization system with conflict resolution and a complete test suite for core components.
+CosmicSyncCore is in early development (v0.3.6). Recent updates include improved database management, enhanced P2P networking capabilities, and better system migration support. We're currently focusing on completing Phase 1.0, which includes establishing a functional P2P network with basic communication.
+
+## Recent Updates
+
+- Enhanced database initialization and management
+- Improved NAT traversal with STUN/TURN support
+- Migration to Helia for decentralized storage
+- Updated dependency management and security fixes
 
 ## Recent Updates
 
@@ -28,16 +35,6 @@ CosmicSyncCore is in early development. We have set up the basic project structu
 - Comprehensive backup and restore functionality with compression
 - Backup integrity validation and automatic rotation
 - Event-based monitoring for cache and backup operations
-
-## Tech Stack
-
-- Backend: Node.js
-- Database: PostgreSQL
-- P2P: libp2p
-- Encryption: Node.js crypto module
-- Decentralized Storage: Helia (IPFS implementation)
-- Compression: zlib
-- Caching: Custom LRU implementation
 
 ## Decentralized File Storage with Helia
 
@@ -146,23 +143,81 @@ CosmicSyncCore/
 
 ```
 
-## Setup
+## Setup Instructions
+
+### Prerequisites
+
+- Node.js (v14.18.0 or later)
+- PostgreSQL
+- Build essentials (`build-essential`, `python3`, `gcc`, `g++`, `make`)
+- SQLite development files (`libsqlite3-dev`)
+
+### Database Setup
+
+1. Create PostgreSQL database:
+```sql
+CREATE DATABASE cosmicsynccore;
+CREATE USER cosmicsynccore WITH ENCRYPTED PASSWORD 'your_secure_password';
+GRANT ALL PRIVILEGES ON DATABASE cosmicsynccore TO cosmicsynccore;
+```
+
+2. Configure environment:
+```bash
+cp .env.example .env
+# Edit .env with your database credentials
+```
+
+3. Initialize database:
+```bash
+npm run setup-db
+# Or to reset database: npm run reset-db
+
+### Installation
 
 1. Clone the repository
-2. Install Node.js (version 14 or later recommended)
-3. Install PostgreSQL and create a database for the project
-4. Run `npm install` to install dependencies
-5. Copy `.env.example` to `.env` and fill in the required environment variables
-6. Run `npm start` to start the development server
-7. Run `npm test -- --detectOpenHandles --forceExit` to run the test suite
+2. Install dependencies:
+```bash
+npm install
+```
 
+3. Start the development server:
+```bash
+npm start
+```
+
+## Development Tools
+
+- Database Management: PostgreSQL
+- P2P Networking: libp2p with enhanced NAT traversal
+- Decentralized Storage: Helia (IPFS implementation)
+- Testing: Jest
+- API Documentation: OpenAPI/Swagger
+
+### Testing
+```bash
+npm test -- --detectOpenHandles --forceExit
+```
 ## Contributing
 
-We would love to receive contributions, especially regarding the P2P-technology, with which we are currently experiencing some issues. Contact bjorn.kenneth.holmstrom@gmail.com if you'd like to contribute.
+We welcome contributions, especially in the following areas:
+- P2P networking improvements
+- Security enhancements
+- Documentation
+- Testing
+
+Contact bjorn.kenneth.holmstrom@gmail.com for contribution guidelines.
 
 ## License
 
 This project is licensed under a custom license - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Next Steps
+
+- Complete Phase 1.0 P2P networking implementation
+- Enhance real-time data synchronization
+- Improve security measures
+- Expand test coverage
+- Refine documentation
 
 ## Acknowledgments
 
