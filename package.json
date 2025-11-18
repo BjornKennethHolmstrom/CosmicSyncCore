@@ -27,7 +27,7 @@
     "offline-first"
   ],
   "author": "Björn Kenneth Holmström",
-  "license": "SEE LICENSE IN LICENSE.md",
+  "license": "AGPL-3.0-only",
   "dependencies": {
     "@chainsafe/libp2p-noise": "^14.1.0",
     "@chainsafe/libp2p-yamux": "^6.0.1",

@@ -6,6 +6,34 @@ CosmicSyncCore is a flexible, P2P-based platform designed to enable decentralize
 
 CosmicSyncCore is in early development (v0.3.6). Recent updates include improved database management, enhanced P2P networking capabilities, and better system migration support. We're currently focusing on completing Phase 1.0, which includes establishing a functional P2P network with basic communication.
 
+Absolutely! Here's a snippet you can add to your README.md:
+
+## 🤝 Get Involved & Contribute
+
+**CosmicSyncCore is looking for rebels, builders, and visionaries** to help create the decentralized app platform of the future. We're building infrastructure for digital independence, and we need your help.
+
+### 🚀 Quick Start for Contributors
+
+- **New to the project?** Start with our **[Vision Document](docs/ESSENTIAL_READING/PROJECT_VISION.md)** to understand the big picture
+- **Ready to contribute?** Check out the **[Quickstart Guide](docs/ESSENTIAL_READING/QUICKSTART_CONTRIBUTORS.md)** to find your first task
+- **General guidelines** in our **[Contributing Guide](CONTRIBUTING.md)**
+
+### 🎯 Immediate Priorities
+We're currently focused on completing **Phase 1.0**:
+- ✅ P2P networking with libp2p
+- ✅ Decentralized storage with Helia/IPFS  
+- 🔄 Real-time data synchronization
+- 🔄 Basic conflict resolution
+- 🔄 Core API completion
+
+### 💡 Why Contribute?
+- Build **truly disruptive** alternatives to big tech platforms
+- Work with **cutting-edge P2P technologies** (libp2p, IPFS, Helia)
+- Create **user-sovereign apps** that respect privacy by design
+- Join a community building **infrastructure for digital freedom**
+
+**Your code could help power the next generation of decentralized applications!**
+
 ## Recent Updates
 
 - Enhanced database initialization and management
@@ -197,16 +225,6 @@ npm start
 ```bash
 npm test -- --detectOpenHandles --forceExit
 ```
-## Contributing
-
-We welcome contributions, especially in the following areas:
-- P2P networking improvements
-- Security enhancements
-- Documentation
-- Testing
-
-Contact bjorn.kenneth.holmstrom@gmail.com for contribution guidelines.
-
 ## License
 
 This project is licensed under a custom license - see the [LICENSE.md](LICENSE.md) file for details.

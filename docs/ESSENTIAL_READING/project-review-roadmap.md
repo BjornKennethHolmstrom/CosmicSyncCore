@@ -44,7 +44,7 @@ It should also enable tailored PWA applications to run on the CosmicSyncCore pla
 ### Phase 3: API and Developer Experience (2-3 months)
 1. Design and implement flexible API (REST and GraphQL)
 2. Create comprehensive developer documentation
-3. Develop example integrations for various app types (including EPiC)
+3. Develop example integrations for various app types
 
 ### Phase 4: Performance Optimization and Scalability (2-3 months)
 1. Implement efficient data sharding mechanisms
@@ -57,7 +57,7 @@ It should also enable tailored PWA applications to run on the CosmicSyncCore pla
 3. Create a developer portal with resources and support channels
 
 ### Phase 6: Beta Launch and Iteration (3-4 months)
-1. Launch closed beta with selected partner applications (including SharedSpheres and EPiC)
+1. Launch closed beta with selected partner applications
 2. Gather feedback and iterate on features
 3. Perform security audits and penetration testing
 
