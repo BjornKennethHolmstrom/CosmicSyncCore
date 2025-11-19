@@ -1,5 +1,5 @@
 # The CosmicSyncCore Manifesto
-### Infrastructure for Digital Sovereignty and Human Connection
+### Infrastructure for Digital Sovereignty and Human Flourishing
 
 **Current Status:** *Conceptual Blueprint & Architectural Exploration*
 
@@ -10,13 +10,32 @@ We currently live in a "Stage Orange" digital economy—a system optimized for e
 * **Users are Resources:** Human connection is mined for data to fuel advertising algorithms.
 * **Centralization is King:** Our digital lives are rented from a handful of corporate landlords (Cloud Providers).
 * **Fragility is Built-in:** If the server goes down, the community vanishes.
+* **The Tragedy of the Commons 2.0:** We lack the tools to coordinate shared resources transparently, leading to waste and competition rather than cooperation.
 
 We believe that you cannot build a "Stage Green" (Community-Centric) or "Stage Yellow" (Integrative/Systemic) society on top of extractive infrastructure. **To change how we connect, we must change *where* the connection lives.**
 
 ## The Vision: CosmicSyncCore
 CosmicSyncCore is not just a library; it is a declaration of independence for user data. It is an architectural blueprint for a "Local-First" internet where technology serves the user, not the server.
 
-It is designed to power applications like **SharedSpheres**—apps that prioritize meaningful depth over algorithmic engagement.
+It serves as the **"Engine"** for a new ecosystem of sovereign applications—a prototype for a new societal operating system.
+
+## The Ecosystem
+We are prototyping a full stack for a decentralized civilization, powered by CosmicSyncCore:
+
+### 1. SharedSpheres (The Social Layer)
+* **The Goal:** Reclaiming human connection from algorithms.
+* **The Shift:** Moving from "User Engagement" (Clicks) to "Deep Connection" (Values, Mind, Body, Soul).
+* **The Mechanism:** A privacy-first social graph that maps the whole human experience, not just a resume or a dating profile.
+
+### 2. CommonsNet (The Economic Layer)
+* **The Goal:** Coordinating our shared resources for human flourishing.
+* **The Shift:** Moving from "Ownership" to "Access," enabling communities to govern their own physical commons (tractors, tools, time) without the extraction of the gig economy.
+* **The Mechanism:** A decentralized ledger for resource sharing and participatory governance, ensuring labor matches meaningful work.
+
+### 3. GitSyncCore (The Creative Layer)
+* **The Goal:** Truly decentralized code collaboration.
+* **The Shift:** Ensuring that the tools we use to build the future are not owned by the corporations of the past. "When GitHub goes down, your work shouldn't."
+* **The Mechanism:** A P2P repository system where code lives across the network, resilient against censorship and infrastructure failure.
 
 ## Core Principles
 
@@ -30,10 +49,11 @@ Human connection is direct. Digital connection should be too.
 By utilizing **P2P Networking (Libp2p)** and **Decentralized Storage (Helia/IPFS)**, we remove the "Man in the Middle." This reduces censorship, eliminates server costs for non-profits, and ensures that communities can exist even if the internet goes offline.
 
 ### 3. The "Whole Human" Data Model
-Current platforms flatten users into a single dimension (a resume, a dating profile, a credit score). CosmicSyncCore is designed to handle complex, multi-dimensional data structures that reflect the reality of being human:
+Current platforms flatten users into a single dimension. CosmicSyncCore is designed to handle complex, multi-dimensional data structures that reflect the reality of being human:
 * **Mind:** Projects, Skills, Collaboration.
 * **Heart:** Values, Emotions, Relationships.
 * **Body:** Health, Activity, Physical presence.
+* **Soul:** Creativity, Consciousness, Meaning.
 
 ### 4. Resilience Over Efficiency
 Centralized servers are efficient, but they are fragile. A decentralized mesh is messier, but it is resilient. We prioritize the longevity and autonomy of the user's data over the speed of data mining.
