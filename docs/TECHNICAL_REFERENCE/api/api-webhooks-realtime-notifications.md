@@ -1,6 +1,6 @@
 # Webhooks and Real-time Notifications
 
-CosmicSyncCore provides robust support for webhooks and real-time notifications, allowing your application to receive instant updates about relevant events.
+CivicBase provides robust support for webhooks and real-time notifications, allowing your application to receive instant updates about relevant events.
 
 ## Webhook Setup
 
@@ -33,7 +33,7 @@ You can also subscribe to model-specific events using the format `model_name.eve
 
 ## Webhook Payload
 
-When an event occurs, CosmicSyncCore sends a POST request to your specified URL with a payload:
+When an event occurs, CivicBase sends a POST request to your specified URL with a payload:
 
 ```json
 {
@@ -78,15 +78,15 @@ function verifyWebhookSignature(payload, signature, secret) {
 
 ## Real-time Notifications via WebSocket
 
-For real-time updates, CosmicSyncCore also provides a WebSocket API.
+For real-time updates, CivicBase also provides a WebSocket API.
 
 ### Establishing a WebSocket Connection
 
 ```javascript
-const socket = new WebSocket('wss://api.cosmicsynccore.com/v1/realtime');
+const socket = new WebSocket('wss://api.civicbase.com/v1/realtime');
 
 socket.onopen = () => {
-  console.log('Connected to CosmicSyncCore realtime API');
+  console.log('Connected to CivicBase realtime API');
   socket.send(JSON.stringify({
     type: 'authenticate',
     token: 'your_auth_token'

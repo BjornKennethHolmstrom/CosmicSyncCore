@@ -1,4 +1,4 @@
-# CosmicSyncCore Technology Decisions
+# CivicBase Technology Decisions
 
 ## P2P Networking Library Selection
 
@@ -10,7 +10,7 @@ We evaluated the following options:
 
 ### Decision: libp2p
 
-We have chosen to use libp2p as our P2P networking library for CosmicSyncCore.
+We have chosen to use libp2p as our P2P networking library for CivicBase.
 
 Rationale:
 - Modular architecture allowing for customization and flexibility
@@ -39,7 +39,7 @@ We evaluated the following options:
 
 ### Decision: PostgreSQL
 
-We have chosen to use PostgreSQL as our database for CosmicSyncCore.
+We have chosen to use PostgreSQL as our database for CivicBase.
 
 Rationale:
 - Robust and feature-rich relational database

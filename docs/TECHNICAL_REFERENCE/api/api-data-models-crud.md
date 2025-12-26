@@ -2,7 +2,7 @@
 
 ## Defining Custom Data Models
 
-CosmicSyncCore allows applications to define custom data models dynamically. This is done through the `/data-models` endpoint.
+CivicBase allows applications to define custom data models dynamically. This is done through the `/data-models` endpoint.
 
 ### Create a Data Model
 
@@ -145,7 +145,7 @@ Once a data model is defined, you can perform CRUD operations on instances of th
 
 ## Data Validation
 
-CosmicSyncCore automatically validates data against the defined model. If validation fails, you'll receive a 400 Bad Request response with details about the validation errors.
+CivicBase automatically validates data against the defined model. If validation fails, you'll receive a 400 Bad Request response with details about the validation errors.
 
 Example validation error response:
 ```json

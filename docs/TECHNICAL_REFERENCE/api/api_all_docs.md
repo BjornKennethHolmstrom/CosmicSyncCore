@@ -1,8 +1,8 @@
-# CosmicSyncCore API: Additional Sections
+# CivicBase API: Additional Sections
 
 ## Webhooks
 
-Webhooks allow your application to receive real-time notifications about events in CosmicSyncCore.
+Webhooks allow your application to receive real-time notifications about events in CivicBase.
 
 ### Configuring Webhooks
 
@@ -22,7 +22,7 @@ Webhooks allow your application to receive real-time notifications about events 
 
 ### Webhook Payload
 
-When an event occurs, CosmicSyncCore will send a POST request to your specified URL with a payload similar to:
+When an event occurs, CivicBase will send a POST request to your specified URL with a payload similar to:
 
 ```json
 {
@@ -86,7 +86,7 @@ Perform operations on multiple resources in a single API call.
 
 ## SDK Documentation
 
-CosmicSyncCore provides SDKs for several programming languages:
+CivicBase provides SDKs for several programming languages:
 
 - JavaScript/TypeScript
 - Python
@@ -109,13 +109,13 @@ Each SDK provides a similar interface to the REST API, with additional language-
 For a complete list of all available endpoints, parameters, and response formats, please refer to our interactive API reference at:
 
 ```
-https://api.cosmicsynccore.com/docs
+https://api.civicbase.com/docs
 ```
 
 This reference is automatically generated from our OpenAPI specification and is always up-to-date with the latest API changes.
 # Advanced Security Features
 
-CosmicSyncCore provides a range of advanced security features to protect your application and user data.
+CivicBase provides a range of advanced security features to protect your application and user data.
 
 ## End-to-End Encryption
 
@@ -176,7 +176,7 @@ await cosmicSync.updateInstance('UserProfile', 'user_123', { twoFactorSecret: se
 const qrCodeUrl = speakeasy.otpauthURL({
   secret: secret.ascii,
   label: 'MyApp',
-  issuer: 'CosmicSyncCore'
+  issuer: 'CivicBase'
 });
 ```
 
@@ -201,11 +201,11 @@ Use a secure key management system to store and manage encryption keys and other
 const keytar = require('keytar');
 
 async function getEncryptionKey(userId) {
-  return await keytar.getPassword('CosmicSyncCore', userId);
+  return await keytar.getPassword('CivicBase', userId);
 }
 
 async function setEncryptionKey(userId, key) {
-  await keytar.setPassword('CosmicSyncCore', userId, key);
+  await keytar.setPassword('CivicBase', userId, key);
 }
 ```
 
@@ -304,10 +304,10 @@ async function secureErase(userId) {
 }
 ```
 
-By implementing these advanced security features, you can significantly enhance the security of your application built on CosmicSyncCore, protecting both your users' data and your application's integrity.
+By implementing these advanced security features, you can significantly enhance the security of your application built on CivicBase, protecting both your users' data and your application's integrity.
 # Conflict Resolution Strategies
 
-In a P2P system like CosmicSyncCore, conflicts can arise when multiple users or devices modify the same data concurrently. Implementing effective conflict resolution strategies is crucial for maintaining data consistency and providing a smooth user experience.
+In a P2P system like CivicBase, conflicts can arise when multiple users or devices modify the same data concurrently. Implementing effective conflict resolution strategies is crucial for maintaining data consistency and providing a smooth user experience.
 
 ## 1. Last Write Wins (LWW)
 
@@ -502,10 +502,10 @@ cosmicSync.setConflictResolver('CriticalData', userAssistedResolver);
 5. Allow manual conflict resolution for critical data when automatic resolution is not sufficient.
 6. Test conflict resolution strategies thoroughly with various scenarios.
 
-By implementing these conflict resolution strategies, you can ensure that your CosmicSyncCore-based application handles data conflicts gracefully, maintaining data consistency across the P2P network.
+By implementing these conflict resolution strategies, you can ensure that your CivicBase-based application handles data conflicts gracefully, maintaining data consistency across the P2P network.
 # Custom Business Logic Implementation
 
-CosmicSyncCore allows you to extend its functionality by implementing custom business logic. This enables you to create tailored behaviors for your specific application needs.
+CivicBase allows you to extend its functionality by implementing custom business logic. This enables you to create tailored behaviors for your specific application needs.
 
 ## Custom Validators
 
@@ -648,12 +648,12 @@ cosmicSync.registerSyncStrategy(customSyncStrategy);
 4. Test custom logic thoroughly, including edge cases
 5. Document all custom logic for easier maintenance
 
-By leveraging these custom business logic features, you can tailor CosmicSyncCore to meet your specific application requirements while maintaining the benefits of its P2P architecture.
+By leveraging these custom business logic features, you can tailor CivicBase to meet your specific application requirements while maintaining the benefits of its P2P architecture.
 # Data Models and CRUD Operations
 
 ## Defining Custom Data Models
 
-CosmicSyncCore allows applications to define custom data models dynamically. This is done through the `/data-models` endpoint.
+CivicBase allows applications to define custom data models dynamically. This is done through the `/data-models` endpoint.
 
 ### Create a Data Model
 
@@ -796,7 +796,7 @@ Once a data model is defined, you can perform CRUD operations on instances of th
 
 ## Data Validation
 
-CosmicSyncCore automatically validates data against the defined model. If validation fails, you'll receive a 400 Bad Request response with details about the validation errors.
+CivicBase automatically validates data against the defined model. If validation fails, you'll receive a 400 Bad Request response with details about the validation errors.
 
 Example validation error response:
 ```json
@@ -810,13 +810,13 @@ Example validation error response:
 ```
 # Data Privacy and GDPR Compliance
 
-CosmicSyncCore is designed with a privacy-first approach, ensuring that your application can easily comply with data protection regulations like GDPR.
+CivicBase is designed with a privacy-first approach, ensuring that your application can easily comply with data protection regulations like GDPR.
 
 ## Data Storage and Processing
 
 ### Local-First Approach
 
-CosmicSyncCore prioritizes local data storage and processing:
+CivicBase prioritizes local data storage and processing:
 
 1. User data is primarily stored and processed on the user's device
 2. Only necessary, non-personal data is synchronized with the P2P network
@@ -975,16 +975,16 @@ Maintain a clear and comprehensive privacy policy that outlines:
 4. Data retention periods
 5. How to contact your Data Protection Officer
 
-By implementing these practices and features, your application can maintain a high standard of data privacy and comply with GDPR and other data protection regulations while using CosmicSyncCore.
+By implementing these practices and features, your application can maintain a high standard of data privacy and comply with GDPR and other data protection regulations while using CivicBase.
 # Error Handling, Rate Limiting, and API Versioning
 
 ## Error Handling
 
-CosmicSyncCore uses conventional HTTP response codes to indicate the success or failure of an API request. In general:
+CivicBase uses conventional HTTP response codes to indicate the success or failure of an API request. In general:
 
 - Codes in the 2xx range indicate success
 - Codes in the 4xx range indicate an error that failed given the information provided (e.g., a required parameter was missing)
-- Codes in the 5xx range indicate an error with CosmicSyncCore's servers
+- Codes in the 5xx range indicate an error with CivicBase's servers
 
 ### Error Response Format
 
@@ -1008,7 +1008,7 @@ Example error response:
 | 403 | FORBIDDEN | The API key doesn't have permissions to perform the request |
 | 404 | NOT_FOUND | The requested resource doesn't exist |
 | 429 | RATE_LIMIT_EXCEEDED | Too many requests hit the API too quickly |
-| 500 | INTERNAL_SERVER_ERROR | Something went wrong on CosmicSyncCore's end |
+| 500 | INTERNAL_SERVER_ERROR | Something went wrong on CivicBase's end |
 
 ### Handling Errors
 
@@ -1020,7 +1020,7 @@ When handling errors in your application, we recommend:
 
 ## Rate Limiting
 
-To ensure the stability and fairness of the CosmicSyncCore API, rate limits are enforced on a per-user basis.
+To ensure the stability and fairness of the CivicBase API, rate limits are enforced on a per-user basis.
 
 ### Rate Limit Rules
 
@@ -1059,14 +1059,14 @@ To avoid hitting rate limits:
 
 ## API Versioning
 
-CosmicSyncCore uses URL versioning to ensure backward compatibility as the API evolves.
+CivicBase uses URL versioning to ensure backward compatibility as the API evolves.
 
 ### Version Format
 
 The version is specified in the URL path, immediately after the API root:
 
 ```
-https://api.cosmicsynccore.com/v1/
+https://api.civicbase.com/v1/
 ```
 
 ### Current Versions
@@ -1084,7 +1084,7 @@ https://api.cosmicsynccore.com/v1/
 Always specify the API version in your requests to ensure consistency:
 
 ```
-GET https://api.cosmicsynccore.com/v1/users/me
+GET https://api.civicbase.com/v1/users/me
 ```
 
 ### Version Sunset
@@ -1098,7 +1098,7 @@ When a version is scheduled for sunset:
 ### Best Practices
 
 1. Always specify a version in your API calls
-2. Subscribe to the CosmicSyncCore developer newsletter for version update notifications
+2. Subscribe to the CivicBase developer newsletter for version update notifications
 3. Regularly review your integration to ensure you're using the latest recommended version
 
 ## Changelog
@@ -1106,34 +1106,34 @@ When a version is scheduled for sunset:
 Major changes to the API will be documented in our changelog, available at:
 
 ```
-https://api.cosmicsynccore.com/changelog
+https://api.civicbase.com/changelog
 ```
 
 We recommend regularly reviewing the changelog to stay informed about new features, bug fixes, and deprecations.
-# CosmicSyncCore API Documentation
+# CivicBase API Documentation
 
-# CosmicSyncCore API Documentation
+# CivicBase API Documentation
 
 ## Introduction
 
-The CosmicSyncCore API provides a flexible and powerful interface for applications to interact with the CosmicSyncCore platform. This API supports both RESTful HTTP endpoints and GraphQL queries, allowing developers to choose the most suitable approach for their application.
+The CivicBase API provides a flexible and powerful interface for applications to interact with the CivicBase platform. This API supports both RESTful HTTP endpoints and GraphQL queries, allowing developers to choose the most suitable approach for their application.
 
 ## Core Concepts
 
 ### Data Models
-CosmicSyncCore allows applications to define custom data models. These models are flexible and can be adapted to various use cases.
+CivicBase allows applications to define custom data models. These models are flexible and can be adapted to various use cases.
 
 ### Real-time Updates
 The API supports real-time updates through WebSocket connections, enabling applications to receive instant notifications about data changes.
 
 ### Authentication and Authorization
-CosmicSyncCore uses JWT (JSON Web Tokens) for authentication and provides fine-grained access control mechanisms.
+CivicBase uses JWT (JSON Web Tokens) for authentication and provides fine-grained access control mechanisms.
 
 ## API Versions
 
 This documentation covers API v1. Always specify the API version in your requests.
 
-Base URL: `https://api.cosmicsynccore.com/v1`
+Base URL: `https://api.civicbase.com/v1`
 
 ## Authentication
 
@@ -1144,7 +1144,7 @@ To obtain a JWT token, use the authentication endpoints described in the User Ma
 
 ## Error Handling
 
-The API uses conventional HTTP response codes to indicate the success or failure of requests. Codes in the 2xx range indicate success, codes in the 4xx range indicate an error that failed given the information provided, and codes in the 5xx range indicate an error with CosmicSyncCore's servers.
+The API uses conventional HTTP response codes to indicate the success or failure of requests. Codes in the 2xx range indicate success, codes in the 4xx range indicate an error that failed given the information provided, and codes in the 5xx range indicate an error with CivicBase's servers.
 
 Error responses will include a JSON object with an `error` key containing a human-readable error message.
 
@@ -1227,11 +1227,11 @@ Code: 200
 
 # Offline Functionality and Sync
 
-CosmicSyncCore is designed to support offline functionality, allowing applications to work seamlessly even without an internet connection. This guide explains how to implement offline support and data synchronization.
+CivicBase is designed to support offline functionality, allowing applications to work seamlessly even without an internet connection. This guide explains how to implement offline support and data synchronization.
 
 ## Offline Data Storage
 
-Applications should implement local storage to cache data and enable offline functionality. CosmicSyncCore provides methods to facilitate this:
+Applications should implement local storage to cache data and enable offline functionality. CivicBase provides methods to facilitate this:
 
 ```javascript
 // Store data locally
@@ -1349,7 +1349,7 @@ async function partialSync() {
 By implementing these offline and sync features, your application can provide a seamless experience to users, regardless of their network connectivity.
 # Performance Optimization Techniques
 
-Optimizing performance is crucial for providing a smooth user experience in applications built with CosmicSyncCore. Here are some key techniques to improve performance:
+Optimizing performance is crucial for providing a smooth user experience in applications built with CivicBase. Here are some key techniques to improve performance:
 
 ## 1. Efficient Data Querying
 
@@ -1576,16 +1576,16 @@ async function measureSyncPerformance() {
 }
 ```
 
-By implementing these performance optimization techniques, you can significantly improve the efficiency and responsiveness of your CosmicSyncCore-based application.
+By implementing these performance optimization techniques, you can significantly improve the efficiency and responsiveness of your CivicBase-based application.
 # Real-time Updates and Querying
 
 ## Real-time Updates
 
-CosmicSyncCore provides real-time updates through WebSocket connections, allowing applications to receive instant notifications about data changes.
+CivicBase provides real-time updates through WebSocket connections, allowing applications to receive instant notifications about data changes.
 
 ### Establishing a WebSocket Connection
 
-- **URL**: `wss://api.cosmicsynccore.com/v1/realtime`
+- **URL**: `wss://api.civicbase.com/v1/realtime`
 - **Headers**:
   - `Authorization: Bearer <your_jwt_token>`
 
@@ -1632,7 +1632,7 @@ To unsubscribe, send a JSON message:
 
 ## Advanced Querying
 
-CosmicSyncCore provides powerful querying capabilities to filter, sort, and aggregate data.
+CivicBase provides powerful querying capabilities to filter, sort, and aggregate data.
 
 ### Filtering
 
@@ -1736,7 +1736,7 @@ Supported aggregation operations:
 
 ### GraphQL Support
 
-For more complex queries, CosmicSyncCore also supports GraphQL:
+For more complex queries, CivicBase also supports GraphQL:
 
 - **URL**: `/graphql`
 - **Method**: `POST`
@@ -1780,7 +1780,7 @@ To create a new user account:
     }
     ```
 
-Note: The `application_id` field is used to associate the user with a specific application using CosmicSyncCore.
+Note: The `application_id` field is used to associate the user with a specific application using CivicBase.
 
 ## User Authentication
 
@@ -1852,7 +1852,7 @@ To refresh an expired JWT token:
 
 ## Application-specific User Data
 
-CosmicSyncCore allows applications to store custom user data:
+CivicBase allows applications to store custom user data:
 
 ### Set Custom User Data
 
@@ -1892,7 +1892,7 @@ CosmicSyncCore allows applications to store custom user data:
 
 ## User Permissions and Roles
 
-CosmicSyncCore supports a flexible role-based access control (RBAC) system:
+CivicBase supports a flexible role-based access control (RBAC) system:
 
 ### Assign Role to User
 
@@ -1937,7 +1937,7 @@ CosmicSyncCore supports a flexible role-based access control (RBAC) system:
 
 ## Multi-factor Authentication (MFA)
 
-CosmicSyncCore supports multi-factor authentication for enhanced security:
+CivicBase supports multi-factor authentication for enhanced security:
 
 ### Enable MFA
 
@@ -1980,7 +1980,7 @@ CosmicSyncCore supports multi-factor authentication for enhanced security:
 Remember to handle errors appropriately and provide clear error messages to users when authentication or authorization fails.
 # Webhooks and Real-time Notifications
 
-CosmicSyncCore provides robust support for webhooks and real-time notifications, allowing your application to receive instant updates about relevant events.
+CivicBase provides robust support for webhooks and real-time notifications, allowing your application to receive instant updates about relevant events.
 
 ## Webhook Setup
 
@@ -2013,7 +2013,7 @@ You can also subscribe to model-specific events using the format `model_name.eve
 
 ## Webhook Payload
 
-When an event occurs, CosmicSyncCore sends a POST request to your specified URL with a payload:
+When an event occurs, CivicBase sends a POST request to your specified URL with a payload:
 
 ```json
 {
@@ -2058,15 +2058,15 @@ function verifyWebhookSignature(payload, signature, secret) {
 
 ## Real-time Notifications via WebSocket
 
-For real-time updates, CosmicSyncCore also provides a WebSocket API.
+For real-time updates, CivicBase also provides a WebSocket API.
 
 ### Establishing a WebSocket Connection
 
 ```javascript
-const socket = new WebSocket('wss://api.cosmicsynccore.com/v1/realtime');
+const socket = new WebSocket('wss://api.civicbase.com/v1/realtime');
 
 socket.onopen = () => {
-  console.log('Connected to CosmicSyncCore realtime API');
+  console.log('Connected to CivicBase realtime API');
   socket.send(JSON.stringify({
     type: 'authenticate',
     token: 'your_auth_token'

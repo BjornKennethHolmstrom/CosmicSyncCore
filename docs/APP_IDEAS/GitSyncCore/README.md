@@ -4,7 +4,7 @@
 
 ## The Vision
 
-GitSyncCore is a fully decentralized Git platform built on CosmicSyncCore - because your open source contributions shouldn't depend on any single company's infrastructure.
+GitSyncCore is a fully decentralized Git platform built on CivicBase - because your open source contributions shouldn't depend on any single company's infrastructure.
 
 ### Why This Matters
 
@@ -42,9 +42,9 @@ gitsync clone cosmic://repo-id
 - **Cryptographically signed** - Every commit verified
 - **Conflict-free collaboration** - Built on CRDTs for smooth merging
 
-## Built on CosmicSyncCore
+## Built on CivicBase
 
-GitSyncCore demonstrates the power of the CosmicSyncCore platform:
+GitSyncCore demonstrates the power of the CivicBase platform:
 
 ### Leverages Existing Components
 - **P2P Networking** - libp2p for peer discovery and communication
@@ -53,10 +53,10 @@ GitSyncCore demonstrates the power of the CosmicSyncCore platform:
 - **Security** - End-to-end encryption and signing
 
 ### Platform Benefits
-- **Proven Infrastructure** - Built on battle-tested CosmicSyncCore components
+- **Proven Infrastructure** - Built on battle-tested CivicBase components
 - **Extensible** - Plugin system for custom workflows
 - **Scalable** - Naturally grows with the network
-- **Open Source** - AGPL-3.0 licensed, like CosmicSyncCore
+- **Open Source** - AGPL-3.0 licensed, like CivicBase
 
 ## The Bigger Picture
 
@@ -68,7 +68,7 @@ This isn't just another Git hosting service. It's:
 - True decentralization in practice
 
 ### A Demonstration
-- CosmicSyncCore's capabilities in action
+- CivicBase's capabilities in action
 - What's possible when we build without permission
 - The future of collaborative development
 

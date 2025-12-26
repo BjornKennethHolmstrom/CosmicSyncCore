@@ -1,4 +1,4 @@
-# CosmicSyncCore Development Roadmap
+# CivicBase Development Roadmap
 
 > **A living document showing where we are and where we're going**
 
@@ -132,7 +132,7 @@ This roadmap evolves based on:
 ## 📚 Related Documents
 
 - [Detailed Phase Plans](/docs/PLANNING/) - Comprehensive technical specifications
-- [Project Vision](/docs/ESSENTIAL_READING/PROJECT_VISION.md) - The "why" behind CosmicSyncCore  
+- [Project Vision](/docs/ESSENTIAL_READING/PROJECT_VISION.md) - The "why" behind CivicBase  
 - [Contributor Guide](/docs/ESSENTIAL_READING/QUICKSTART_CONTRIBUTORS.md) - How to get started
 - [API Documentation](/docs/TECHNICAL_REFERENCE/) - Technical reference
 

@@ -2,11 +2,11 @@
 
 ## Real-time Updates
 
-CosmicSyncCore provides real-time updates through WebSocket connections, allowing applications to receive instant notifications about data changes.
+CivicBase provides real-time updates through WebSocket connections, allowing applications to receive instant notifications about data changes.
 
 ### Establishing a WebSocket Connection
 
-- **URL**: `wss://api.cosmicsynccore.com/v1/realtime`
+- **URL**: `wss://api.civicbase.com/v1/realtime`
 - **Headers**:
   - `Authorization: Bearer <your_jwt_token>`
 
@@ -53,7 +53,7 @@ To unsubscribe, send a JSON message:
 
 ## Advanced Querying
 
-CosmicSyncCore provides powerful querying capabilities to filter, sort, and aggregate data.
+CivicBase provides powerful querying capabilities to filter, sort, and aggregate data.
 
 ### Filtering
 
@@ -157,7 +157,7 @@ Supported aggregation operations:
 
 ### GraphQL Support
 
-For more complex queries, CosmicSyncCore also supports GraphQL:
+For more complex queries, CivicBase also supports GraphQL:
 
 - **URL**: `/graphql`
 - **Method**: `POST`

@@ -1,6 +1,6 @@
 # Advanced Security Features
 
-CosmicSyncCore provides a range of advanced security features to protect your application and user data.
+CivicBase provides a range of advanced security features to protect your application and user data.
 
 ## End-to-End Encryption
 
@@ -61,7 +61,7 @@ await cosmicSync.updateInstance('UserProfile', 'user_123', { twoFactorSecret: se
 const qrCodeUrl = speakeasy.otpauthURL({
   secret: secret.ascii,
   label: 'MyApp',
-  issuer: 'CosmicSyncCore'
+  issuer: 'CivicBase'
 });
 ```
 
@@ -86,11 +86,11 @@ Use a secure key management system to store and manage encryption keys and other
 const keytar = require('keytar');
 
 async function getEncryptionKey(userId) {
-  return await keytar.getPassword('CosmicSyncCore', userId);
+  return await keytar.getPassword('CivicBase', userId);
 }
 
 async function setEncryptionKey(userId, key) {
-  await keytar.setPassword('CosmicSyncCore', userId, key);
+  await keytar.setPassword('CivicBase', userId, key);
 }
 ```
 
@@ -189,4 +189,4 @@ async function secureErase(userId) {
 }
 ```
 
-By implementing these advanced security features, you can significantly enhance the security of your application built on CosmicSyncCore, protecting both your users' data and your application's integrity.
+By implementing these advanced security features, you can significantly enhance the security of your application built on CivicBase, protecting both your users' data and your application's integrity.

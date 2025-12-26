@@ -8,7 +8,7 @@
 
 ### ✅ Completed
 - [x] **Comprehensive vision** and architectural framework
-- [x] **Four-layer integration model** with CosmicSyncCore, Project Janus, and GGF
+- [x] **Four-layer integration model** with CivicBase, Project Janus, and GGF
 - [x] **Detailed use cases** from local to global scale
 - [x] **Technical specifications** for core components
 - [x] **Initial community interest** and feedback
@@ -25,7 +25,7 @@
 **Goal**: Working CommonsNet deployment in 3+ real communities
 
 #### Phase 1.1: Core Platform (Months 1-6)
-- [ ] **Basic resource registry** on CosmicSyncCore
+- [ ] **Basic resource registry** on CivicBase
 - [ ] **Simple borrowing/return system**
 - [ ] **User authentication** and profiles
 - [ ] **Mobile-first web interface**
@@ -162,7 +162,7 @@
 
 #### Technical Roles
 - **Frontend Developers** - Svelte/SvelteKit interfaces
-- **Backend Engineers** - CosmicSyncCore integration
+- **Backend Engineers** - CivicBase integration
 - **Protocol Designers** - Resource sharing protocols
 - **Security Experts** - Privacy and encryption
 - **DevOps Engineers** - Deployment and scaling
@@ -304,7 +304,7 @@ This roadmap evolves based on:
 - [System Architecture](./ARCHITECTURE.md) - Technical implementation details  
 - [Use Cases](./USE_CASES.md) - Practical applications and impact stories
 - [Relationship Model](./RELATIONSHIP_MODEL.md) - How all four projects work together
-- [CosmicSyncCore Integration](../cosmicsynccore/README.md) - Infrastructure foundation
+- [CivicBase Integration](../civicbase/README.md) - Infrastructure foundation
 
 *This roadmap represents our current best thinking about how to build a society-layer for human flourishing. It will evolve as we learn and as the world changes around us.*
 

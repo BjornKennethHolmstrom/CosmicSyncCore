@@ -1,10 +1,10 @@
 # GitSyncCore Integration Guide
 
-> *How GitSyncCore works with existing Git ecosystems and CosmicSyncCore platform*
+> *How GitSyncCore works with existing Git ecosystems and CivicBase platform*
 
 ## Integration Overview
 
-GitSyncCore is designed to integrate seamlessly with existing Git workflows while providing a bridge to the decentralized future. This document covers integration points with standard Git tools, CosmicSyncCore platform, and third-party services.
+GitSyncCore is designed to integrate seamlessly with existing Git workflows while providing a bridge to the decentralized future. This document covers integration points with standard Git tools, CivicBase platform, and third-party services.
 
 ## 1. Git Client Integration
 
@@ -46,18 +46,18 @@ git lfs track "*.psd"
 git add large-file.zip  # Handled transparently
 ```
 
-## 2. CosmicSyncCore Platform Integration
+## 2. CivicBase Platform Integration
 
 ### Using Core Services
 
 ```javascript
-// GitSyncCore bootstrap using CosmicSyncCore
+// GitSyncCore bootstrap using CivicBase
 const GitSyncCore = require('gitsynccore');
-const CosmicSyncCore = require('cosmicsynccore');
+const CivicBase = require('civicbase');
 
 async function setupGitSync() {
-  // Initialize with existing CosmicSyncCore instance
-  const cosmic = await CosmicSyncCore.createNode({
+  // Initialize with existing CivicBase instance
+  const cosmic = await CivicBase.createNode({
     config: 'cosmic-config.json'
   });
   
@@ -78,7 +78,7 @@ async function setupGitSync() {
 ### Shared Resource Management
 
 ```yaml
-# CosmicSyncCore configuration with GitSyncCore
+# CivicBase configuration with GitSyncCore
 cosmic:
   network:
     libp2p:

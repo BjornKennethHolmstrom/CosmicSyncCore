@@ -1,8 +1,8 @@
-# CosmicSyncCore API Documentation
+# CivicBase API Documentation
 
 ## API Version: v1
 
-This document outlines the API endpoints for CosmicSyncCore.
+This document outlines the API endpoints for CivicBase.
 
 ## Authentication
 

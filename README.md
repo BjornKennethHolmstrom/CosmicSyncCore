@@ -1,16 +1,16 @@
-# CosmicSyncCore
+# CivicBase
 
-CosmicSyncCore is a flexible, P2P-based platform designed to enable decentralized data storage and synchronization for various applications. It supports a wide range of app types and use cases, including SharedSpheres and EPiC (Exercise Planning in Collaboration).
+CivicBase is a flexible, P2P-based platform designed to enable decentralized data storage and synchronization for various applications. It supports a wide range of app types and use cases, including SharedSpheres and EPiC (Exercise Planning in Collaboration).
 
 ## Current Status
 
-CosmicSyncCore is in early development (v0.3.6). Recent updates include improved database management, enhanced P2P networking capabilities, and better system migration support. We're currently focusing on completing Phase 1.0, which includes establishing a functional P2P network with basic communication.
+CivicBase is in early development (v0.3.6). Recent updates include improved database management, enhanced P2P networking capabilities, and better system migration support. We're currently focusing on completing Phase 1.0, which includes establishing a functional P2P network with basic communication.
 
 Absolutely! Here's a snippet you can add to your README.md:
 
 ## 🤝 Get Involved & Contribute
 
-**CosmicSyncCore is looking for rebels, builders, and visionaries** to help create the decentralized app platform of the future. We're building infrastructure for digital independence, and we need your help.
+**CivicBase is looking for rebels, builders, and visionaries** to help create the decentralized app platform of the future. We're building infrastructure for digital independence, and we need your help.
 
 ### 🚀 Quick Start for Contributors
 
@@ -66,7 +66,7 @@ We're currently focused on completing **Phase 1.0**:
 
 ## Decentralized File Storage with Helia
 
-CosmicSyncCore uses Helia, a modern, modular implementation of IPFS, for decentralized file storage. Helia offers several advantages:
+CivicBase uses Helia, a modern, modular implementation of IPFS, for decentralized file storage. Helia offers several advantages:
 
 - Improved performance and scalability for content retrieval and file management
 - Better integration with decentralized web applications (PWAs)
@@ -79,7 +79,7 @@ While Helia is optimized for JavaScript and browser-based environments, it remai
 ## Project Structure
 
 ```
-CosmicSyncCore/
+CivicBase/
 ├── CHANGELOG.md
 ├── combined.log
 ├── config
@@ -184,9 +184,9 @@ CosmicSyncCore/
 
 1. Create PostgreSQL database:
 ```sql
-CREATE DATABASE cosmicsynccore;
-CREATE USER cosmicsynccore WITH ENCRYPTED PASSWORD 'your_secure_password';
-GRANT ALL PRIVILEGES ON DATABASE cosmicsynccore TO cosmicsynccore;
+CREATE DATABASE civicbase;
+CREATE USER civicbase WITH ENCRYPTED PASSWORD 'your_secure_password';
+GRANT ALL PRIVILEGES ON DATABASE civicbase TO civicbase;
 ```
 
 2. Configure environment:

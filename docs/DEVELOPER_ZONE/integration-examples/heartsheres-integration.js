@@ -1,10 +1,10 @@
 // HeartSpheres Integration Example
 
-const CosmicSyncCore = require('cosmicsynccore-sdk');
+const CivicBase = require('civicbase-sdk');
 const CryptoJS = require('crypto-js'); // For local encryption
 
 // Initialize the SDK with HeartSpheres credentials
-const cosmicSync = new CosmicSyncCore({
+const cosmicSync = new CivicBase({
   appId: 'heartsheres_app_id',
   appSecret: 'heartsheres_app_secret'
 });

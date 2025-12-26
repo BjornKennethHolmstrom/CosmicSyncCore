@@ -1,6 +1,6 @@
 # Performance Optimization Techniques
 
-Optimizing performance is crucial for providing a smooth user experience in applications built with CosmicSyncCore. Here are some key techniques to improve performance:
+Optimizing performance is crucial for providing a smooth user experience in applications built with CivicBase. Here are some key techniques to improve performance:
 
 ## 1. Efficient Data Querying
 
@@ -227,4 +227,4 @@ async function measureSyncPerformance() {
 }
 ```
 
-By implementing these performance optimization techniques, you can significantly improve the efficiency and responsiveness of your CosmicSyncCore-based application.
+By implementing these performance optimization techniques, you can significantly improve the efficiency and responsiveness of your CivicBase-based application.

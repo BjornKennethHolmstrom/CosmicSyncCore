@@ -2,13 +2,13 @@
 
 ## System Overview
 
-GitSyncCore extends CosmicSyncCore's decentralized platform to provide Git repository hosting as a native application. This document explains how GitSyncCore components integrate with and leverage the CosmicSyncCore infrastructure.
+GitSyncCore extends CivicBase's decentralized platform to provide Git repository hosting as a native application. This document explains how GitSyncCore components integrate with and leverage the CivicBase infrastructure.
 
 ## High-Level Architecture
 
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   Git Client    │    │   GitSyncCore    │    │  CosmicSyncCore │
+│   Git Client    │    │   GitSyncCore    │    │  CivicBase │
 │                 │    │    Application   │    │    Platform     │
 ├─────────────────┤    ├──────────────────┤    ├─────────────────┤
 │ Standard Git    │◄──►│ Git Protocol     │◄──►│ P2P Networking  │
@@ -33,13 +33,13 @@ GitSyncCore extends CosmicSyncCore's decentralized platform to provide Git repos
 
 ## Component Integration
 
-### 1. Leveraging CosmicSyncCore P2P Networking
+### 1. Leveraging CivicBase P2P Networking
 
 ```javascript
 // GitSyncCore reuses the existing libp2p node
 class GitSyncNetwork {
   constructor() {
-    this.node = CosmicSyncCore.getP2PNode();
+    this.node = CivicBase.getP2PNode();
     this.setupGitProtocols();
   }
   
@@ -51,8 +51,8 @@ class GitSyncNetwork {
   }
   
   async discoverRepoPeers(repoId) {
-    // Use CosmicSyncCore's peer discovery with Git-specific filters
-    const peers = await CosmicSyncCore.discovery.findProviders(repoId);
+    // Use CivicBase's peer discovery with Git-specific filters
+    const peers = await CivicBase.discovery.findProviders(repoId);
     return peers.filter(peer => peer.protocols.includes('/git-sync/1.0.0'));
   }
 }
@@ -63,8 +63,8 @@ class GitSyncNetwork {
 ```javascript
 class GitObjectStore {
   constructor() {
-    this.helia = CosmicSyncCore.getHeliaAdapter();
-    this.cache = CosmicSyncCore.getCacheManager();
+    this.helia = CivicBase.getHeliaAdapter();
+    this.cache = CivicBase.getCacheManager();
   }
   
   async storeGitObject(object) {
@@ -98,12 +98,12 @@ class GitObjectStore {
 ```javascript
 class GitSyncEngine {
   constructor() {
-    this.syncManager = CosmicSyncCore.getSyncManager();
-    this.eventBus = CosmicSyncCore.getEventBus();
+    this.syncManager = CivicBase.getSyncManager();
+    this.eventBus = CivicBase.getEventBus();
   }
   
   async syncRepository(repoId, options = {}) {
-    // Use CosmicSyncCore's sync with Git-specific conflict resolution
+    // Use CivicBase's sync with Git-specific conflict resolution
     const result = await this.syncManager.sync(
       `git-repo:${repoId}`,
       {
@@ -135,7 +135,7 @@ class GitSyncEngine {
 sequenceDiagram
     participant G as Git Client
     participant GSC as GitSyncCore
-    participant CSC as CosmicSyncCore
+    participant CSC as CivicBase
     participant P as Peer Network
 
     G->>GSC: git push cosmic main
@@ -212,8 +212,8 @@ sequenceDiagram
 ```javascript
 class GitSecurity {
   constructor() {
-    this.crypto = CosmicSyncCore.getCryptoManager();
-    this.auth = CosmicSyncCore.getAuthManager();
+    this.crypto = CivicBase.getCryptoManager();
+    this.auth = CivicBase.getAuthManager();
   }
   
   async verifyCommitSignature(commit, publicKey) {
@@ -240,7 +240,7 @@ class GitSecurity {
 ```javascript
 class GitPerformance {
   constructor() {
-    this.cache = CosmicSyncCore.getCacheManager();
+    this.cache = CivicBase.getCacheManager();
     this.setupCaching();
   }
   
@@ -266,8 +266,8 @@ class GitPerformance {
 ```javascript
 class GitDeltaEngine {
   async calculateDelta(localRef, remoteRef) {
-    // Use CosmicSyncCore's diffing for efficient transfers
-    return await CosmicSyncCore.diff.calculateDelta(
+    // Use CivicBase's diffing for efficient transfers
+    return await CivicBase.diff.calculateDelta(
       localRef.objects,
       remoteRef.objects
     );
@@ -277,11 +277,11 @@ class GitDeltaEngine {
 
 ## Monitoring and Metrics
 
-### Integration with CosmicSyncCore Monitoring
+### Integration with CivicBase Monitoring
 ```javascript
 class GitMetrics {
   constructor() {
-    this.monitoring = CosmicSyncCore.getMonitoring();
+    this.monitoring = CivicBase.getMonitoring();
     this.setupMetrics();
   }
   
@@ -304,14 +304,14 @@ class GitMetrics {
 ### 1. Standalone Application
 ```
 GitSyncCore as a separate service
-↳ Uses CosmicSyncCore as a library
+↳ Uses CivicBase as a library
 ↳ Full Git protocol support
 ↳ Ideal for individual developers
 ```
 
 ### 2. Integrated Module
 ```
-CosmicSyncCore with built-in GitSync
+CivicBase with built-in GitSync
 ↳ Git functionality available out-of-the-box
 ↳ Shared resource management
 ↳ Ideal for application platforms
@@ -330,7 +330,7 @@ Mix of standalone and integrated
 ### Plugin System
 ```javascript
 // Custom Git hooks and workflows
-CosmicSyncCore.plugins.register('gitsync-pre-push', {
+CivicBase.plugins.register('gitsync-pre-push', {
   execute: async (repoId, changes) => {
     // Custom validation logic
     return { allowed: true, reason: '' };
@@ -341,12 +341,12 @@ CosmicSyncCore.plugins.register('gitsync-pre-push', {
 ### Custom Protocols
 ```javascript
 // Extend with additional Git features
-CosmicSyncCore.protocols.register('/git-sync/large-files/1.0.0', {
+CivicBase.protocols.register('/git-sync/large-files/1.0.0', {
   handle: this.handleLargeFileTransfer
 });
 ```
 
 ---
 
-*This architecture demonstrates how GitSyncCore leverages CosmicSyncCore's robust foundation while adding Git-specific capabilities for a truly decentralized version control system.*
+*This architecture demonstrates how GitSyncCore leverages CivicBase's robust foundation while adding Git-specific capabilities for a truly decentralized version control system.*
 

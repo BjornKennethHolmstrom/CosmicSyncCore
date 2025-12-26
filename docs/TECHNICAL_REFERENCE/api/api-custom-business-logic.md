@@ -1,6 +1,6 @@
 # Custom Business Logic Implementation
 
-CosmicSyncCore allows you to extend its functionality by implementing custom business logic. This enables you to create tailored behaviors for your specific application needs.
+CivicBase allows you to extend its functionality by implementing custom business logic. This enables you to create tailored behaviors for your specific application needs.
 
 ## Custom Validators
 
@@ -143,4 +143,4 @@ cosmicSync.registerSyncStrategy(customSyncStrategy);
 4. Test custom logic thoroughly, including edge cases
 5. Document all custom logic for easier maintenance
 
-By leveraging these custom business logic features, you can tailor CosmicSyncCore to meet your specific application requirements while maintaining the benefits of its P2P architecture.
+By leveraging these custom business logic features, you can tailor CivicBase to meet your specific application requirements while maintaining the benefits of its P2P architecture.

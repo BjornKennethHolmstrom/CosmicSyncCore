@@ -1,4 +1,4 @@
-The **CosmicSyncCore** platform offers several compelling advantages based on its features and goals:  
+The **CivicBase** platform offers several compelling advantages based on its features and goals:  
 
 ### **1. Decentralization and Data Sovereignty**  
 - **No reliance on centralized servers:** Users retain control over their data, reducing dependency on external providers.  
@@ -29,7 +29,7 @@ The **CosmicSyncCore** platform offers several compelling advantages based on it
 - **Environmentally conscious:** Decentralized systems often utilize existing user resources, potentially reducing the carbon footprint compared to centralized data centers.  
 
 ### **8. Catalyst for Innovation**  
-- **Empowering developers:** By providing a robust and secure base, CosmicSyncCore encourages the creation of innovative applications tailored to decentralized ecosystems.  
+- **Empowering developers:** By providing a robust and secure base, CivicBase encourages the creation of innovative applications tailored to decentralized ecosystems.  
 - **Encourages open collaboration:** Fosters a community-driven approach to app development.  
 
-CosmicSyncCore is well-positioned to provide not only technical advantages but also to align with broader societal values of autonomy, security, and sustainability, making it a highly promising platform.
+CivicBase is well-positioned to provide not only technical advantages but also to align with broader societal values of autonomy, security, and sustainability, making it a highly promising platform.

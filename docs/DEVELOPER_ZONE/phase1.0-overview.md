@@ -1,7 +1,7 @@
 # Phase 1: Core Infrastructure and API
 
 ## Goals and Objectives
-- [x] Establish the foundational architecture for CosmicSyncCore
+- [x] Establish the foundational architecture for CivicBase
 - [x] Implement basic P2P networking capabilities
 - [x] Develop essential data management features
 - [x] Implement core security measures

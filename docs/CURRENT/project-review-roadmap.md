@@ -1,4 +1,4 @@
-# CosmicSyncCore Project Review and Roadmap
+# CivicBase Project Review and Roadmap
 
 ## Current State
 
@@ -24,9 +24,9 @@ The project's overall goal is clear: to create a non-profit, global platform (Sh
 
 1. Define specific metrics for success (e.g., number of successful collaborations, user engagement rates)
 2. Clarify the scope of the "ethical collaboration framework"
-3. Elaborate on how CosmicSyncCore will integrate with SharedSpheres
+3. Elaborate on how CivicBase will integrate with SharedSpheres
 
-It should also enable tailored PWA applications to run on the CosmicSyncCore platform, taking advantage of its P2P features by almost eliminating the need for a centralized server and cloud services.
+It should also enable tailored PWA applications to run on the CivicBase platform, taking advantage of its P2P features by almost eliminating the need for a centralized server and cloud services.
 
 ## Proposed Roadmap
 
@@ -67,7 +67,7 @@ It should also enable tailored PWA applications to run on the CosmicSyncCore pla
 - Community engagement and third-party developer support
 
 ## Next Steps
-1. Refine SharedSpheres concept to better define CosmicSyncCore requirements
+1. Refine SharedSpheres concept to better define CivicBase requirements
 2. Prioritize features for initial development phases
 3. Establish development team and assign roles
 4. Set up project management tools and processes

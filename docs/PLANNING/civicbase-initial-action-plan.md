@@ -1,4 +1,4 @@
-# CosmicSyncCore Initial Action Plan (Hybrid Approach)
+# CivicBase Initial Action Plan (Hybrid Approach)
 
 ## Week 1-2: Project Setup and Core Architecture
 

@@ -1,12 +1,12 @@
 # Data Privacy and GDPR Compliance
 
-CosmicSyncCore is designed with a privacy-first approach, ensuring that your application can easily comply with data protection regulations like GDPR.
+CivicBase is designed with a privacy-first approach, ensuring that your application can easily comply with data protection regulations like GDPR.
 
 ## Data Storage and Processing
 
 ### Local-First Approach
 
-CosmicSyncCore prioritizes local data storage and processing:
+CivicBase prioritizes local data storage and processing:
 
 1. User data is primarily stored and processed on the user's device
 2. Only necessary, non-personal data is synchronized with the P2P network
@@ -165,4 +165,4 @@ Maintain a clear and comprehensive privacy policy that outlines:
 4. Data retention periods
 5. How to contact your Data Protection Officer
 
-By implementing these practices and features, your application can maintain a high standard of data privacy and comply with GDPR and other data protection regulations while using CosmicSyncCore.
+By implementing these practices and features, your application can maintain a high standard of data privacy and comply with GDPR and other data protection regulations while using CivicBase.

@@ -2,7 +2,7 @@
 
 ## Overview
 
-GitSyncCore implements the Git protocol over CosmicSyncCore's P2P infrastructure, providing a fully decentralized alternative to centralized Git hosting platforms.
+GitSyncCore implements the Git protocol over CivicBase's P2P infrastructure, providing a fully decentralized alternative to centralized Git hosting platforms.
 
 ## Core Components
 
@@ -39,7 +39,7 @@ repo_id = hash(initial_commit + metadata)
 
 #### Protocol Flow
 ```
-Client -> GitSyncCore -> CosmicSyncCore Network
+Client -> GitSyncCore -> CivicBase Network
      |                      |
      +-- Git Commands ----> P2P Peers
      |                      |
@@ -54,7 +54,7 @@ Client -> GitSyncCore -> CosmicSyncCore Network
 - Local caching with LRU eviction
 
 #### References and Metadata
-- Stored in CosmicSyncCore's distributed data layer
+- Stored in CivicBase's distributed data layer
 - Real-time synchronization across peers
 - Conflict resolution using CRDTs
 
@@ -109,28 +109,28 @@ class PeerManager {
 }
 ```
 
-## Integration with CosmicSyncCore
+## Integration with CivicBase
 
 ### Using Existing Components
 
 #### P2P Networking
 ```javascript
-// Reuse libp2p from CosmicSyncCore
-const node = await CosmicSyncCore.getP2PNode();
+// Reuse libp2p from CivicBase
+const node = await CivicBase.getP2PNode();
 await node.dial(peerId, '/git-sync/1.0.0');
 ```
 
 #### Distributed Storage
 ```javascript
 // Use Helia adapter for Git objects
-const helia = await CosmicSyncCore.getHeliaAdapter();
+const helia = await CivicBase.getHeliaAdapter();
 const cid = await helia.store(gitObject);
 ```
 
 #### Real-time Sync
 ```javascript
 // Leverage existing sync manager
-const sync = await CosmicSyncCore.getSyncManager();
+const sync = await CivicBase.getSyncManager();
 await sync.syncRepo(repoId);
 ```
 

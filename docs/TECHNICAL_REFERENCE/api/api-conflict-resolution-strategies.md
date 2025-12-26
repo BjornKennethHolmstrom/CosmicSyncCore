@@ -1,6 +1,6 @@
 # Conflict Resolution Strategies
 
-In a P2P system like CosmicSyncCore, conflicts can arise when multiple users or devices modify the same data concurrently. Implementing effective conflict resolution strategies is crucial for maintaining data consistency and providing a smooth user experience.
+In a P2P system like CivicBase, conflicts can arise when multiple users or devices modify the same data concurrently. Implementing effective conflict resolution strategies is crucial for maintaining data consistency and providing a smooth user experience.
 
 ## 1. Last Write Wins (LWW)
 
@@ -195,4 +195,4 @@ cosmicSync.setConflictResolver('CriticalData', userAssistedResolver);
 5. Allow manual conflict resolution for critical data when automatic resolution is not sufficient.
 6. Test conflict resolution strategies thoroughly with various scenarios.
 
-By implementing these conflict resolution strategies, you can ensure that your CosmicSyncCore-based application handles data conflicts gracefully, maintaining data consistency across the P2P network.
+By implementing these conflict resolution strategies, you can ensure that your CivicBase-based application handles data conflicts gracefully, maintaining data consistency across the P2P network.

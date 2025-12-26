@@ -1,9 +1,9 @@
 // Generic App Integration Example
 
-const CosmicSyncCore = require('cosmicsynccore-sdk');
+const CivicBase = require('civicbase-sdk');
 
 // Initialize the SDK with your app's credentials
-const cosmicSync = new CosmicSyncCore({
+const cosmicSync = new CivicBase({
   appId: 'your_app_id',
   appSecret: 'your_app_secret'
 });

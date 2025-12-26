@@ -4,7 +4,7 @@
 
 ## Overview
 
-CommonsNet enables practical resource coordination at multiple scales, from local communities to global systems. Each use case demonstrates how the four-layer architecture (CosmicSyncCore + Project Janus + GGF + CommonsNet) creates unique value.
+CommonsNet enables practical resource coordination at multiple scales, from local communities to global systems. Each use case demonstrates how the four-layer architecture (CivicBase + Project Janus + GGF + CommonsNet) creates unique value.
 
 ## Local Community Use Cases
 
@@ -31,7 +31,7 @@ CommonsNet enables practical resource coordination at multiple scales, from loca
 ```
 
 **Four-Layer Integration**:
-- **CosmicSyncCore**: Decentralized tool registry, no corporate platform
+- **CivicBase**: Decentralized tool registry, no corporate platform
 - **Project Janus**: Ensures access prioritizes those with genuine need
 - **GGF**: `Peace & Conflict Resolution Framework` resolves disputes over damaged tools
 - **CommonsNet**: User-friendly reservation and pickup system
@@ -60,7 +60,7 @@ CommonsNet enables practical resource coordination at multiple scales, from loca
 ```
 
 **Four-Layer Integration**:
-- **CosmicSyncCore**: Real-time equipment availability tracking
+- **CivicBase**: Real-time equipment availability tracking
 - **Project Janus**: Optimizes volunteer matching for skill development and social connection
 - **GGF**: `Moral Operating System` guides fair produce distribution
 - **CommonsNet**: Mobile app for slot signups and harvest sharing
@@ -94,7 +94,7 @@ CommonsNet enables practical resource coordination at multiple scales, from loca
 ```
 
 **Four-Layer Integration**:
-- **CosmicSyncCore**: Encrypted skill profiles and match history
+- **CivicBase**: Encrypted skill profiles and match history
 - **Project Janus**: Ensures exchanges build meaning and connection, not just transaction
 - **GGF**: Reputation system based on `Dynamic Rights Spectrum`
 - **CommonsNet**: Trust-based matching with verification
@@ -129,7 +129,7 @@ CommonsNet enables practical resource coordination at multiple scales, from loca
 ```
 
 **Four-Layer Integration**:
-- **CosmicSyncCore**: Cross-community equipment tracking
+- **CivicBase**: Cross-community equipment tracking
 - **Project Janus**: Balances efficiency with farmer well-being during harvest
 - **GGF**: Multi-stakeholder governance for equipment allocation
 - **CommonsNet**: Predictive scheduling based on crop cycles
@@ -160,7 +160,7 @@ CommonsNet enables practical resource coordination at multiple scales, from loca
 ```
 
 **Four-Layer Integration**:
-- **CosmicSyncCore**: Works offline during network outages
+- **CivicBase**: Works offline during network outages
 - **Project Janus**: Prioritizes allocations based on human impact, not just efficiency
 - **GGF**: Emergency powers framework with accountability
 - **CommonsNet**: Real-time resource tracking and needs assessment
@@ -195,7 +195,7 @@ CommonsNet enables practical resource coordination at multiple scales, from loca
 ```
 
 **Four-Layer Integration**:
-- **CosmicSyncCore**: Sovereign public infrastructure, no vendor lock-in
+- **CivicBase**: Sovereign public infrastructure, no vendor lock-in
 - **Project Janus**: Ensures public access serves community well-being
 - **GGF**: Transparent public governance patterns
 - **CommonsNet**: Unified booking across municipal boundaries
@@ -228,7 +228,7 @@ CommonsNet enables practical resource coordination at multiple scales, from loca
 ```
 
 **Four-Layer Integration**:
-- **CosmicSyncCore**: HIPAA-compliant decentralized storage
+- **CivicBase**: HIPAA-compliant decentralized storage
 - **Project Janus**: Allocation based on medical need and patient dignity
 - **GGF**: Ethical frameworks for scarce resource allocation
 - **CommonsNet**: Integration with healthcare provider systems
@@ -262,7 +262,7 @@ CommonsNet enables practical resource coordination at multiple scales, from loca
 ```
 
 **Four-Layer Integration**:
-- **CosmicSyncCore**: Cross-border data sovereignty
+- **CivicBase**: Cross-border data sovereignty
 - **Project Janus**: Climate justice principles guide allocation
 - **GGF**: International coordination protocols
 - **CommonsNet**: Real-time global resource dashboard
@@ -295,7 +295,7 @@ CommonsNet enables practical resource coordination at multiple scales, from loca
 ```
 
 **Four-Layer Integration**:
-- **CosmicSyncCore**: Censorship-resistant knowledge storage
+- **CivicBase**: Censorship-resistant knowledge storage
 - **Project Janus**: Knowledge sharing that builds global solidarity
 - **GGF**: Intellectual property frameworks for commons
 - **CommonsNet**: Context-aware knowledge delivery
@@ -326,7 +326,7 @@ CommonsNet enables practical resource coordination at multiple scales, from loca
 ```
 
 **Four-Layer Integration**:
-- **CosmicSyncCore**: Privacy-protected personal data
+- **CivicBase**: Privacy-protected personal data
 - **Project Janus**: Integration that preserves dignity and cultural identity
 - **GGF**: Rights-based access frameworks
 - **CommonsNet**: Multi-language, culturally sensitive interface
@@ -358,7 +358,7 @@ CommonsNet enables practical resource coordination at multiple scales, from loca
 ```
 
 **Four-Layer Integration**:
-- **CosmicSyncCore**: Distributed educational content storage
+- **CivicBase**: Distributed educational content storage
 - **Project Janus**: Learning materials that support holistic development
 - **GGF**: Open educational resource frameworks
 - **CommonsNet**: Teacher collaboration and resource adaptation tools

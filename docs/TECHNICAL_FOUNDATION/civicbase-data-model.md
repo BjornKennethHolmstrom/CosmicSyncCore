@@ -1,4 +1,4 @@
-# CosmicSyncCore and SharedSpheres: Data Model
+# CivicBase and SharedSpheres: Data Model
 
 ## Core Entities
 
@@ -99,7 +99,7 @@
 - User 1:N ForumPost (as author)
 - ForumThread 1:N ForumPost
 
-## Sync Considerations for CosmicSyncCore
+## Sync Considerations for CivicBase
 
 - User and UserProfile data should be synced across the P2P network, with privacy settings respected
 - Project and ProjectMember data should be distributed among relevant users
@@ -116,4 +116,4 @@ SharedSpheres may extend this core data model with additional entities or attrib
 - Badge: for gamification and recognition systems
 - EventLog: for tracking user activities and system events
 
-This data model provides a solid foundation for both CosmicSyncCore and SharedSpheres, allowing for efficient data management and synchronization across the P2P network while supporting the collaborative features of the platform.
+This data model provides a solid foundation for both CivicBase and SharedSpheres, allowing for efficient data management and synchronization across the P2P network while supporting the collaborative features of the platform.

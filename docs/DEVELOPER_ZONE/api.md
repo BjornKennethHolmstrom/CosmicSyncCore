@@ -1,27 +1,27 @@
-# CosmicSyncCore API Documentation
+# CivicBase API Documentation
 
-# CosmicSyncCore API Documentation
+# CivicBase API Documentation
 
 ## Introduction
 
-The CosmicSyncCore API provides a flexible and powerful interface for applications to interact with the CosmicSyncCore platform. This API supports both RESTful HTTP endpoints and GraphQL queries, allowing developers to choose the most suitable approach for their application.
+The CivicBase API provides a flexible and powerful interface for applications to interact with the CivicBase platform. This API supports both RESTful HTTP endpoints and GraphQL queries, allowing developers to choose the most suitable approach for their application.
 
 ## Core Concepts
 
 ### Data Models
-CosmicSyncCore allows applications to define custom data models. These models are flexible and can be adapted to various use cases.
+CivicBase allows applications to define custom data models. These models are flexible and can be adapted to various use cases.
 
 ### Real-time Updates
 The API supports real-time updates through WebSocket connections, enabling applications to receive instant notifications about data changes.
 
 ### Authentication and Authorization
-CosmicSyncCore uses JWT (JSON Web Tokens) for authentication and provides fine-grained access control mechanisms.
+CivicBase uses JWT (JSON Web Tokens) for authentication and provides fine-grained access control mechanisms.
 
 ## API Versions
 
 This documentation covers API v1. Always specify the API version in your requests.
 
-Base URL: `https://api.cosmicsynccore.com/v1`
+Base URL: `https://api.civicbase.com/v1`
 
 ## Authentication
 
@@ -32,7 +32,7 @@ To obtain a JWT token, use the authentication endpoints described in the User Ma
 
 ## Error Handling
 
-The API uses conventional HTTP response codes to indicate the success or failure of requests. Codes in the 2xx range indicate success, codes in the 4xx range indicate an error that failed given the information provided, and codes in the 5xx range indicate an error with CosmicSyncCore's servers.
+The API uses conventional HTTP response codes to indicate the success or failure of requests. Codes in the 2xx range indicate success, codes in the 4xx range indicate an error that failed given the information provided, and codes in the 5xx range indicate an error with CivicBase's servers.
 
 Error responses will include a JSON object with an `error` key containing a human-readable error message.
 

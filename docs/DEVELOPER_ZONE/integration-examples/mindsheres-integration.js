@@ -1,9 +1,9 @@
 // MindSpheres Integration Example
 
-const CosmicSyncCore = require('cosmicsynccore-sdk');
+const CivicBase = require('civicbase-sdk');
 
 // Initialize the SDK with MindSpheres credentials
-const cosmicSync = new CosmicSyncCore({
+const cosmicSync = new CivicBase({
   appId: 'mindsheres_app_id',
   appSecret: 'mindsheres_app_secret'
 });

@@ -24,15 +24,15 @@ async function ensureSwaggerFile() {
       const defaultSwagger = `
 openapi: 3.0.0
 info:
-  title: CosmicSyncCore API
+  title: CivicBase API
   version: '1.0.0'
   description: |
-    API documentation for CosmicSyncCore, a flexible P2P-based platform for decentralized data storage and synchronization.
+    API documentation for CivicBase, a flexible P2P-based platform for decentralized data storage and synchronization.
   contact:
     name: Björn Kenneth Holmström
   license:
     name: Custom License
-    url: https://github.com/BjornKennethHolmstrom/CosmicSyncCore/blob/main/LICENSE.md
+    url: https://github.com/BjornKennethHolmstrom/CivicBase/blob/main/LICENSE.md
 
 servers:
   - url: http://localhost:3000/api/v1

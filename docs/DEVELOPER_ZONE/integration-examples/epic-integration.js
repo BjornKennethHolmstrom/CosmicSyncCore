@@ -1,9 +1,9 @@
 // EPiC (Exercise Planning in Collaboration) Integration Example
 
-const CosmicSyncCore = require('cosmicsynccore-sdk');
+const CivicBase = require('civicbase-sdk');
 
 // Initialize the SDK with EPiC credentials
-const cosmicSync = new CosmicSyncCore({
+const cosmicSync = new CivicBase({
   appId: 'epic_app_id',
   appSecret: 'epic_app_secret'
 });

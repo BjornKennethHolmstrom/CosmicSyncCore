@@ -39,7 +39,7 @@ Modern platforms create value but capture it for shareholders:
 
 CommonsNet doesn't stand alone. It's the **society-layer** in a four-part architecture for human-centered civilization:
 
-### 🏗️ **The Engine: CosmicSyncCore**
+### 🏗️ **The Engine: CivicBase**
 *Digital sovereignty infrastructure*
 - Ensures no single entity controls the platform
 - Provides P2P networking, decentralized storage, encryption
@@ -67,7 +67,7 @@ CommonsNet doesn't stand alone. It's the **society-layer** in a four-part archit
 ## Example Applications
 
 ### SharedSpheres - Personal & Relational Layer
-[SharedSpheres Repository](https://github.com/BjornKennethHolmstrom/SharedSpheres) demonstrates how CosmicSyncCore can power applications for:
+[SharedSpheres Repository](https://github.com/BjornKennethHolmstrom/SharedSpheres) demonstrates how CivicBase can power applications for:
 
 - **Meaningful social connections** with privacy-by-design
 - **Personal growth tracking** with sovereign data
@@ -159,14 +159,14 @@ Without systems like CommonsNet, we face:
 
 CommonsNet needs:
 - **Community organizers** to design local implementations
-- **Technical developers** to build on CosmicSyncCore
+- **Technical developers** to build on CivicBase
 - **Ethical philosophers** to refine governance models
 - **Economic innovators** to design new value flows
 - **Local pioneers** to test and iterate in real communities
 
 ## The Long-Term Vision
 
-We're not just building an app. We're **prototyping a new societal operating system** - one that could eventually coordinate global resources with the wisdom of Project Janus, the resilience of CosmicSyncCore, and the practical focus of CommonsNet.
+We're not just building an app. We're **prototyping a new societal operating system** - one that could eventually coordinate global resources with the wisdom of Project Janus, the resilience of CivicBase, and the practical focus of CommonsNet.
 
 This is the infrastructure for a world that works for all of us.
 

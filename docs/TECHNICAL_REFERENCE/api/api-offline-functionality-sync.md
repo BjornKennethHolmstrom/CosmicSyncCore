@@ -1,10 +1,10 @@
 # Offline Functionality and Sync
 
-CosmicSyncCore is designed to support offline functionality, allowing applications to work seamlessly even without an internet connection. This guide explains how to implement offline support and data synchronization.
+CivicBase is designed to support offline functionality, allowing applications to work seamlessly even without an internet connection. This guide explains how to implement offline support and data synchronization.
 
 ## Offline Data Storage
 
-Applications should implement local storage to cache data and enable offline functionality. CosmicSyncCore provides methods to facilitate this:
+Applications should implement local storage to cache data and enable offline functionality. CivicBase provides methods to facilitate this:
 
 ```javascript
 // Store data locally

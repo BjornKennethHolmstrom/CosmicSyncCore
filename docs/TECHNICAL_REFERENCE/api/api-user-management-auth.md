@@ -27,7 +27,7 @@ To create a new user account:
     }
     ```
 
-Note: The `application_id` field is used to associate the user with a specific application using CosmicSyncCore.
+Note: The `application_id` field is used to associate the user with a specific application using CivicBase.
 
 ## User Authentication
 
@@ -99,7 +99,7 @@ To refresh an expired JWT token:
 
 ## Application-specific User Data
 
-CosmicSyncCore allows applications to store custom user data:
+CivicBase allows applications to store custom user data:
 
 ### Set Custom User Data
 
@@ -139,7 +139,7 @@ CosmicSyncCore allows applications to store custom user data:
 
 ## User Permissions and Roles
 
-CosmicSyncCore supports a flexible role-based access control (RBAC) system:
+CivicBase supports a flexible role-based access control (RBAC) system:
 
 ### Assign Role to User
 
@@ -184,7 +184,7 @@ CosmicSyncCore supports a flexible role-based access control (RBAC) system:
 
 ## Multi-factor Authentication (MFA)
 
-CosmicSyncCore supports multi-factor authentication for enhanced security:
+CivicBase supports multi-factor authentication for enhanced security:
 
 ### Enable MFA
 

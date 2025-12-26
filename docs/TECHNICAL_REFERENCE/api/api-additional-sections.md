@@ -1,8 +1,8 @@
-# CosmicSyncCore API: Additional Sections
+# CivicBase API: Additional Sections
 
 ## Webhooks
 
-Webhooks allow your application to receive real-time notifications about events in CosmicSyncCore.
+Webhooks allow your application to receive real-time notifications about events in CivicBase.
 
 ### Configuring Webhooks
 
@@ -22,7 +22,7 @@ Webhooks allow your application to receive real-time notifications about events 
 
 ### Webhook Payload
 
-When an event occurs, CosmicSyncCore will send a POST request to your specified URL with a payload similar to:
+When an event occurs, CivicBase will send a POST request to your specified URL with a payload similar to:
 
 ```json
 {
@@ -86,7 +86,7 @@ Perform operations on multiple resources in a single API call.
 
 ## SDK Documentation
 
-CosmicSyncCore provides SDKs for several programming languages:
+CivicBase provides SDKs for several programming languages:
 
 - JavaScript/TypeScript
 - Python
@@ -109,7 +109,7 @@ Each SDK provides a similar interface to the REST API, with additional language-
 For a complete list of all available endpoints, parameters, and response formats, please refer to our interactive API reference at:
 
 ```
-https://api.cosmicsynccore.com/docs
+https://api.civicbase.com/docs
 ```
 
 This reference is automatically generated from our OpenAPI specification and is always up-to-date with the latest API changes.

@@ -1,4 +1,4 @@
-# Quickstart for CosmicSyncCore Contributors
+# Quickstart for CivicBase Contributors
 
 > **Welcome rebel!** This guide gets you from zero to contributing in 15 minutes. We're building infrastructure for digital independence, and we need your help.
 
@@ -38,7 +38,7 @@ Perfect for newcomers:
 **Key files:** `libp2pNode.js`, `natTraversal.js`, `discovery.js`
 
 ### I'm a Security-Focused Developer  
-**Start with:** `src/core/cryptoManager.js` and `docs/TECHNICAL_FOUNDATION/cosmicsynccore-authentication-security.md`
+**Start with:** `src/core/cryptoManager.js` and `docs/TECHNICAL_FOUNDATION/civicbase-authentication-security.md`
 **Current challenge:** End-to-end encryption key management
 **Key files:** `auth.js`, `cryptoManager.js`, security tests
 
@@ -78,7 +78,7 @@ Perfect for newcomers:
 ## 📁 Key Files to Know
 
 ```
-CosmicSyncCore/
+CivicBase/
 ├── 🎯 src/p2p/           # P2P networking core
 ├── 🔐 src/core/          # Security, auth, crypto
 ├── 📦 src/data/          # Storage adapters (Helia, Gun, etc.)

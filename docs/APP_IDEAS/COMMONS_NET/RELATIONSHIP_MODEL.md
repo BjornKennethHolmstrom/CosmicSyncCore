@@ -1,6 +1,6 @@
 # Relationship Model: The Four-Layer Architecture
 
-> *How CosmicSyncCore, Project Janus, Global Governance Frameworks, and CommonsNet work together to create a complete societal operating system*
+> *How CivicBase, Project Janus, Global Governance Frameworks, and CommonsNet work together to create a complete societal operating system*
 
 ## Overview
 
@@ -51,14 +51,14 @@ The four projects form a synergistic stack where each layer provides essential c
 
 ## Detailed Relationship Flows
 
-### 1. Infrastructure to Wisdom: CosmicSyncCore → Project Janus
+### 1. Infrastructure to Wisdom: CivicBase → Project Janus
 
-**How CosmicSyncCore enables Project Janus:**
+**How CivicBase enables Project Janus:**
 ```javascript
 // Janus models run on decentralized infrastructure
 class JanusOnCosmic {
   constructor() {
-    this.cosmic = CosmicSyncCore.getNode();
+    this.cosmic = CivicBase.getNode();
     this.setupJanusModels();
   }
   
@@ -73,7 +73,7 @@ class JanusOnCosmic {
     );
   }
   
-  // Janus benefits from CosmicSyncCore's:
+  // Janus benefits from CivicBase's:
   // - Censorship-resistant model storage
   // - Global collaboration capabilities
   // - Privacy-preserving data handling
@@ -156,14 +156,14 @@ class CommonsNetWithGGF {
 
 **Value Created**: CommonsNet communities can scale without becoming bureaucratic or oppressive, maintaining fairness and participation.
 
-### 4. Society to Infrastructure: CommonsNet → CosmicSyncCore
+### 4. Society to Infrastructure: CommonsNet → CivicBase
 
-**How CommonsNet validates and extends CosmicSyncCore:**
+**How CommonsNet validates and extends CivicBase:**
 ```javascript
-// CommonsNet as CosmicSyncCore's flagship application
+// CommonsNet as CivicBase's flagship application
 class CommonsNetAsValidation {
   constructor() {
-    this.cosmic = CosmicSyncCore.getNode();
+    this.cosmic = CivicBase.getNode();
     this.pushInfrastructureLimits();
   }
   
@@ -171,7 +171,7 @@ class CommonsNetAsValidation {
     // Real-world usage reveals infrastructure needs
     const performanceData = await this.monitorUsagePatterns();
     
-    // Feed requirements back to CosmicSyncCore development
+    // Feed requirements back to CivicBase development
     await this.cosmic.feedback.reportRequirements({
       feature: 'real-time-sync',
       requirement: 'sub-100ms for resource availability',
@@ -180,7 +180,7 @@ class CommonsNetAsValidation {
     });
   }
   
-  // CosmicSyncCore benefits from CommonsNet's:
+  // CivicBase benefits from CommonsNet's:
   // - Real-world scalability testing
   // - Diverse usage pattern exposure
   // - Practical security requirements
@@ -188,7 +188,7 @@ class CommonsNetAsValidation {
 }
 ```
 
-**Value Created**: CosmicSyncCore evolves based on real societal needs rather than theoretical technical requirements.
+**Value Created**: CivicBase evolves based on real societal needs rather than theoretical technical requirements.
 
 ## Bidirectional Relationships
 
@@ -201,21 +201,21 @@ GGF (Pattern refinement)
          ↑↓
 Project Janus (Wisdom evolution)
          ↑↓
-CosmicSyncCore (Infrastructure improvement)
+CivicBase (Infrastructure improvement)
 ```
 
 **Example: Emergency Response Improvement Cycle**
 1. **CommonsNet** identifies need for faster resource allocation in crises
 2. **GGF** refines emergency governance patterns based on real usage
 3. **Project Janus** updates models to prioritize survival needs in crises
-4. **CosmicSyncCore** improves offline synchronization for disaster scenarios
+4. **CivicBase** improves offline synchronization for disaster scenarios
 5. **CommonsNet** implements improved emergency response capabilities
 
 ### Mutual Reinforcement Mechanisms
 
 #### 1. **Trust Propagation**
 ```
-CosmicSyncCore (Technical trust)
+CivicBase (Technical trust)
          ↓
 Project Janus (Ethical trust)  
          ↓
@@ -226,7 +226,7 @@ CommonsNet (Social trust)
 
 #### 2. **Value Creation Cascade**
 ```
-CosmicSyncCore (Creates digital sovereignty value)
+CivicBase (Creates digital sovereignty value)
          ↓
 Project Janus (Creates wisdom value)
          ↓  
@@ -243,7 +243,7 @@ More GGF pattern validation
          ↓
 More Janus model refinement
          ↓  
-More CosmicSyncCore development
+More CivicBase development
          ↓
 Better CommonsNet capabilities
 ```
@@ -268,10 +268,10 @@ interface GovernanceProvider {
 System remains functional even when higher layers are unavailable:
 
 ```
-Full Stack: CommonsNet → GGF → Project Janus → CosmicSyncCore
-Degraded: CommonsNet → GGF → CosmicSyncCore (Janus offline)
-Minimal: CommonsNet → CosmicSyncCore (Governance cached)
-Basic: CosmicSyncCore only (Pure infrastructure)
+Full Stack: CommonsNet → GGF → Project Janus → CivicBase
+Degraded: CommonsNet → GGF → CivicBase (Janus offline)
+Minimal: CommonsNet → CivicBase (Governance cached)
+Basic: CivicBase only (Pure infrastructure)
 ```
 
 ### 3. **Progressive Enhancement**
@@ -281,12 +281,12 @@ Systems can start simple and add sophistication:
 ```javascript
 // Progressive integration pathway
 const basicCommons = new CommonsNet({
-  infrastructure: CosmicSyncCore,
+  infrastructure: CivicBase,
   governance: 'basic-community-rules'
 });
 
 const enhancedCommons = new CommonsNet({
-  infrastructure: CosmicSyncCore,
+  infrastructure: CivicBase,
   governance: GGF.oracleProtocol,
   wisdom: ProjectJanus.optimization
 });
@@ -297,19 +297,19 @@ const enhancedCommons = new CommonsNet({
 ### Parallel Development Streams
 
 ```
-CosmicSyncCore Team:
+CivicBase Team:
   - Focus: Infrastructure reliability, performance, security
   - Dependencies: None (foundational)
   - Delivers to: All upper layers
 
 Project Janus Team:
   - Focus: Human modeling accuracy, ethical frameworks
-  - Dependencies: CosmicSyncCore for storage/collaboration
+  - Dependencies: CivicBase for storage/collaboration
   - Delivers to: GGF and CommonsNet
 
 GGF Team:
   - Focus: Governance pattern effectiveness, interoperability
-  - Dependencies: CosmicSyncCore (infrastructure), Project Janus (wisdom)
+  - Dependencies: CivicBase (infrastructure), Project Janus (wisdom)
   - Delivers to: CommonsNet
 
 CommonsNet Team:
@@ -322,7 +322,7 @@ CommonsNet Team:
 
 ```yaml
 Release Cycle:
-  CosmicSyncCore: 
+  CivicBase: 
     frequency: "monthly"
     focus: "stability, performance"
   
@@ -373,7 +373,7 @@ class RelationshipEvolution {
 
 The four-layer architecture creates a virtuous cycle where:
 
-- **CosmicSyncCore** provides the digital sovereignty that enables ethical systems
+- **CivicBase** provides the digital sovereignty that enables ethical systems
 - **Project Janus** provides the wisdom that ensures human-centered design
 - **Global Governance Frameworks** provide the patterns that enable scalable fairness
 - **CommonsNet** provides the practical implementation that delivers real value

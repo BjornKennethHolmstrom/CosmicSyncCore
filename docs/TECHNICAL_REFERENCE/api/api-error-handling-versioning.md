@@ -2,11 +2,11 @@
 
 ## Error Handling
 
-CosmicSyncCore uses conventional HTTP response codes to indicate the success or failure of an API request. In general:
+CivicBase uses conventional HTTP response codes to indicate the success or failure of an API request. In general:
 
 - Codes in the 2xx range indicate success
 - Codes in the 4xx range indicate an error that failed given the information provided (e.g., a required parameter was missing)
-- Codes in the 5xx range indicate an error with CosmicSyncCore's servers
+- Codes in the 5xx range indicate an error with CivicBase's servers
 
 ### Error Response Format
 
@@ -30,7 +30,7 @@ Example error response:
 | 403 | FORBIDDEN | The API key doesn't have permissions to perform the request |
 | 404 | NOT_FOUND | The requested resource doesn't exist |
 | 429 | RATE_LIMIT_EXCEEDED | Too many requests hit the API too quickly |
-| 500 | INTERNAL_SERVER_ERROR | Something went wrong on CosmicSyncCore's end |
+| 500 | INTERNAL_SERVER_ERROR | Something went wrong on CivicBase's end |
 
 ### Handling Errors
 
@@ -42,7 +42,7 @@ When handling errors in your application, we recommend:
 
 ## Rate Limiting
 
-To ensure the stability and fairness of the CosmicSyncCore API, rate limits are enforced on a per-user basis.
+To ensure the stability and fairness of the CivicBase API, rate limits are enforced on a per-user basis.
 
 ### Rate Limit Rules
 
@@ -81,14 +81,14 @@ To avoid hitting rate limits:
 
 ## API Versioning
 
-CosmicSyncCore uses URL versioning to ensure backward compatibility as the API evolves.
+CivicBase uses URL versioning to ensure backward compatibility as the API evolves.
 
 ### Version Format
 
 The version is specified in the URL path, immediately after the API root:
 
 ```
-https://api.cosmicsynccore.com/v1/
+https://api.civicbase.com/v1/
 ```
 
 ### Current Versions
@@ -106,7 +106,7 @@ https://api.cosmicsynccore.com/v1/
 Always specify the API version in your requests to ensure consistency:
 
 ```
-GET https://api.cosmicsynccore.com/v1/users/me
+GET https://api.civicbase.com/v1/users/me
 ```
 
 ### Version Sunset
@@ -120,7 +120,7 @@ When a version is scheduled for sunset:
 ### Best Practices
 
 1. Always specify a version in your API calls
-2. Subscribe to the CosmicSyncCore developer newsletter for version update notifications
+2. Subscribe to the CivicBase developer newsletter for version update notifications
 3. Regularly review your integration to ensure you're using the latest recommended version
 
 ## Changelog
@@ -128,7 +128,7 @@ When a version is scheduled for sunset:
 Major changes to the API will be documented in our changelog, available at:
 
 ```
-https://api.cosmicsynccore.com/changelog
+https://api.civicbase.com/changelog
 ```
 
 We recommend regularly reviewing the changelog to stay informed about new features, bug fixes, and deprecations.

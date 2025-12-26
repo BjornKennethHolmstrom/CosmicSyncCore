@@ -4,11 +4,11 @@
 
 ## 🎯 Current Status: **Phase 0 - Foundation**
 
-**Focus:** Design and prototyping based on CosmicSyncCore infrastructure
+**Focus:** Design and prototyping based on CivicBase infrastructure
 
 ### ✅ Completed
 - [x] **Technical specification** and architecture design
-- [x] **Integration analysis** with CosmicSyncCore components
+- [x] **Integration analysis** with CivicBase components
 - [x] **Proof of concept** for Git object storage in Helia
 - [x] **Community interest** validation
 
@@ -191,7 +191,7 @@ This roadmap evolves based on:
 - **Contributor availability** and interests
 - **Technology changes** in decentralized space
 - **User feedback** and real-world usage
-- **CosmicSyncCore platform** developments
+- **CivicBase platform** developments
 
 **See something that should change?** Open an issue or start a discussion!
 
@@ -199,7 +199,7 @@ This roadmap evolves based on:
 
 ### For Contributors
 1. **Read the specs** - Start with [SPECIFICATION.md](./SPECIFICATION.md)
-2. **Set up development environment** - CosmicSyncCore + GitSyncCore
+2. **Set up development environment** - CivicBase + GitSyncCore
 3. **Pick a Phase 1 task** - Look for `good-first-issue` labels
 4. **Join discussions** - Share your ideas and feedback
 
@@ -215,7 +215,7 @@ This roadmap evolves based on:
 
 - [Technical Specification](./SPECIFICATION.md) - Detailed implementation guide
 - [System Architecture](./ARCHITECTURE.md) - Component integration details  
-- [CosmicSyncCore Integration](../cosmicsynccore/README.md) - Platform foundation
+- [CivicBase Integration](../civicbase/README.md) - Platform foundation
 - [Contributor Guide](../CONTRIBUTING.md) - How to get involved
 
 *Last updated: November 2024*

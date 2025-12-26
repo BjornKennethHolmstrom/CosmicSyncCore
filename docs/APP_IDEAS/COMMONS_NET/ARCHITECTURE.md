@@ -4,7 +4,7 @@
 
 ## System Overview
 
-CommonsNet is built as a **flagship application** on the CosmicSyncCore platform, guided by Project Janus wisdom frameworks and implementing Global Governance Frameworks patterns. This architecture ensures technological sovereignty, human-centered design, and scalable governance.
+CommonsNet is built as a **flagship application** on the CivicBase platform, guided by Project Janus wisdom frameworks and implementing Global Governance Frameworks patterns. This architecture ensures technological sovereignty, human-centered design, and scalable governance.
 
 ## Four-Layer Architecture Stack
 
@@ -94,13 +94,13 @@ CommonsNet is built as a **flagship application** on the CosmicSyncCore platform
 
 ## Integration Points
 
-### With CosmicSyncCore
+### With CivicBase
 
 ```javascript
-// CommonsNet bootstrap using CosmicSyncCore
+// CommonsNet bootstrap using CivicBase
 class CommonsNet {
   constructor() {
-    this.cosmic = await CosmicSyncCore.createNode();
+    this.cosmic = await CivicBase.createNode();
     this.setupCommonsProtocols();
   }
   
@@ -111,7 +111,7 @@ class CommonsNet {
       this.handleResourceSync
     );
     
-    // Use CosmicSyncCore storage for resource data
+    // Use CivicBase storage for resource data
     this.resourceStore = this.cosmic.storage.createStore('resources');
   }
   
@@ -276,7 +276,7 @@ Message Types:
 
 ### Identity Management
 ```javascript
-// Using CosmicSyncCore's decentralized identity
+// Using CivicBase's decentralized identity
 class CommonsIdentity {
   async verifyMember(communityId, userDid) {
     const membershipProof = await this.cosmic.identity.verify({
@@ -319,7 +319,7 @@ Single community deployment:
 └─────────────────┘
         ↓
 ┌─────────────────┐
-│ CosmicSyncCore  │
+│ CivicBase  │
 │   P2P Node      │
 └─────────────────┘
 ```
@@ -333,7 +333,7 @@ Multiple communities interconnected:
 └─────────────┘   └─────────────┘   └─────────────┘
         ↓               ↓               ↓
 ┌─────────────────────────────────────────────────┐
-│           CosmicSyncCore P2P Network            │
+│           CivicBase P2P Network            │
 └─────────────────────────────────────────────────┘
 ```
 
@@ -357,7 +357,7 @@ Larger communities with cloud support:
 ## Implementation Roadmap
 
 ### Phase 1: Core Resource Sharing
-- [ ] Basic resource registry on CosmicSyncCore
+- [ ] Basic resource registry on CivicBase
 - [ ] Simple borrowing/return system
 - [ ] Local community deployment
 - [ ] Basic web interface
