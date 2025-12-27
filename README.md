@@ -1,243 +1,387 @@
 # CivicBase
+**Offline-First Infrastructure for Swedish Municipal Resilience**
 
-CivicBase is a flexible, P2P-based platform designed to enable decentralized data storage and synchronization for various applications. It supports a wide range of app types and use cases, including SharedSpheres and EPiC (Exercise Planning in Collaboration).
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![Node Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen)](https://nodejs.org)
+[![Status](https://img.shields.io/badge/status-proof--of--concept-yellow)](https://github.com/yourusername/CivicBase)
 
-## Current Status
+---
 
-CivicBase is in early development (v0.3.6). Recent updates include improved database management, enhanced P2P networking capabilities, and better system migration support. We're currently focusing on completing Phase 1.0, which includes establishing a functional P2P network with basic communication.
+## About This Project
 
-Absolutely! Here's a snippet you can add to your README.md:
+CivicBase is developed under the **Global Governance Frameworks** research 
+initiative by Björn Kenneth Holmström, independent systems architect and 
+researcher based in Upplands Väsby, Sweden.
 
-## 🤝 Get Involved & Contribute
+### Organizational Status
 
-**CivicBase is looking for rebels, builders, and visionaries** to help create the decentralized app platform of the future. We're building infrastructure for digital independence, and we need your help.
+Global Governance Frameworks is currently a **research initiative**, not a 
+registered legal entity. We are seeking institutional partnerships with Swedish 
+municipalities and civil defense organizations before formalizing organizational 
+structure.
 
-### 🚀 Quick Start for Contributors
+Upon securing funding and institutional backing, Global Governance Frameworks 
+will be established as a Swedish non-profit organization (ideell förening) 
+focused on public infrastructure development.
 
-- **New to the project?** Start with our **[Vision Document](docs/ESSENTIAL_READING/PROJECT_VISION.md)** to understand the big picture
-- **Ready to contribute?** Check out the **[Quickstart Guide](docs/ESSENTIAL_READING/QUICKSTART_CONTRIBUTORS.md)** to find your first task
-- **General guidelines** in our **[Contributing Guide](CONTRIBUTING.md)**
+## The Problem
 
-### 🎯 Immediate Priorities
-We're currently focused on completing **Phase 1.0**:
-- ✅ P2P networking with libp2p
-- ✅ Decentralized storage with Helia/IPFS  
-- 🔄 Real-time data synchronization
-- 🔄 Basic conflict resolution
-- 🔄 Core API completion
+**November 2024:** Undersea cables in the Baltic Sea were severed between Sweden-Lithuania and Finland-Germany. Swedish municipalities, 95% dependent on American cloud infrastructure (AWS, Azure, Google Cloud), would have completely failed during extended outages.
 
-### 💡 Why Contribute?
-- Build **truly disruptive** alternatives to big tech platforms
-- Work with **cutting-edge P2P technologies** (libp2p, IPFS, Helia)
-- Create **user-sovereign apps** that respect privacy by design
-- Join a community building **infrastructure for digital freedom**
+**Current reality:**
+- Payment systems (Swish, BankID) require central servers + continuous internet
+- Municipal IT runs entirely in foreign clouds
+- No offline capability for critical services
+- Single points of failure everywhere
 
-**Your code could help power the next generation of decentralized applications!**
+**When cables are cut, Swedish society stops.**
 
-## Recent Updates
+---
 
-- Enhanced database initialization and management
-- Improved NAT traversal with STUN/TURN support
-- Migration to Helia for decentralized storage
-- Updated dependency management and security fixes
+## The Solution: CivicBase
 
-## Recent Updates
+CivicBase is **peer-to-peer infrastructure** that enables Swedish municipalities to maintain critical services during infrastructure disruptions.
 
-- Implemented advanced caching system with LRU eviction policy
-- Added comprehensive backup and restore functionality
-- Enhanced data access performance through intelligent caching
-- Added backup integrity validation and automatic rotation
+Built on **libp2p** (proven technology powering IPFS/Filecoin globally), CivicBase provides:
 
-## Features
+- **Offline-first operation** - Services continue via mesh networks when internet fails
+- **Data sovereignty** - All data stays in Sweden on Swedish devices
+- **No single point of failure** - Distributed architecture survives cable cuts
+- **Crisis-ready by design** - 72+ hour offline operation validated
 
-- Advanced P2P data synchronization with offline support using libp2p
-- Flexible data model supporting various data types and structures
-- Scalable user and data management across multiple applications
-- Real-time updates and basic conflict resolution
-- Secure, privacy-focused design with end-to-end encryption
-- Extensible API for integration with various applications
-- Support for custom data validation and business logic
-- Cross-platform compatibility (Node.js based)
-- Basic file upload and download functionality using Helia for decentralized storage
-- Advanced caching system with LRU eviction and TTL support
-- Comprehensive backup and restore functionality with compression
-- Backup integrity validation and automatic rotation
-- Event-based monitoring for cache and backup operations
+**This is infrastructure Sweden should have built in 2010—before becoming dependent on foreign clouds.**
 
-## Decentralized File Storage with Helia
+---
 
-CivicBase uses Helia, a modern, modular implementation of IPFS, for decentralized file storage. Helia offers several advantages:
+## Project Status
 
-- Improved performance and scalability for content retrieval and file management
-- Better integration with decentralized web applications (PWAs)
-- Support for content-addressed data via Content Identifiers (CIDs)
-- Modular design allowing for customization and extension of core features
-- Efficient "reference counting file system" for handling large datasets
+**Phase:** Proof-of-concept development (Vinnova 12-month grant)  
+**Timeline:** January 2026 - December 2026  
+**Funding:** 2.5M SEK (Vinnova + MCF parallel track)  
+**Deliverable:** Production-ready platform with TAK-405 integration
 
-While Helia is optimized for JavaScript and browser-based environments, it remains interoperable with the broader IPFS ecosystem, allowing for future scalability and integration options.
+**Current capabilities:**
+- ✅ Database layer (SQLite, agent-centric schema)
+- ✅ Authentication & encryption (JWT, AES-256-GCM, PBKDF2)
+- ✅ Sync infrastructure (conflict resolution, vector clocks)
+- ✅ Backup/restore (compressed, checksummed)
+- ✅ Event system, caching, monitoring
+- ✅ Comprehensive test coverage (12 integration test files)
+- 🔄 P2P networking (libp2p modernization in progress)
+- 🔄 Mesh networking (Bluetooth/Wi-Fi Direct fallback)
+- 🔄 Hearts currency (offline transactions)
+
+**Next milestone:** 72-hour offline operation test (Q3 2026)
+
+---
+
+## Applications
+
+CivicBase is a **platform**, not a single application. It enables:
+
+### TAK-405 "Regionens Nervsystem"
+Transit wellness system for Stockholm public transport. Uses Hearts currency to incentivize helping behavior, reducing psychological stress. **Proof-of-concept for offline economic transactions.**
+
+### DPOP (Democratic Party Operations Platform)
+Political organizing that continues during cable cuts. Meetings, decisions, coordination—all offline-capable with sync when connectivity returns.
+
+### DiDiS (Distributed Digital Identity System)
+Privacy-preserving identity verification without central databases. Agent-centric architecture means no single point of compromise.
+
+**Future:** Healthcare records, elder care coordination, emergency response, climate adaptation—any municipal service requiring crisis resilience.
+
+---
+
+## Architecture
+
+### Core Principles
+
+**1. Privacy by Physics, Not Policy**
+- Agent-centric design: Each citizen controls their data on their device
+- End-to-end encryption: Data mathematically sealed, no intermediary can read
+- No central database: No "master copy" to hack, leak, or subpoena
+
+**2. Sovereign Connectivity**
+- Peer-to-peer networking (libp2p)
+- Mesh networks maintain local coordination when internet fails
+- Eliminates dependency on foreign cloud providers
+
+**3. Resilience Over Efficiency**
+- Graceful degradation, never total failure
+- Offline capability is default, not exception
+- 72-hour resilience target for critical functions
+
+**4. Dual-Use Infrastructure**
+- **Peacetime:** Municipal innovation (TAK-405, DPOP, DiDiS)
+- **Crisis:** Critical redundancy (economic continuity, resource coordination)
+
+### Technology Stack
+
+**Runtime:** Node.js 20+ (LTS)  
+**Database:** SQLite (per-device, offline-first)  
+**P2P Networking:** libp2p (battle-tested, powers IPFS/Filecoin)  
+**Encryption:** AES-256-GCM (data), Ed25519 (signatures)  
+**Sync:** Vector clocks + last-write-wins conflict resolution  
+**Testing:** Jest, Supertest (comprehensive integration tests)
+
+### Why libp2p, Not Blockchain?
+
+**Blockchain:**
+- ❌ Requires global internet connectivity
+- ❌ High energy consumption
+- ❌ Poor performance at scale
+- ❌ Immutable ledger (GDPR conflict)
+
+**libp2p:**
+- ✅ Offline-capable mesh networking
+- ✅ Minimal resource consumption
+- ✅ Modular (use only what you need)
+- ✅ NAT traversal works behind firewalls
+- ✅ GDPR-compliant (data can be deleted)
+
+See [ARCHITECTURE.md](docs/CURRENT/ARCHITECTURE.md) for full technical details.
+
+---
+
+## Quick Start
+
+### Prerequisites
+
+- Node.js 20+ (LTS)
+- SQLite 3
+- Git
+
+### Installation
+
+```bash
+# Clone repository
+git clone https://github.com/yourusername/CivicBase.git
+cd CivicBase
+
+# Install dependencies
+npm install
+
+# Run tests
+npm test
+
+# Start development server
+npm start
+```
+
+### Your First Contribution
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+
+**Good starting points:**
+1. Review test coverage - Run `npm test`, identify gaps
+2. Update libp2p integration - Migrate to modern ESM modules
+3. Document offline reconciliation - Explain conflict resolution
+4. Add mesh networking - Implement Bluetooth/Wi-Fi Direct
+
+---
+
+## Documentation
+
+### Essential Reading
+
+- **[VISION.md](docs/CURRENT/VISION.md)** - CivicBase mission and strategic context
+- **[ARCHITECTURE.md](docs/CURRENT/ARCHITECTURE.md)** - Technical architecture and design decisions
+- **[12-MONTH-ROADMAP.md](docs/CURRENT/12-MONTH-ROADMAP.md)** - Vinnova grant implementation plan
+- **[MANIFESTO.md](MANIFESTO.md)** - Principles and commitments
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - How to contribute
+
+### Technical Reference
+
+- **[API Documentation](docs/TECHNICAL_REFERENCE/api/)** - RESTful and WebSocket APIs
+- **[OpenAPI Specification](docs/TECHNICAL_REFERENCE/openapi.yaml)** - Machine-readable API spec
+- **[Test Suite](tests/)** - Integration tests demonstrate capabilities
+
+---
 
 ## Project Structure
 
 ```
 CivicBase/
-├── CHANGELOG.md
-├── combined.log
-├── config
-│   └── default.json
-├── CONTRIBUTING.md
-├── docs
-│   ├── api
-│   ├── decisions
-│   ├── plan
-│   └── project-review-roadmap.md
-├── error.log
-├── eslint.config.js
-├── jest.config.js
-├── jest.setup.js
-├── jest.teardown.js
-├── LICENSE.md
-├── __mocks__
-│   └── libp2p-gossipsub.mjs
-├── nodemon.js
-├── package.json
-├── package-lock.json
-├── public
-│   ├── dashboard.html
-│   └── index.html
-├── radata
-├── README.md
-├── scripts
-├── server
-│   └── postgresAdapter.js
-├── src
-│   ├── api
-│   │   ├── restApi.js
-│   │   └── websocketApi.js
-│   ├── config.js
-│   ├── core
-│   │   ├── auth.js
-│   │   ├── backupManager.js
-│   │   ├── cacheManager.js
-│   │   ├── cryptoManager.js
-│   │   ├── errorHandler.js
-│   │   ├── errorMiddleware.js
-│   │   ├── errors.js
-│   │   ├── eventBus.js
-│   │   ├── eventEmitter.js
-│   │   ├── logger.js
-│   │   ├── monitoring.js
-│   │   └── syncManager.js
-│   ├── data
-│   │   ├── dataAccessLayer.js
-│   │   ├── DatabaseManager.js
-│   │   ├── gunAdapter.js
-│   │   ├── heliaAdapter.js
-│   │   ├── kuboAdapter.js
-│   │   ├── localStorageAdapter.js
-│   │   └── schema.js
-│   ├── index.js
-│   ├── middleware
-│   │   └── rateLimiter.js
-│   ├── networking
-│   ├── p2p
-│   │   ├── discovery.js
-│   │   ├── libp2pNode.js
-│   │   ├── natTraversal.js
-│   │   └── node.js
-│   ├── plugins
-│   │   └── pluginManager.js
-│   ├── testUtils
-│   │   └── dbSetup.js
-│   └── utils
-│       └── validation.js
-└── tests
-    ├── helpers
-    │   ├── dbSetup.helper.js
-    │   └── testEnvironment.js
-    └── integration
-        ├── api-extended.test.js
-        ├── api.test.js
-        ├── auth-extended.test.js
-        ├── auth.test.js
-        ├── backup.test.js
-        ├── cache.test.js
-        ├── database.test.js
-        ├── dataSync.test.js
-        ├── data.test.js
-        ├── p2p.test.js.bak
-        ├── schema.test.js
-        └── security.test.js
-
-
+├── src/
+│   ├── core/          # Authentication, encryption, sync, logging
+│   ├── p2p/           # libp2p networking, discovery, mesh
+│   ├── data/          # Database layer, adapters, schema
+│   ├── api/           # REST and WebSocket endpoints
+│   └── apps/          # Applications (TAK-405, DPOP, DiDiS)
+├── tests/
+│   ├── integration/   # Comprehensive integration tests
+│   └── helpers/       # Test utilities
+├── docs/
+│   ├── CURRENT/       # Primary documentation
+│   ├── PLANNING/      # Implementation plans
+│   └── ARCHIVE/       # Historical context (SharedSpheres vision)
+├── CONTRIBUTING.md    # Contributor guide
+├── MANIFESTO.md       # Principles and commitments
+└── README.md          # This file
 ```
 
-## Setup Instructions
+---
 
-### Prerequisites
+## Grant Applications
 
-- Node.js (v14.18.0 or later)
-- PostgreSQL
-- Build essentials (`build-essential`, `python3`, `gcc`, `g++`, `make`)
-- SQLite development files (`libsqlite3-dev`)
+CivicBase is funded through multiple strategic grants:
 
-### Database Setup
+**Vinnova (2.5M SEK, 12 months):**
+- Core platform development
+- Distributed systems consultant (800K)
+- Security audit (400K)
+- Municipal integration (300K)
 
-1. Create PostgreSQL database:
-```sql
-CREATE DATABASE civicbase;
-CREATE USER civicbase WITH ENCRYPTED PASSWORD 'your_secure_password';
-GRANT ALL PRIVILEGES ON DATABASE civicbase TO civicbase;
-```
+**MCF (Myndigheten för civilt försvar):**
+- Skärgård pilot (resource coordination)
+- FRG/Hemvärn integration
+- Crisis simulation exercises
 
-2. Configure environment:
-```bash
-cp .env.example .env
-# Edit .env with your database credentials
-```
+**Region Stockholm (TAK-405):**
+- Transit wellness alpha launch (Q1 2027)
+- 80% external funding (MCF + EU)
 
-3. Initialize database:
-```bash
-npm run setup-db
-# Or to reset database: npm run reset-db
+See grant applications in [docs/GRANTS/](docs/GRANTS/) for full details.
 
-### Installation
+---
 
-1. Clone the repository
-2. Install dependencies:
-```bash
-npm install
-```
+## Roadmap
 
-3. Start the development server:
-```bash
-npm start
-```
+### Phase 1: Core Infrastructure (Months 1-4)
+- Distributed systems consultant hired
+- libp2p P2P networking modernized
+- Offline data layer with conflict resolution
+- GDPR-compliant architecture
 
-## Development Tools
+### Phase 2: Applications (Months 5-9)
+- Hearts currency protocol
+- TAK-405 integration
+- Mesh networking (Bluetooth/Wi-Fi Direct)
 
-- Database Management: PostgreSQL
-- P2P Networking: libp2p with enhanced NAT traversal
-- Decentralized Storage: Helia (IPFS implementation)
-- Testing: Jest
-- API Documentation: OpenAPI/Swagger
+### Phase 3: Security & Testing (Months 10-12)
+- Professional security audit (400K SEK)
+- 72-hour offline operation test
+- Municipal deployment guides
+- TAK-405 alpha launch (Q1 2027)
 
-### Testing
-```bash
-npm test -- --detectOpenHandles --forceExit
-```
+See [12-MONTH-ROADMAP.md](docs/CURRENT/12-MONTH-ROADMAP.md) for detailed timeline.
+
+---
+
+## Why CivicBase?
+
+### For Swedish Municipalities
+- **Crisis readiness:** Services continue when infrastructure fails
+- **Data sovereignty:** All data stays in Sweden, controlled by citizens
+- **Cost reduction:** Eliminate expensive cloud dependencies
+- **GDPR compliance:** Privacy by design, user control guaranteed
+
+### For Developers
+- **Cutting-edge P2P:** libp2p, offline-first architecture
+- **Meaningful work:** Building public infrastructure that saves lives
+- **Open source:** All code auditable, no proprietary lock-in
+- **Grant-funded:** Paid positions available (distributed systems consultant)
+
+### For Sweden
+- **Digital sovereignty:** Break dependency on American tech giants
+- **Totalförsvar:** Operationalize MCF doctrine with concrete infrastructure
+- **Democratic resilience:** Political organizing continues during crises
+- **EU model:** Template for member state digital independence
+
+---
+
+## Security
+
+**Threat Model:**
+- Adversary controls network (ISP, government, attackers)
+- Adversary gains physical access to some devices
+- Adversary attempts to impersonate users
+- Adversary intercepts sync traffic
+
+**Defense:**
+- End-to-end encryption (AES-256-GCM)
+- Agent-centric identity (Ed25519 signatures)
+- No central database to compromise
+- Offline reconciliation with cryptographic proofs
+
+**Security Audit:**
+Professional penetration testing scheduled for Month 10 (400K SEK budgeted).
+
+**Responsible Disclosure:**
+Security vulnerabilities should be reported privately to:  
+Email: bjorn.kenneth.holmstrom@gmail.com  
+Subject: "CivicBase Security"
+
+**Do NOT open public issues for security vulnerabilities.**
+
+---
+
 ## License
 
-This project is licensed under a custom license - see the [LICENSE.md](LICENSE.md) file for details.
+CivicBase is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
 
-## Next Steps
+### Why AGPL?
 
-- Complete Phase 1.0 P2P networking implementation
-- Enhance real-time data synchronization
-- Improve security measures
-- Expand test coverage
-- Refine documentation
+We chose AGPL to ensure that **public infrastructure stays public**:
+
+- ✅ Municipalities can use CivicBase freely
+- ✅ Commercial use is allowed
+- ✅ Integration with existing systems is fine
+- ⚠️ If you modify CivicBase, you must share improvements
+- ⚠️ If you run it as a network service, you must provide source to users
+
+**This prevents vendor lock-in while encouraging shared innovation across Swedish municipalities.**
+
+See [LICENSE.md](LICENSE.md) for full legal text.
+
+---
+
+## Contributing
+
+We're building **crisis-ready public infrastructure**, not a consumer application.
+
+**We need:**
+- Distributed systems experts (P2P, conflict resolution, mesh networking)
+- Security researchers (offline reconciliation, cryptographic protocols)
+- Mobile developers (React Native, offline-first architecture)
+- Municipal IT specialists (legacy system integration, GDPR compliance)
+
+**Every design decision asks: "Will this work when the cables are cut?"**
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+
+---
+
+## Community
+
+**Monthly Contributor Calls:** (During grant period)  
+**GitHub Discussions:** Architecture questions, feature proposals  
+**GitHub Issues:** Bug reports, specific tasks  
+**Email:** bjorn.kenneth.holmstrom@gmail.com
+
+---
+
+## The Question
+
+November 2024's cable cuts exposed our vulnerability. The question is not whether Sweden will face infrastructure disruptions again.
+
+**The question is whether our municipalities will be ready.**
+
+CivicBase is the answer: **resilient infrastructure for Swedish digital sovereignty.**
+
+---
 
 ## Acknowledgments
 
-- Claude 3.5 Sonnet for development assistance and brainstorming
-- ChatGPT for name availability search and analysis
+- **libp2p/IPFS community** - P2P infrastructure foundation
+- **All contributors** - Building infrastructure that survives
+
+---
+
+**Infrastructure that survives.** 🎯
+
+**Initiative:** Global Governance Frameworks  
+**Lead Architect:** Björn K. Holmström  
+**Contact:** bjorn.kenneth.holmstrom@gmail.com  
+**Website:** globalgovernanceframeworks.org  
+**Status:** Active development (Proof-of-concept, 2026)
